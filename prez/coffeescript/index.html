@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2011 Bodil Stokke <bodil@bodil.tv>
+  Copyright 2011 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Chrome DevRel Team (chrome-devrel@googlegroups.com)
+                 Alex Russell (slightlyoff@chromium.org)
+                 Brad Neuberg
+-->
+<html manifest="cache.appcache">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
+    <title>CoffeeScript: JavaScript without the Fail</title>
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono" rel="stylesheet" type="text/css" />
+    <link href="css/prettify.css" rel="stylesheet"/>
+    <link href="css/moon.css" class="theme" rel="stylesheet" />
+    <link href="css/sand.css" class="theme" rel="stylesheet" />
+    <link href="css/sea_wave.css" class="theme" rel="stylesheet" />
+    <link href="css/default.css" class="theme" rel="stylesheet" media="screen" />
+    <style>
+      .slide li, .slide p {
+        font-size: 28px;
+        line-height: 1em;
+      }
+      .slide li {
+        list-style-type: disc;
+      }
+      .slide pre {
+        margin: 0.5em 0;
+        font-family: 'Droid Sans Mono';
+        font-size: 20px;
+      }
+
+      .slide code {
+        font-family: 'Droid Sans Mono';
+        font-size: 90%;
+      }
+
+      img.drop {
+        box-shadow: 8px 8px 16px #888;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+        font-size: 96px;
+        font-weight: bold;
+      }
+      h2 {
+        color: #181818;
+        font-size: 56px;
+        letter-spacing: -1px;
+      }
+      h3 {
+        color: black;
+        font-size: 40px;
+        letter-spacing: -1px;
+        margin: 0;
+      }
+
+      .kitteh {
+        font-family: 'Impact';
+        font-weight: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="presentation-counter">Loading...</div>
+    
+    <div class="presentation">
+      <div class="slides">
+
+        <div class="slide" id="landing-slide">
+          <style>
+            p#disclaimer-message {
+              font-size: 20px;
+            }
+          </style>
+          <section class="middle">
+            <p>This presentation is an HTML5 website</p>
+            <p>Press <span id="left-init-key" class="key">&rarr;</span> key to advance.</p>
+            <p id="disclaimer-message">Presentation template from <a href="http://html5rocks.com/">http://html5rocks.com/</a></p>
+          </section>
+          <aside class="note">
+            <section>
+              Welcome! (This field is for presenter notes and commentary.)
+            </section>
+          </aside> 
+        </div>
+
+        <div class="slide" id="title-slide">
+          <style>
+            #title-slide h1 {
+              color: #594E42;
+            }
+            #title-slide h2 {
+              color: black;
+              font-size: 48px;
+              margin-top: -5px;
+            }
+            #title-slide p {
+              line-height: 1em;
+            }
+          </style>
+          <section class="middle">
+            <hgroup>
+              <h1>CoffeeScript</h1>
+              <p style="margin-top: 0.3em"><img class="drop" src="media/cat_looking_at_coffee.jpg"/></p>
+              <h2>JavaScript without the Fail</h2>
+            </hgroup>
+            <p style="margin: 0; color: black">Bodil Stokke</p>
+            <p style="margin: 0">@bodiltv</p>
+          </section>
+        </div>
+
+        <div class="slide" id="steria-slide">
+          <section class="middle">
+            <p><img src="media/steria_challenge_accepted.svg"/></p>
+          </section>
+        </div>
+
+        <div class="slide" id="ohai-js-slide">
+          <section class="middle">
+            <h1>JavaScript</h1>
+            <h2>Why does it hurt so much?</h2>
+          </section>
+        </div>
+
+        <div class="slide" id="in-the-beginning-slide">
+          <section class="middle">
+            <h3>In the beginning...</h3>
+            <p><img class="drop" src="media/netscape.png"/></p>
+          </section>
+        </div>
+
+        <div class="slide" id="brendan-eich-slide">
+          <section class="middle">
+            <h2>Brendan Eich</h2>
+            <p><img class="drop" src="media/brendan_eich.png"/></p>
+            <p>Inventor of JavaScript,<br/>one dark and stormy week in 1995</p>
+          </section>
+        </div>
+
+        <div class="slide" id="wtfjs-slide">
+          <header>WTF JS?</header>
+          <section>
+            <ul data-build>
+              <li>Global variables
+                <pre class="lang-js">
+function plus_two(n) { two = 2; return n + two; }
+plus_two(3); // 5 - obviously, 3 + 2 = 5
+two;         // 2 - wtf, JS?</pre></li>
+              <li>The <code class="lang-js">with</code> block
+                <pre>
+var foo = 5;
+with (obj)
+    foo; // 5, unless obj.foo exists</pre></li>
+              <li>Wtf is the deal with the == operator?
+              <pre class="lang-js">
+2 === "2"; // false - obviously a number is not a string
+2 == "2";  // true - wtf JS?</pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="how-it-went-wrong-slide">
+          <section>
+            <h2>What happened?</h2>
+            <ul data-build>
+              <li>Time constraints?</li>
+              <li>Corporate interference?</li>
+              <li>Crack cocaine?</li>
+              <li>Pair programming?</li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="john-mccarthy-slide">
+          <section class="middle">
+            <h2>John McCarthy</h2>
+            <p><img class="drop" src="media/mccarthy.png"/></p>
+            <p>Inventor of Lisp, 1958</p>
+          </section>
+        </div>
+
+        <div class="slide" id="dennis-ritchie-slide">
+          <section class="middle">
+            <h2>Dennis Ritchie</h2>
+            <p><img class="drop" src="media/ritchie.png"/></p>
+            <p>Co-inventor of C, 1973</p>
+          </section>
+        </div>
+
+        <div class="slide" id="bjarne-stroustrup-slide">
+          <section class="middle">
+            <h2>Bjarne Stroustrup</h2>
+            <p><img class="drop" src="media/bjarne.png"/></p>
+            <p>Inventor of C++, 1983</p>
+          </section>
+        </div>
+
+        <div class="slide" id="guido-van-rossum-slide">
+          <section class="middle">
+            <h2>Guido van Rossum</h2>
+            <p><img class="drop" src="media/guido.png"/></p>
+            <p>Inventor of Python, 1991</p>
+          </section>
+        </div>
+
+        <div class="slide" id="james-gosling-slide">
+          <section class="middle">
+            <h2>James Gosling</h2>
+            <p><img class="drop" src="media/gosling.png"/></p>
+            <p>Inventor of Java, 1995</p>
+          </section>
+        </div>
+
+        <div class="slide" id="brendan-double-take-slide">
+          <section class="middle">
+            <h2>Brendan Eich</h2>
+            <p><img class="drop" src="media/brendan_eich.png"/></p>
+            <p>Inventor of JavaScript, 1995</p>
+          </section>
+        </div>
+
+        <div class="slide" id="the-secret-slide">
+          <section class="middle">
+            <p><img class="drop" src="media/the_secret.png"/></p>
+          </section>
+        </div>
+
+        <div class="slide" id="facial-hair-theory-slide">
+          <style>
+            #facial-hair-theory-slide h3 {
+              color: #383838;
+            }
+          </style>
+          <section class="middle">
+            <h2>The Facial Hair Theory</h2>
+            <h3>of programming language design</h3>
+          </section>
+        </div>
+
+        <div class="slide" id="anders-hejlsberg-slide">
+          <section class="middle">
+            <h2>Anders Hejlsberg</h2>
+            <p><img class="drop" src="media/hejlsberg.png"/></p>
+            <p>Inventor of C#, 2001</p>
+          </section>
+        </div>
+
+        <div class="slide" id="larry-wall-slide">
+          <section class="middle">
+            <h2>Larry Wall</h2>
+            <p><img class="drop" src="media/larry_wall.png"/></p>
+            <p>Inventor of Perl, 1987</p>
+          </section>
+        </div>
+
+        <div class="slide" id="no-future-slide">
+          <style>
+            #no-future-slide section.middle {
+              background: url(media/no_hope.png) no-repeat center;
+            }
+          </style>
+          <section class="middle">
+            <h2>So is there no hope for JS?</h2>
+          </section>
+        </div>
+
+
+        <div class="slide" id="crockford-slide">
+          <section class="middle">
+            <h2>Douglas Crockford</h2>
+            <p><img class="drop" src="media/crockford.png"/></p>
+            <p>Discovered the Good Parts, 2008</p>
+          </section>
+        </div>
+
+        <div class="slide" id="strict-mode-slide">
+          <section class="middle">
+            <h2>"use strict";</h2>
+          </section>
+        </div>
+
+        <div class="slide" id="what-is-strict-mode-slide">
+          <header>Strict Mode</header>
+          <section>
+            <ul data-build>
+              <li>No more global variables
+                <pre class="lang-js">
+"use strict";
+myUndeclaredVariable = 5; // throws a ReferenceError</pre></li>
+              <li>No more <code class="lang-js">with</code>
+                <pre>
+"use strict";
+var foo = 5;
+with (obj)  // syntax error!
+    foo;    // no more wondering what this evaluates to</pre></li>
+              <li>But it's still JavaScript&hellip;</li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="node-logo-slide">
+          <section class="middle">
+            <p><img src="media/node_js.png"/></p>
+          </section>
+        </div>
+
+        <div class="slide" id="ryan-dahl-slide">
+          <section class="middle">
+            <h2>Ryan Dahl</h2>
+            <p><img class="drop" src="media/ryan.png"/></p>
+            <p>Inventor of Node.JS</p>
+          </section>
+        </div>
+
+
+        <div class="slide" id="async-programming-slide">
+          <header>The joys of async programming</header>
+          <section>
+            <p><pre class="lang-js">
+server.listen(function(request, response) {
+    database.open(function(connection) {
+        connection.query("SELECT * FROM posts", function(cursor) {
+            cursor.fetchAll(function(posts) {
+                response.write(posts.forEach(function(post) {
+                    return post.title;
+                }));
+            });
+        });
+    });
+});
+
+// wtf</pre></p>
+          </section>
+        </div>
+
+        <div class="slide" id="make-it-stop-1-slide">
+          <header>Make it stop!</header>
+          <section>
+            <p><pre class="lang-js">
+server.listen(function(request, response) {
+  database.open(function(connection) {
+    connection.query("SELECT * FROM posts", function(cursor) {
+      cursor.fetchAll(function(posts) {
+        response.write(posts.forEach(function(post) {
+          return post.title;
+        }));
+      });
+    });
+  });
+});</pre></p>
+          </section>
+        </div>
+
+        <div class="slide" id="make-it-stop-2-slide">
+          <header>First, let's kill all the semicolons</header>
+          <section>
+            <p><pre class="lang-js">
+server.listen(function(request, response) {
+  database.open(function(connection) {
+    connection.query("SELECT * FROM posts", function(cursor) {
+      cursor.fetchAll(function(posts) {
+        response.write(posts.forEach(function(post) {
+          return post.title
+        }))
+      })
+    })
+  })
+})</pre></p>
+          </section>
+        </div>
+
+        <div class="slide" id="make-it-stop-3-slide">
+          <header>Do we really need those parentheses?</header>
+          <section>
+            <p><pre class="lang-js">
+server.listen function(request, response) {
+  database.open function(connection) {
+    connection.query "SELECT * FROM posts", function(cursor) {
+      cursor.fetchAll function(posts) {
+        response.write posts.forEach function(post) {
+          return post.title
+        }
+      }
+    }
+  }
+}</pre></p>
+          </section>
+        </div>
+
+        <div class="slide" id="make-it-stop-4-slide">
+          <header>Have some significant indentation</header>
+          <section>
+            <p><pre class="lang-js">
+server.listen function(request, response)
+  database.open function(connection)
+    connection.query "SELECT * FROM posts", function(cursor)
+      cursor.fetchAll function(posts)
+        response.write posts.forEach function(post)
+          return post.title</pre></p>
+          </section>
+        </div>
+
+        <div class="slide" id="make-it-stop-5-slide">
+          <header>Don't make me type <code>function</code></header>
+          <section>
+            <p><pre class="lang-js">
+server.listen (request, response) ->
+  database.open (connection) ->
+    connection.query "SELECT * FROM posts", (cursor) ->
+      cursor.fetchAll (posts) ->
+        response.write posts.forEach (post) ->
+          return post.title</pre></p>
+          </section>
+        </div>
+
+        <div class="slide" id="make-it-stop-6-slide">
+          <header><code>return</code> is implied</header>
+          <section>
+            <p><pre class="lang-js">
+server.listen (request, response) ->
+  database.open (connection) ->
+    connection.query "SELECT * FROM posts", (cursor) ->
+      cursor.fetchAll (posts) ->
+        response.write posts.forEach (post) ->
+          post.title</pre></p>
+          </section>
+        </div>
+
+        <div class="slide" id="slow-down-slide">
+          <section class="middle">
+            <p><img class="drop" src="media/stupid_kitteh.gif"/></p>
+            <h2 class="kitteh">LOL WUT?</h2>
+          </section>
+        </div>
+
+        <div class="slide" id="hello-coffeescript-slide">
+          <style>
+            #hello-coffeescript-slide h1 {
+              color: #191932;
+              font-size: 102px;
+            }
+            #hello-coffeescript-slide h1 img {
+              margin-top: -30px;
+            }
+          </style>
+          <section class="middle">
+            <h1><img src="media/coffeescript_logo.png" align="center"/> CoffeeScript</h1>
+          </section>
+        </div>
+
+        <div class="slide" id="jeremy-slide">
+          <section class="middle">
+            <h2>Jeremy Ashkenas</h2>
+            <p><img class="drop" src="media/jeremy.png"/></p>
+            <p>Inventor of CoffeeScript, 2009</p>
+          </section>
+        </div>
+
+        <div class="slide" id="myth-debunked-slide">
+          <style>
+            #myth-debunked-slide h3 {
+              color: #383838;
+            }
+            #myth-debunked-slide img.debunked {
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              margin-left: -212px;
+              margin-top: -146px;
+            }
+          </style>
+          <section class="middle">
+            <h2>The Facial Hair Theory</h2>
+            <h3>of programming language design</h3>
+            <img class="debunked" src="media/debunked.svg"/>
+          </section>
+        </div>
+
+        <div class="slide" id="js-is-bloated-slide">
+          <section class="middle">
+            <h3>JavaScript syntax is bloated</h3>
+            <p><img class="drop" src="media/fatcat.gif"/></p>
+          </section>
+        </div>
+
+        <div class="slide" id="boilerplate-slide">
+          <section class="middle">
+            <h3>JavaScript has too much boilerplate</h3>
+            <p><img class="drop" src="media/forcedlabour.gif"/></p>
+          </section>
+        </div>
+
+        <div class="slide" id="compress-slide">
+          <section class="middle">
+            <h3>So let's get rid of the bloat</h3>
+            <p><img class="drop" src="media/compression.gif"/></p>
+          </section>
+        </div>
+
+
+        <div class="slide" id="basic-functions-slide">
+          <header>Functions</header>
+          <section>
+            <ul data-build>
+              <li>A function in JavaScript:
+                <pre class="lang-js">
+var sum = function(a, b) {
+    return a + b;
+}</pre></li>
+              <li>In CoffeeScript:
+                <pre class="lang-coffee">
+sum = (a, b) -> a + b</pre></li>
+              <li><code class="lang-js">function(a, b)</code>
+                becomes <code class="lang-coffee">(a, b) -></code></li>
+              <li>A function always returns the value of its last expression.
+                <pre class="lang-coffee">
+foo = -> 2 + 2       // return 2 + 2;
+bar = ->
+  console.log "ohai" // prints "ohai"
+  "kthxbye"          // return "kthxbye";</pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="function-invocation-slide">
+          <header>Calling functions</header>
+          <section>
+            <ul data-build>
+              <li>Parentheses are optional:
+                <pre class="lang-coffee">
+sum = (a, b) -> a + b // remember this? It calculates a + b :)
+
+sum(2, 3) // returns 5
+sum 2, 3  // returns 5</pre></li>
+              <li>You might still need them to group expressions, though:
+                <pre class="lang-coffee">
+sum (sum 2, 3), 4 // returns 9
+sum sum 2, 3, 4   // which args belong where? returns NaN
+sum 4, sum 2, 3   // also returns 9</pre></li>
+              <li>Calling a function with no arguments:
+                <pre class="lang-coffee">
+connection.close() // calls the close function
+connection.close   // returns the function, doesn't call it</pre></li>
+            </ul>
+          </section>
+        </div>
+
+
+        <div class="slide" id="significant-indentation-slide">
+          <header>So what happened to the curly braces?</header>
+          <section>
+            <ul data-build>
+              <li>CoffeeScript has significant indentation.
+                <pre class="lang-coffee">
+foo = (a, b) ->
+  c = a + b     // indent starts a block - "{" implied
+  console.log c // same indentation level, part of same block
+foo 2, 3        // unindent ends the block - "}" implied</pre></li>
+              <li>Blocks are defined by the indentation you'd give them anyway:<pre class="lang-coffee">
+if name != "honey badger"
+  care()
+else
+  eat_cobra()</pre>Can you see the blocks?</li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="bad-parts-removed-slide">
+          <header>Forget JavaScript flaws</header>
+          <section>
+            <ul data-build>
+              <li><em>All</em> variable declarations are local:
+                <pre>
+foo = "bar"
+// compiles to:
+var foo;
+foo = "bar";</pre></li>
+              <li>No more == weirdness:
+                <pre>
+2 == "2"
+// compiles to:
+2 === "2" // returns false, like you'd expect</pre></li>
+              <li>There is no <code>with</code> statement.</li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="declaring-objects-slide">
+          <header>Declaring objects</header>
+          <section>
+            <ul data-build>
+              <li>In JavaScript:
+                <pre class="lang-js">
+var tweet = {
+    user: {
+        name: "bodiltv",
+        url: "http://bodil.tv/"
+    },
+    tweet: "PONIES RULE SO HARD"
+};</pre></li>
+              <li>In CoffeeScript:
+                <pre class="lang-coffee">
+tweet =
+  user:
+    name: "bodiltv"
+    url: "http://bodil.tv/"
+  tweet: "PONIES RULE SO HARD"</pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="declaring-arrays-slide">
+          <header>Declaring arrays</header>
+          <section>
+            <ul data-build>
+              <li>In JavaScript:
+                <pre class="lang-js">
+var things_that_rule = [
+    "robot unicorns",
+    "honey badgers",
+    "Lord Inglip"
+];</pre></li>
+              <li>In CoffeeScript:
+                <pre class="lang-coffee">
+things_that_rule = [
+    "robot unicorns"
+    "honey badgers"
+    "Lord Inglip"
+]</pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="interlude-1-slide">
+          <section class="middle">
+            <p><img class="drop" src="media/falling.gif"/></p>
+            <h2 class="kitteh">OK LET THAT SINK IN FOR A BIT</h2>
+          </section>
+        </div>
+
+        <div class="slide" id="if-slide">
+          <header>But what <code>if</code></header>
+          <section>
+            <ul data-build>
+              <li>The <code class="lang-coffee">if</code> statement:
+                <pre class="lang-coffee">
+if elvis.state == "alive"
+  console.log "Hail to the King!"
+else
+  console.log "You lie!"</pre></li>
+              <li>It has a short form:
+                <pre class="lang-coffee">
+if balance &lt; 0 then file_for_bankruptcy() else invest_moar()</pre></li>
+              <li>It <em>returns a value:</em>
+                <pre class="lang-coffee">
+console.log if name == "Elvis" then "My liege!" else "ohai noob"</pre></li>
+              <li>It can even be used as a suffix:
+                <pre class="lang-coffee">
+console.log "My liege!" if name == "Elvis"</pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="while-loop-slide">
+          <header>The <code class="lang-coffee">while</code> loop</header>
+          <section>
+            <ul data-build>
+              <li>The basic loop:
+                <pre class="lang-coffee">
+while count > 0
+  count -= 1</pre></li>
+              <li><code class="lang-coffee">unless</code> is like <code class="lang-coffee">while not</code>:
+                <pre class="lang-coffee">
+unless count > 1337
+  count += 1</pre></li>
+              <li>And you can put them <em>after</em> a statement, just like <code class="lang-coffee">if</code>:
+                <pre class="lang-coffee">
+counter = 0
+console.log counter++ while counter &lt; 5</pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="everything-evaluates-slide">
+          <section class="middle">
+            <h2>Everything is an expression.</h2>
+          </section>
+        </div>
+
+        <div class="slide" id="expressive-slide">
+          <header>Everything is an expression</header>
+          <section>
+            <ul data-build>
+              <li><code class="lang-coffee">if</code> evaluates to the <code class="lang-coffee">then</code> or <code class="lang-coffee">else</code> block:
+                <pre class="lang-coffee">
+foo = false
+result = if foo then "foo is truthy" else "foo is falsy"
+// result is "foo is falsy"</pre></li>
+              <li><code class="lang-coffee">while</code> returns <em>an array:</em>
+                <pre>
+counter = 0
+list = while counter &lt; 5
+  counter++
+  "n" + counter
+// list is [ 'n1', 'n2', 'n3', 'n4', 'n5' ]</pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="everything2-slide">
+          <header>Everything is an expression</header>
+          <section>
+            <ul>
+              <li>Even <code class="lang-coffee">switch</code> statements return something:
+                <pre class="lang-coffee">
+result = switch request.error_code
+  when 200 then "OK"
+  when 301 then "don't live here anymore"
+  when 404 then "not found"
+  when 500 then "i maed u a page... but i eated it"
+  else "unknown error call the police " + request.error_code
+</pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="coolness-slide">
+          <header>More niceties</header>
+          <section>
+            <ul data-build>
+              <li>Chained comparisons:
+                <pre class="lang-coffee">
+if 20 &lt; temperature &lt; 30
+  venture_outside()</pre></li>
+              <li>Destructuring assignment:
+                <pre>
+sum_and_difference = (a, b) -> [ a + b, a - b]
+[ sum, difference ] = sum_and_difference 5, 2
+sum // returns 7
+difference // returns 3
+</pre></li>
+              <li>The existential operator:
+                <pre>
+foo = { bar: "bar" }
+if foo.bar? then console.log foo.bar
+// if (foo.bar != null) { ... }</pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="fun-with-strings-slide">
+          <header>Fun with strings</header>
+          <section>
+            <ul data-build>
+              <li>Tired of adding strings together? We borrowed this from Ruby:
+                <pre class="lang-coffee">
+power_level = 9000
+console.log "It's over #{power_level}!"
+"It's over 9000!"</pre></li>
+              <li>Want to make really large strings? CoffeeScript doesn't mind line breaks:<pre>
+blurb = "I don't always drink beer,
+         but when I do,
+         I prefer Dos Equis."
+console.log blurb
+"I don't always drink beer, but when I do, I prefer Dos Equis."</pre></li>
+            </ul>
+          </section>
+        </div>
+
+
+        <div class="slide" id="pretty-cool-slide">
+          <section class="middle">
+            <p><img class="drop" src="media/shakers.gif"/></p>
+            <h2 class="kitteh">PRETTY COOL</h2>
+          </section>
+        </div>
+
+        <div class="slide" id="kingdom-of-nouns-slide">
+          <header>The Kingdom of Nouns</header>
+          <section>
+            <p>Have you ever tried to make JavaScript act object oriented?</p>
+            <pre class="lang-js">
+Ape = function(name) {
+    this.name = name;
+};
+
+Ape.prototype.sayHi = function() {
+    console.log "ohai my name is " + this.name;
+}
+
+Ape.prototype.exclaim = function(target) {
+    console.log "You damn dirty " + target +"!"
+}
+
+doctorZaius = new Ape("Doctor Zaius");
+doctorZaius.exclaim("human");
+</pre>
+          </section>
+        </div>
+
+        <div class="slide" id="wtf-oop-slide">
+          <section class="middle">
+            <p><img class="drop" src="media/wtf.gif"/></p>
+          </section>
+        </div>
+
+        <div class="slide" id="better-class-slide">
+          <header>A better kind of class</header>
+          <section>
+            <pre class="lang-coffee">
+class Ape
+  constructor: (@name) ->
+
+  sayHi: ->
+    "ohay my name is " + @name
+
+  exclaim: (target) ->
+    "You damn dirty #{target}!"
+
+doctorZaius = new Ape "Doctor Zaius"
+doctorZaius.exclaim "human"
+</pre>
+          </section>
+        </div>
+
+        <div class="slide" id="inheritance-slide">
+          <header>Class hierarchy keeps society together</header>
+          <section>
+            <pre class="lang-coffee">
+class Ape
+  constructor: (@name) ->
+
+  sayHi: ->
+    "ohay my name is " + @name
+
+  exclaim: (target) ->
+    "You damn dirty #{target}!"
+
+class Orangutan extends Ape
+  exclaim: (target) ->
+    "I don't think #{target}s care."
+ 
+doctorZaius = new Orangutan "Doctor Zaius"
+doctorZaius.sayHi()
+"ohai my name is Doctor Zaius"
+doctorZaius.exclaim "honey badger"
+"I don't think honey badgers care."
+
+charltonHeston = new Ape "Charlton Heston"
+charltonHeston.exclaim "ape"
+"You damn dirty ape!"</pre>
+          </section>
+        </div>
+
+        <div class="slide" id="mock-slide">
+          <section class="middle">
+            <p><img class="drop" src="media/wtf.gif"/></p>
+            <h2 class="kitteh">I MOCK UR OOP</h2>
+          </section>
+        </div>
+
+
+        <div class="slide" id="get-ready-slide">
+          <style>
+            #get-ready-slide h3 {
+              color: #400;
+            }
+          </style>
+          <section class="middle">
+            <p><img class="drop" src="media/hiding.gif"/></p>
+            <h2 class="kitteh">ASSUME SAFETY POSITIONS</h2>
+            <h3 class="kitteh">&mdash; FUNCTIONAL PROGRAMMING AHEAD &mdash;</h3>
+          </section>
+        </div>
+
+        <div class="slide" id="list-processing-slide">
+          <header>List Processing</header>
+          <section>
+            <ul data-build>
+              <li>Proper slicing operators:
+                <pre class="lang-coffee">
+numbers = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+
+numbers[3..6] // [ 3, 4, 5, 6 ]
+numbers[7..]  // [ 7, 8, 9 ]
+numbers[..3]  // [ 0, 1, 2, 3 ]</pre></li>
+              <li>And we can do splicing too:
+                <pre class="lang-coffee">
+numbers = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+
+numbers[3..6] = [ "foo", "bar" ]
+numbers // [ 0, 1, 2, "foo", "bar", 7, 8, 9 ]
+              </pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="iteration-slide">
+          <header>The <code class="lang-coffee">for</code> loop</header>
+          <section>
+            <ul data-build>
+              <li>Iterate over a list's members:
+                <pre class="lang-coffee">
+numbers = [ 1, 2, 3, "many" ]
+for number in numbers
+  console.log "I just counted to #{number}"</pre></li>
+              <li>It has a suffix form too, of course:
+                <pre class="lang-coffee">
+numbers = [ 1, 2, 3, "many" ]
+console.log "I just counted to #{number}" for number in numbers</pre></li>
+              <li>And it <em>returns a new list:</em>
+                <pre class="lang-coffee">
+numbers = [ 1..5 ]
+new_numbers = number + 1 for number in numbers
+new_numbers // [ 2, 3, 4, 6 ]</pre></li>
+          </section>
+        </div>
+
+
+        <div class="slide" id="list-comprehension-slide">
+          <header>List comprehension</header>
+          <section>
+            <ul data-build>
+              <li>Real map/reduce with a simple syntax:
+                <pre>
+numbers = [ 1, 2, 3, 4, 5 ]
+
+(x * 2 for x in numbers) // [ 2, 4, 6, 8, 10 ]
+(x * 2 for x in numbers when x % 2) // [ 2, 6, 10 ]
+</pre></li>
+              <li>Wait, what?
+                <pre>
+( <em>expression</em> for <em>item</em> in <em>list</em> )
+( <em>expression</em> for <em>item</em> in <em>list</em> when <em>condition</em> )</pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="omg-lisp-enlightenment-slide">
+          <section class="middle">
+            <p><img class="drop" src="media/omgcat.gif"/></p>
+            <h2 class="kitteh">LISP ENLIGHTENMENT</h2>
+          </section>
+        </div>
+
+
+        <div class="slide" id="howto-slide">
+          <header>OK, but can I use this anywhere?</header>
+          <section>
+            <ul data-build>
+              <li>In your web page:
+                <pre class="lang-html">
+&lt;script type="text/javascript" src="coffee-script.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/coffeescript" src="my.coffee"&gt;&lt;/script&gt;</pre></li>
+              <li>In Node:
+                <pre class="lang-js">
+var my_cs_module = require("./my_cs_module");</pre></li>
+              <li>Compile and run anywhere JavaScript runs:
+                <pre class="lang-sh">
+$ coffee -c my_script.coffee</pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="questions-slide">
+          <section class="middle">
+            <h2 class="kitteh">CONFUSED?</h2>
+            <p><img class="drop" src="media/smartcat.gif"/></p>
+            <h3 class="kitteh">YOU MAY NOW ASK QUESTIONS</h3>
+          </section>
+        </div>
+
+
+
+
+
+        <div class="slide" id="outro-slide">
+          <style>
+            #outro-slide h2 {
+              color: black;
+              letter-spacing: -1px;
+              font-size: 64px;
+            }
+            p.resource-link {
+              font-size: 36px;
+              line-height: 1.15em;
+            }
+            p.resource-link a {
+              color: blue;
+              text-decoration: underline;
+              border: none;
+            }
+            span.bodil {
+              font-weight: bold;
+              font-size: 48px;
+              letter-spacing: -2px;
+            }
+          </style>
+          <section class="middle">
+            <h2>Thank you for listening!</h2>
+            <p><img class="drop" src="media/honeybadger.jpg"></p>
+            <p class="resource-link"><span class="bodil">Bodil Stokke</span><br>
+              <a href="http://steria.no/">steria.no</a><br>
+              <a href="http://github.com/bodil">github.com/bodil</a><br>
+              <a href="http://twitter.com/bodiltv">@bodiltv</a>
+            </p>
+          </section>
+        </div>
+
+      </div> <!-- slides -->
+      <style>
+      #speaker-note {
+        position:absolute;
+        left: 0;
+        top: 80%;
+        width: 100%;
+        height: 20%;
+        z-index: 50;
+        opacity: 0.75;
+        background-color: white;
+        overflow: auto;
+        padding: 2px 20px;
+        -webkit-transition: top 0.5s ease-in-out;
+        -moz-transition: top 0.5s ease-in-out;
+        -o-transition: top 0.5s ease-in-out;
+        transition: top 0.5s ease-in-out;
+      }
+      #speaker-note.invisible {
+        top: 101%;
+      }
+      </style>
+      <div id="speaker-note" class="invisible" style="display: none;">
+      </div> <!-- speaker note -->
+    </div> <!-- presentation -->
+
+    <!--[if lt IE 9]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
+    </script>
+    <script>CFInstall.check({ mode: "overlay" });</script>
+    <![endif]-->
+
+    <script src="js/utils.js"></script>
+    <script src="js/prettify.js"></script>
+    <script src="js/lang-sql.js"></script>
+    <script>prettyPrint();</script>
+  </body>
+</html>
