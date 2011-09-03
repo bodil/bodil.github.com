@@ -125,7 +125,7 @@
   var canTransition = testStyle('transition');
 
   var unescape = function(s) {
-      return s.replace("&gt;", ">").replace("&lt;", "<").replace("&amp;", "&");
+      return s.replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&amp;/g, "&");
   };
 
   //
@@ -139,13 +139,14 @@
     var editorContent = query('.editor-content', node);
     this._editorContent = editorContent ? unescape(editorContent.innerHTML) : '';
     this._editorRendered = query('.editor-rendered', node);
+    this._editorConsole = query('.editor-console', node);
     if (idx >= 0) {
       this._count = idx + 1;
     }
     if (this._node) {
       addClass(this._node, 'slide distant-slide');
     }
-    this._makeCounter();
+    // this._makeCounter();
     this._makeBuildList();
   };
 
@@ -288,6 +289,9 @@
     getEditorRendered: function() {
       return this._editorRendered;
     },
+    getEditorConsole: function() {
+      return this._editorConsole;
+    },
     buildNext: function() {
       if (!this._buildList.length) {
         return false;
@@ -392,9 +396,14 @@
         var editor, editorNode = this._slides[currentIndex - 1].getEditorNode();
         var editorContent = this._slides[currentIndex - 1].getEditorContent();
         var _t = this;
+        var CoffeeMode = require("ace/mode/coffee").Mode;
         if (editorNode) {
             removeClass(editorNode, "visible");
             editor = this._editor = ace.edit(editorNode);
+            editor.getSession().setMode(new CoffeeMode());
+            editor.getSession().setUseSoftTabs(true);
+            editor.getSession().setTabSize(2);
+            editor.setTheme("ace/theme/textmate");
             addClass(editorNode, "visible");
             setTimeout(function() {
                 editor.getSession().setValue(editorContent);
@@ -471,7 +480,31 @@
         try {
             var compiled = CoffeeScript.compile(editor.getSession().getValue(), { bare: true });
             rendered.innerHTML = compiled;
+            prettyPrintNode(rendered);
         } catch (error) {
+        }
+    },
+    runCode: function() {
+        var editor = this._editor;
+        if (!editor) return;
+        var _console = this._slides[this._getCurrentIndex() - 1].getEditorConsole();
+
+        var selection = editor.getSelectionRange();
+        if (selection.start.row === selection.end.row && selection.start.column === selection.end.column) selection = null;
+        var code = selection ? editor.getSession().doc.getTextRange(selection) : editor.getSession().getValue();
+
+        var output = ">> " + code.trim().replace(/\n/g, "\n>> ");
+        output = "<span class=\"input\">" + output + "</span>\n";
+
+        code = "wrap_func = ->\n  " + code.replace(/\n/g, "\n  ") + "\nreturn wrap_func()";
+
+        try {
+            var compiled = CoffeeScript.compile(code);
+            output += eval(compiled);
+            _console.innerHTML = output;
+            _console.scrollTop = _console.scrollHeight;
+        } catch (error) {
+            _console.innerHTML = output + "<span class=\"error\">" + error + "</span>";
         }
     },
     handleKeys: function(e) {
@@ -538,14 +571,18 @@
 
   var slideshow = new SlideShow(queryAll('.slide'));
 
+     function bindKey(key) {
+         return {
+             win: key,
+             mac: key,
+             sender: "editor"
+         };
+     }
+
      var canon = require("pilot/canon");
      canon.addCommand({
          name: "slideForward",
-         bindKey: {
-             win: "Ctrl-Alt-Right",
-             mac: "Ctrl-Alt-Right",
-             sender: "editor"
-         },
+         bindKey: bindKey("Ctrl-Alt-Right"),
          exec: function(env, args, request) {
              env.editor.blur();
              slideshow.next();
@@ -553,11 +590,7 @@
      });
      canon.addCommand({
          name: "slideForward2",
-         bindKey: {
-             win: "Next",
-             mac: "Next",
-             sender: "editor"
-         },
+         bindKey: bindKey("Next"),
          exec: function(env, args, request) {
              env.editor.blur();
              slideshow.next();
@@ -565,11 +598,7 @@
      });
      canon.addCommand({
          name: "slideBack",
-         bindKey: {
-             win: "Ctrl-Alt-Left",
-             mac: "Ctrl-Alt-Left",
-             sender: "editor"
-         },
+         bindKey: bindKey("Ctrl-Alt-Left"),
          exec: function(env, args, request) {
              env.editor.blur();
              slideshow.prev();
@@ -577,15 +606,21 @@
      });
      canon.addCommand({
          name: "slideBack2",
-         bindKey: {
-             win: "Prior",
-             mac: "Prior",
-             sender: "editor"
-         },
+         bindKey: bindKey("Prior"),
          exec: function(env, args, request) {
              env.editor.blur();
              slideshow.prev();
          }
+     });
+     canon.addCommand({
+         name: "runCode",
+         bindKey: bindKey("Alt-R"),
+         exec: function(env, args, request) { slideshow.runCode(); }
+     });
+     canon.addCommand({
+         name: "removetolineend",
+         bindKey: bindKey("Ctrl-K"),
+         exec: function(env, args, request) { env.editor.removeToLineEnd(); }
      });
 
   document.addEventListener('DOMContentLoaded', function() {

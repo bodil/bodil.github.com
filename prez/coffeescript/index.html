@@ -77,16 +77,19 @@
         font-weight: normal;
       }
 
+      div.editor, pre.editor-rendered {
+        font-size: 18px;
+      }
+
       div.editor {
         position: absolute;
         left: 50%;
         top: 50%;
         margin-left: -450px;
-        width: 450px;
-        margin-top: -300px;
-        height: 600px;
+        width: 462px;
+        margin-top: -330px;
+        height: 530px;
         visibility: hidden;
-        font-size: 20px;
       }
 
       div.editor.visible {
@@ -101,15 +104,38 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        margin-left: 10px;
-        width: 400px;
-        margin-top: -300px;
-        height: 580px;
-        font-size: 20px;
+        margin-left: 22px;
+        width: 392px;
+        margin-top: -330px;
+        height: 508px;
         background-color: rgba(255, 204, 0, 0.05);
         border: 2px solid rgba(255, 204, 0, 0.3);
         padding: 10px 10px;
         border-radius: 10px;
+        overflow: auto;
+      }
+
+      pre.editor-console {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -440px;
+        width: 855px;
+        margin-top: 210px;
+        height: 106px;
+        background-color: rgba(0, 0, 0, 0.05);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        padding: 10px 10px;
+        border-radius: 10px;
+        overflow: auto;
+      }
+
+      pre.editor-console span.input {
+        color: #666;
+      }
+
+      pre.editor-console span.error {
+        color: red;
       }
     </style>
   </head>
@@ -572,16 +598,6 @@ sum = (a, b) -> a + b</pre></li>
           </section>
         </div>
 
-        <div class="slide" id="function-examples-slide">
-          <section>
-            <div class="editor-content">sum = (a, b) -&gt; a + b
-</div>
-            <div class="editor"></div>
-            <pre class="editor-rendered"></pre>
-          </section>
-        </div>
-
-
         <div class="slide" id="function-invocation-slide">
           <header>Calling functions</header>
           <section>
@@ -592,11 +608,6 @@ sum = (a, b) -> a + b // remember this? It calculates a + b :)
 
 sum(2, 3) // returns 5
 sum 2, 3  // returns 5</pre></li>
-              <li>You might still need them to group expressions, though:
-                <pre class="lang-coffee">
-sum (sum 2, 3), 4 // returns 9
-sum sum 2, 3, 4   // which args belong where? returns NaN
-sum 4, sum 2, 3   // also returns 9</pre></li>
               <li>Calling a function with no arguments:
                 <pre class="lang-coffee">
 connection.close() // calls the close function
@@ -605,6 +616,15 @@ connection.close   // returns the function, doesn't call it</pre></li>
           </section>
         </div>
 
+        <div class="slide" id="function-examples-slide">
+          <section>
+            <div class="editor-content">sum = (a, b) -&gt; a + b
+</div>
+            <div class="editor"></div>
+            <pre class="editor-rendered"></pre>
+            <pre class="editor-console"></pre>
+          </section>
+        </div>
 
         <div class="slide" id="significant-indentation-slide">
           <header>So what happened to the curly braces?</header>
@@ -1102,8 +1122,10 @@ $ coffee -c my_script.coffee</pre></li>
 
     <script src="js/coffee-script.js"></script>
     <script src="js/ace/ace.js"></script>
-    <script src="js/utils.js"></script>
+    <script src="js/ace/mode-coffee.js"></script>
+    <script src="js/ace/theme-textmate.js"></script>
     <script src="js/prettify.js"></script>
+    <script src="js/utils.js"></script>
     <script src="js/lang-sql.js"></script>
     <script>prettyPrint();</script>
   </body>
