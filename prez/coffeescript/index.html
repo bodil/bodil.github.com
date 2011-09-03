@@ -31,6 +31,7 @@
     <link href="css/sand.css" class="theme" rel="stylesheet" />
     <link href="css/sea_wave.css" class="theme" rel="stylesheet" />
     <link href="css/default.css" class="theme" rel="stylesheet" media="screen" />
+    <link href="css/editor.css" rel="stylesheet">
     <style>
       .slide li, .slide p {
         font-size: 28px;
@@ -74,6 +75,41 @@
       .kitteh {
         font-family: 'Impact';
         font-weight: normal;
+      }
+
+      div.editor {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -450px;
+        width: 450px;
+        margin-top: -300px;
+        height: 600px;
+        visibility: hidden;
+        font-size: 20px;
+      }
+
+      div.editor.visible {
+        visibility: visible !important;
+      }
+
+      div.editor-content {
+        display: none;
+      }
+
+      pre.editor-rendered {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: 10px;
+        width: 400px;
+        margin-top: -300px;
+        height: 580px;
+        font-size: 20px;
+        background-color: rgba(255, 204, 0, 0.05);
+        border: 2px solid rgba(255, 204, 0, 0.3);
+        padding: 10px 10px;
+        border-radius: 10px;
       }
     </style>
   </head>
@@ -529,15 +565,22 @@ var sum = function(a, b) {
 sum = (a, b) -> a + b</pre></li>
               <li><code class="lang-js">function(a, b)</code>
                 becomes <code class="lang-coffee">(a, b) -></code></li>
-              <li>A function always returns the value of its last expression.
-                <pre class="lang-coffee">
-foo = -> 2 + 2       // return 2 + 2;
-bar = ->
-  console.log "ohai" // prints "ohai"
-  "kthxbye"          // return "kthxbye";</pre></li>
+              <li><code class="lang-js">function()</code>
+                becomes simply <code class="lang-coffee">-></code></li>
+              <li><code class="lang-coffee">return</code> is implied: a function always returns the value of its last expression.</li>
             </ul>
           </section>
         </div>
+
+        <div class="slide" id="function-examples-slide">
+          <section>
+            <div class="editor-content">sum = (a, b) -&gt; a + b
+</div>
+            <div class="editor"></div>
+            <pre class="editor-rendered"></pre>
+          </section>
+        </div>
+
 
         <div class="slide" id="function-invocation-slide">
           <header>Calling functions</header>
@@ -1030,12 +1073,11 @@ $ coffee -c my_script.coffee</pre></li>
       #speaker-note {
         position:absolute;
         left: 0;
-        top: 80%;
+        top: 50%;
         width: 100%;
-        height: 20%;
+        height: 50%;
         z-index: 50;
-        opacity: 0.75;
-        background-color: white;
+        background-color: rgba(255, 255, 255, 0.95);
         overflow: auto;
         padding: 2px 20px;
         -webkit-transition: top 0.5s ease-in-out;
@@ -1058,6 +1100,8 @@ $ coffee -c my_script.coffee</pre></li>
     <script>CFInstall.check({ mode: "overlay" });</script>
     <![endif]-->
 
+    <script src="js/coffee-script.js"></script>
+    <script src="js/ace/ace.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/prettify.js"></script>
     <script src="js/lang-sql.js"></script>

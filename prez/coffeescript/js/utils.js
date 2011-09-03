@@ -17,7 +17,7 @@
 
   var query = function(query, root) {
     return queryAll(query, root)[0];
-  }
+  };
 
   var queryAll = function(query, root) {
     if (!query) { return []; }
@@ -124,13 +124,21 @@
 
   var canTransition = testStyle('transition');
 
+  var unescape = function(s) {
+      return s.replace("&gt;", ">").replace("&lt;", "<").replace("&amp;", "&");
+  };
+
   //
   // Slide class
   //
   var Slide = function(node, idx) {
     this._node = node;
+    this._editorNode = query('.editor', node);
     var note = query('.note > section', node);
     this._speakerNote = note ? note.innerHTML : '';
+    var editorContent = query('.editor-content', node);
+    this._editorContent = editorContent ? unescape(editorContent.innerHTML) : '';
+    this._editorRendered = query('.editor-rendered', node);
     if (idx >= 0) {
       this._count = idx + 1;
     }
@@ -271,13 +279,22 @@
     getSpeakerNote: function() {
       return this._speakerNote;
     },
+    getEditorNode: function() {
+      return this._editorNode;
+    },
+    getEditorContent: function() {
+      return this._editorContent;
+    },
+    getEditorRendered: function() {
+      return this._editorRendered;
+    },
     buildNext: function() {
       if (!this._buildList.length) {
         return false;
       }
       removeClass(this._buildList.shift(), 'to-build');
       return true;
-    },
+    }
   };
 
   //
@@ -319,6 +336,7 @@
     _presentationCounter: query('#presentation-counter'),
     _speakerNote: query('#speaker-note'),
     _slides: [],
+    _editor: null,
     _getCurrentIndex: function() {
       var me = this;
       var slideCount = null;
@@ -336,59 +354,86 @@
       // http://stackoverflow.com/questions/704758/how-to-check-if-an-element-is-really-visible-with-javascript
       var currentIndex = this._getCurrentIndex();
 
-      if (targetId) {
-        var savedIndex = currentIndex;
-        this.current = targetId;
-        currentIndex = this._getCurrentIndex();
-        if (Math.abs(savedIndex - currentIndex) > 1) {
-          // if the current switch is not "prev" or "next", we need clear
-          // the state setting near the original slide
-          for (var x = savedIndex; x < savedIndex + 7; x++) {
-            if (this._slides[x-4]) {
-              this._slides[x-4].setState(0);
+        if (targetId) {
+            var savedIndex = currentIndex;
+            this.current = targetId;
+            currentIndex = this._getCurrentIndex();
+            if (Math.abs(savedIndex - currentIndex) > 1) {
+                // if the current switch is not "prev" or "next", we need clear
+                // the state setting near the original slide
+                for (var x = savedIndex; x < savedIndex + 7; x++) {
+                    if (this._slides[x-4]) {
+                        this._slides[x-4].setState(0);
+                    }
+                }
             }
+        }
+        var docElem = document.documentElement;
+        var elem = document.elementFromPoint( docElem.clientWidth / 2, docElem.clientHeight / 2);
+        if (elem && elem.className != 'presentation') {
+            this._presentationCounter.textContent = currentIndex;
+        }
+        this._speakerNote.innerHTML = this._slides[currentIndex - 1].getSpeakerNote();
+
+        if (history.pushState) {
+            if (!dontPush) {
+                history.replaceState(this.current, 'Slide ' + this.current, '#' + this.current);
+            }
+        } else {
+            window.location.hash = this.current;
+        }
+        for (var x = currentIndex; x < currentIndex + 7; x++) {
+            if (this._slides[x-4]) {
+                this._slides[x-4].setState(x-currentIndex);
+            }
+        }
+
+        if (this._editor !== null) this._editor.destroy();
+        var editor, editorNode = this._slides[currentIndex - 1].getEditorNode();
+        var editorContent = this._slides[currentIndex - 1].getEditorContent();
+        var _t = this;
+        if (editorNode) {
+            removeClass(editorNode, "visible");
+            editor = this._editor = ace.edit(editorNode);
+            addClass(editorNode, "visible");
+            setTimeout(function() {
+                editor.getSession().setValue(editorContent);
+                editor.focus();
+            });
+            editor.getSession().on("change", function(e) {
+                if (_t._changeTimer !== null) {
+                    clearTimeout(_t._changeTimer);
+                    _t._changeTimer = null;
+                }
+                _t._changeTimer = setTimeout(function() {
+                    _t._changeTimer = null;
+                    _t._updateEditor();
+                }, 500);
+            });
+        } else {
+            this._editor = null;
+        }
+    },
+
+      current: 0,
+      next: function() {
+          if (!this._slides[this._getCurrentIndex() - 1].buildNext()) {
+              var next = query('#' + this.current + ' + .slide');
+              //this.current = (next) ? next.id : this.current;
+              this._update((next) ? next.id : this.current);
           }
-        }
-      }
-      var docElem = document.documentElement;
-      var elem = document.elementFromPoint( docElem.clientWidth / 2, docElem.clientHeight / 2);
-      if (elem && elem.className != 'presentation') {
-        this._presentationCounter.textContent = currentIndex;
-      }
-      this._speakerNote.innerHTML = this._slides[currentIndex - 1].getSpeakerNote();
-      if (history.pushState) {
-        if (!dontPush) {
-          history.replaceState(this.current, 'Slide ' + this.current, '#' + this.current);
-        }
-      } else {
-        window.location.hash = this.current;
-      }
-      for (var x = currentIndex; x < currentIndex + 7; x++) {
-        if (this._slides[x-4]) {
-          this._slides[x-4].setState(x-currentIndex);
-        }
-      }
-    },
+      },
+      prev: function() {
+          var prev = query('.slide:nth-child(' + (this._getCurrentIndex() - 1) + ')');
+          //this.current = (prev) ? prev.id : this.current;
+          this._update((prev) ? prev.id : this.current);
+      },
+      go: function(slideId, dontPush) {
+          //this.current = slideId;
+          this._update(slideId, dontPush);
+      },
 
-    current: 0,
-    next: function() {
-      if (!this._slides[this._getCurrentIndex() - 1].buildNext()) {
-        var next = query('#' + this.current + ' + .slide');
-        //this.current = (next) ? next.id : this.current;
-        this._update((next) ? next.id : this.current);
-      }
-    },
-    prev: function() {
-      var prev = query('.slide:nth-child(' + (this._getCurrentIndex() - 1) + ')');
-      //this.current = (prev) ? prev.id : this.current;
-      this._update((prev) ? prev.id : this.current);
-    },
-    go: function(slideId, dontPush) {
-      //this.current = slideId;
-      this._update(slideId, dontPush);
-    },
-
-    _notesOn: false,
+      _notesOn: false,
     showNotes: function() {
       if (disableNotes) {
         return;
@@ -412,6 +457,23 @@
       linkEls[(sheetIndex + 1) % linkEls.length].disabled = false;
       sessionStorage['theme'] = linkEls[(sheetIndex + 1) % linkEls.length].href;
     },
+    focusEditor: function() {
+        var editor = this._editor;
+        if (editor) setTimeout(function() {
+            editor.focus();
+        });
+    },
+    _updateEditor: function() {
+        var editor = this._editor;
+        if (!editor) return;
+        var rendered = this._slides[this._getCurrentIndex() - 1].getEditorRendered();
+
+        try {
+            var compiled = CoffeeScript.compile(editor.getSession().getValue(), { bare: true });
+            rendered.innerHTML = compiled;
+        } catch (error) {
+        }
+    },
     handleKeys: function(e) {
       if (/^(input|textarea)$/i.test(e.target.nodeName) || e.target.isContentEditable) {
         return;
@@ -422,21 +484,23 @@
         case 33: // Prior
           this.prev(); break;
         case 39: // right arrow
-        case 32: // space
+        // case 32: // space
         case 34: // Next
           this.next(); break;
-        case 51: // 3
-          this.switch3D(); break;
+        // case 51: // 3
+        //   this.switch3D(); break;
         case 78: // N
           this.showNotes(); break;
-        case 84: // T
-          this.changeTheme(); break;
+        // case 84: // T
+        //   this.changeTheme(); break;
+        case 13: // Return
+          this.focusEditor(); break;
       }
     },
     handleMouseClick: function(e) {
-        if (e.target.tagName !== "A") {
-            this.next();
-        }
+        // if (e.target.tagName !== "A") {
+        //     this.next();
+        // }
     },
     _touchStartX: 0,
     handleTouchStart: function(e) {
@@ -473,6 +537,56 @@
 //  query('#toc-list').innerHTML = li_array.join('');
 
   var slideshow = new SlideShow(queryAll('.slide'));
+
+     var canon = require("pilot/canon");
+     canon.addCommand({
+         name: "slideForward",
+         bindKey: {
+             win: "Ctrl-Alt-Right",
+             mac: "Ctrl-Alt-Right",
+             sender: "editor"
+         },
+         exec: function(env, args, request) {
+             env.editor.blur();
+             slideshow.next();
+         }
+     });
+     canon.addCommand({
+         name: "slideForward2",
+         bindKey: {
+             win: "Next",
+             mac: "Next",
+             sender: "editor"
+         },
+         exec: function(env, args, request) {
+             env.editor.blur();
+             slideshow.next();
+         }
+     });
+     canon.addCommand({
+         name: "slideBack",
+         bindKey: {
+             win: "Ctrl-Alt-Left",
+             mac: "Ctrl-Alt-Left",
+             sender: "editor"
+         },
+         exec: function(env, args, request) {
+             env.editor.blur();
+             slideshow.prev();
+         }
+     });
+     canon.addCommand({
+         name: "slideBack2",
+         bindKey: {
+             win: "Prior",
+             mac: "Prior",
+             sender: "editor"
+         },
+         exec: function(env, args, request) {
+             env.editor.blur();
+             slideshow.prev();
+         }
+     });
 
   document.addEventListener('DOMContentLoaded', function() {
     query('.slides').style.display = 'block';
