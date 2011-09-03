@@ -106,8 +106,8 @@
         top: 50%;
         margin-left: 22px;
         width: 392px;
-        margin-top: -330px;
-        height: 508px;
+        margin-top: -340px;
+        height: 518px;
         background-color: rgba(255, 204, 0, 0.05);
         border: 2px solid rgba(255, 204, 0, 0.3);
         padding: 10px 10px;
@@ -577,6 +577,25 @@ server.listen (request, response) ->
         </div>
 
 
+        <div class="slide" id="significant-indentation-slide">
+          <header>So what happened to the curly braces?</header>
+          <section>
+            <ul data-build>
+              <li>CoffeeScript has significant indentation.
+                <pre class="lang-coffee">
+foo = (a, b) ->
+  c = a + b     // indent starts a block - "{" implied
+  console.log c // same indentation level, part of same block
+foo 2, 3        // unindent ends the block - "}" implied</pre></li>
+              <li>Blocks are defined by the indentation you'd give them anyway:<pre class="lang-coffee">
+if name != "honey badger"
+  care()
+else
+  eat_cobra()</pre>Can you see the blocks?</li>
+            </ul>
+          </section>
+        </div>
+
         <div class="slide" id="basic-functions-slide">
           <header>Functions</header>
           <section>
@@ -620,28 +639,6 @@ connection.close   // returns the function, doesn't call it</pre></li>
           <section>
             <div class="editor-content">sum = (a, b) -&gt; a + b
 </div>
-            <div class="editor"></div>
-            <pre class="editor-rendered"></pre>
-            <pre class="editor-console"></pre>
-          </section>
-        </div>
-
-        <div class="slide" id="significant-indentation-slide">
-          <header>So what happened to the curly braces?</header>
-          <section>
-            <ul data-build>
-              <li>CoffeeScript has significant indentation.
-                <pre class="lang-coffee">
-foo = (a, b) ->
-  c = a + b     // indent starts a block - "{" implied
-  console.log c // same indentation level, part of same block
-foo 2, 3        // unindent ends the block - "}" implied</pre></li>
-              <li>Blocks are defined by the indentation you'd give them anyway:<pre class="lang-coffee">
-if name != "honey badger"
-  care()
-else
-  eat_cobra()</pre>Can you see the blocks?</li>
-            </ul>
           </section>
         </div>
 
@@ -665,6 +662,13 @@ foo = "bar";</pre></li>
           </section>
         </div>
 
+        <div class="slide" id="interlude-1-slide">
+          <section class="middle">
+            <p><img class="drop" src="media/falling.gif"/></p>
+            <h2 class="kitteh">OK LET THAT SINK IN FOR A BIT</h2>
+          </section>
+        </div>
+
         <div class="slide" id="declaring-objects-slide">
           <header>Declaring objects</header>
           <section>
@@ -676,7 +680,7 @@ var tweet = {
         name: "bodiltv",
         url: "http://bodil.tv/"
     },
-    tweet: "PONIES RULE SO HARD"
+    text: "PONIES RULE SO HARD"
 };</pre></li>
               <li>In CoffeeScript:
                 <pre class="lang-coffee">
@@ -684,7 +688,7 @@ tweet =
   user:
     name: "bodiltv"
     url: "http://bodil.tv/"
-  tweet: "PONIES RULE SO HARD"</pre></li>
+  text: "PONIES RULE SO HARD"</pre></li>
             </ul>
           </section>
         </div>
@@ -711,10 +715,35 @@ things_that_rule = [
           </section>
         </div>
 
-        <div class="slide" id="interlude-1-slide">
-          <section class="middle">
-            <p><img class="drop" src="media/falling.gif"/></p>
-            <h2 class="kitteh">OK LET THAT SINK IN FOR A BIT</h2>
+        <div class="slide" id="destructuring-slide">
+          <header>Destructuring assignment</header>
+          <section>
+            <ul data-build>
+              <li>Assign variables from <em>inside arrays:</em><pre>
+sum_and_difference = (a, b) -> [ a + b, a - b]
+[ sum, difference ] = sum_and_difference 5, 2
+sum // returns 7
+difference // returns 3
+</pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="array-destructuring-slide">
+          <section>
+            <div class="editor-content">sumdiff = (a, b) -> [ a + b, a - b]
+</div>
+          </section>
+        </div>
+
+        <div class="slide" id="object-destructuring-slide">
+          <section>
+            <div class="editor-content">tweet =
+  user:
+    name: "bodiltv"
+    url: "http://bodil.tv/"
+  text: "PONIES RULE SO HARD"
+</div>
           </section>
         </div>
 
@@ -733,10 +762,10 @@ else
 if balance &lt; 0 then file_for_bankruptcy() else invest_moar()</pre></li>
               <li>It <em>returns a value:</em>
                 <pre class="lang-coffee">
-console.log if name == "Elvis" then "My liege!" else "ohai noob"</pre></li>
+greeting = if name == "Elvis" then "My liege!" else "ohai noob"</pre></li>
               <li>It can even be used as a suffix:
                 <pre class="lang-coffee">
-console.log "My liege!" if name == "Elvis"</pre></li>
+reign_in_graceland() if name == "Elvis"</pre></li>
             </ul>
           </section>
         </div>
@@ -812,13 +841,6 @@ result = switch request.error_code
                 <pre class="lang-coffee">
 if 20 &lt; temperature &lt; 30
   venture_outside()</pre></li>
-              <li>Destructuring assignment:
-                <pre>
-sum_and_difference = (a, b) -> [ a + b, a - b]
-[ sum, difference ] = sum_and_difference 5, 2
-sum // returns 7
-difference // returns 3
-</pre></li>
               <li>The existential operator:
                 <pre>
 foo = { bar: "bar" }

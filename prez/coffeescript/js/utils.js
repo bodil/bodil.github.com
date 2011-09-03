@@ -124,8 +124,12 @@
 
   var canTransition = testStyle('transition');
 
-  var unescape = function(s) {
+  var unescapeHTML = function(s) {
       return s.replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&amp;/g, "&");
+  };
+
+  var escapeHTML = function(s) {
+      return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   };
 
   //
@@ -137,7 +141,7 @@
     var note = query('.note > section', node);
     this._speakerNote = note ? note.innerHTML : '';
     var editorContent = query('.editor-content', node);
-    this._editorContent = editorContent ? unescape(editorContent.innerHTML) : '';
+    this._editorContent = editorContent ? unescapeHTML(editorContent.innerHTML) : '';
     this._editorRendered = query('.editor-rendered', node);
     this._editorConsole = query('.editor-console', node);
     if (idx >= 0) {
@@ -392,6 +396,11 @@
             }
         }
 
+        var editorConsole = this._slides[currentIndex - 1].getEditorConsole();
+        if (editorConsole) editorConsole.innerHTML = "";
+        var editorRendered = this._slides[currentIndex - 1].getEditorRendered();
+        if (editorRendered) editorRendered.innerHTML = "";
+
         if (this._editor !== null) this._editor.destroy();
         var editor, editorNode = this._slides[currentIndex - 1].getEditorNode();
         var editorContent = this._slides[currentIndex - 1].getEditorContent();
@@ -493,19 +502,22 @@
         if (selection.start.row === selection.end.row && selection.start.column === selection.end.column) selection = null;
         var code = selection ? editor.getSession().doc.getTextRange(selection) : editor.getSession().getValue();
 
-        var output = ">> " + code.trim().replace(/\n/g, "\n>> ");
+        var output = ">> " + escapeHTML(code).trim().replace(/\n/g, "\n>> ");
         output = "<span class=\"input\">" + output + "</span>\n";
 
         code = "wrap_func = ->\n  " + code.replace(/\n/g, "\n  ") + "\nreturn wrap_func()";
 
         try {
             var compiled = CoffeeScript.compile(code);
-            output += eval(compiled);
-            _console.innerHTML = output;
-            _console.scrollTop = _console.scrollHeight;
+            var result = eval(compiled);
+            var resultText = JSON.stringify(result, null, 1).replace(/\n/g, "");
+            if (!resultText) resultText = "" + result;
+            _console.innerHTML = output + "<span class=\"output\">" + escapeHTML(resultText) + "</span>";
+            prettyPrintNode(query("span.output", _console));
         } catch (error) {
             _console.innerHTML = output + "<span class=\"error\">" + error + "</span>";
         }
+        _console.scrollTop = _console.scrollHeight;
     },
     handleKeys: function(e) {
       if (/^(input|textarea)$/i.test(e.target.nodeName) || e.target.isContentEditable) {
@@ -569,6 +581,19 @@
 
 //  query('#toc-list').innerHTML = li_array.join('');
 
+     queryAll("div.editor-content").forEach(function(div) {
+         var parent = div.parentNode;
+         var editor = document.createElement("div");
+         addClass(editor, "editor");
+         var rendered = document.createElement("pre");
+         addClass(rendered, "editor-rendered");
+         var console = document.createElement("pre");
+         addClass(console, "editor-console");
+         parent.appendChild(editor);
+         parent.appendChild(rendered);
+         parent.appendChild(console);
+     });
+
   var slideshow = new SlideShow(queryAll('.slide'));
 
      function bindKey(key) {
@@ -582,7 +607,7 @@
      var canon = require("pilot/canon");
      canon.addCommand({
          name: "slideForward",
-         bindKey: bindKey("Ctrl-Alt-Right"),
+         bindKey: bindKey("Ctrl-Return"),
          exec: function(env, args, request) {
              env.editor.blur();
              slideshow.next();
@@ -591,6 +616,14 @@
      canon.addCommand({
          name: "slideForward2",
          bindKey: bindKey("Next"),
+         exec: function(env, args, request) {
+             env.editor.blur();
+             slideshow.next();
+         }
+     });
+     canon.addCommand({
+         name: "slideForward3",
+         bindKey: bindKey("Ctrl-Alt-Right"),
          exec: function(env, args, request) {
              env.editor.blur();
              slideshow.next();
@@ -634,4 +667,5 @@
   queryAll('pre').forEach(function(el) {
     addClass(el, 'prettyprint');
   });
+
 })();
