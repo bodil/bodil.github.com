@@ -77,7 +77,7 @@
         font-weight: normal;
       }
 
-      div.editor, pre.editor-jsbuffer {
+      div.editor, pre.editor-jsbuffer, pre.editor-console {
         font-size: 18px;
       }
 
@@ -597,9 +597,9 @@ server.listen (request, response) ->
               <li>CoffeeScript has significant indentation.
                 <pre class="lang-coffee">
 foo = (a, b) ->
-  c = a + b     // indent starts a block - "{" implied
-  console.log c // same indentation level, part of same block
-foo 2, 3        // unindent ends the block - "}" implied</pre></li>
+  c = a + b     # indent starts a block - "{" implied
+  console.log c # same indentation level, part of same block
+foo 2, 3        # unindent ends the block - "}" implied</pre></li>
               <li>Blocks are defined by the indentation you'd give them anyway:<pre class="lang-coffee">
 if name != "honey badger"
   care()
@@ -636,14 +636,14 @@ sum = (a, b) -> a + b</pre></li>
             <ul data-build>
               <li>Parentheses are optional:
                 <pre class="lang-coffee">
-sum = (a, b) -> a + b // remember this? It calculates a + b :)
+sum = (a, b) -> a + b # remember this? It calculates a + b :)
 
-sum(2, 3) // returns 5
-sum 2, 3  // returns 5</pre></li>
+sum(2, 3) # returns 5
+sum 2, 3  # returns 5</pre></li>
               <li>Calling a function with no arguments:
                 <pre class="lang-coffee">
-connection.close() // calls the close function
-connection.close   // returns the function, doesn't call it</pre></li>
+connection.close() # calls the close function
+connection.close   # returns the function, doesn't call it</pre></li>
             </ul>
           </section>
         </div>
@@ -662,14 +662,14 @@ connection.close   // returns the function, doesn't call it</pre></li>
               <li><em>All</em> variable declarations are local:
                 <pre>
 foo = "bar"
-// compiles to:
+# compiles to:
 var foo;
 foo = "bar";</pre></li>
               <li>No more == weirdness:
                 <pre>
 2 == "2"
-// compiles to:
-2 === "2" // returns false, like you'd expect</pre></li>
+# compiles to:
+2 === "2" # returns false, like you'd expect</pre></li>
               <li>There is no <code>with</code> statement.</li>
             </ul>
           </section>
@@ -735,8 +735,8 @@ things_that_rule = [
               <li>Assign variables from <em>inside arrays:</em><pre>
 sum_and_difference = (a, b) -> [ a + b, a - b]
 [ sum, difference ] = sum_and_difference 5, 2
-sum // returns 7
-difference // returns 3
+sum # returns 7
+difference # returns 3
 </pre></li>
             </ul>
           </section>
@@ -773,9 +773,6 @@ else
               <li>It has a short form:
                 <pre class="lang-coffee">
 if balance &lt; 0 then file_for_bankruptcy() else invest_moar()</pre></li>
-              <li>It <em>returns a value:</em>
-                <pre class="lang-coffee">
-greeting = if name == "Elvis" then "My liege!" else "ohai noob"</pre></li>
               <li>It can even be used as a suffix:
                 <pre class="lang-coffee">
 reign_in_graceland() if name == "Elvis"</pre></li>
@@ -818,18 +815,18 @@ console.log counter++ while counter &lt; 5</pre></li>
           <header>Everything is an expression</header>
           <section>
             <ul data-build>
-              <li><code class="lang-coffee">if</code> evaluates to the <code class="lang-coffee">then</code> or <code class="lang-coffee">else</code> block:
+              <li><code class="lang-coffee">if</code> works like the ternary operator:
                 <pre class="lang-coffee">
 foo = false
 result = if foo then "foo is truthy" else "foo is falsy"
-// result is "foo is falsy"</pre></li>
+# result is "foo is falsy"</pre></li>
               <li><code class="lang-coffee">while</code> returns <em>an array:</em>
                 <pre>
 counter = 0
 list = while counter &lt; 5
   counter++
   "n" + counter
-// list is [ 'n1', 'n2', 'n3', 'n4', 'n5' ]</pre></li>
+# list is [ 'n1', 'n2', 'n3', 'n4', 'n5' ]</pre></li>
             </ul>
           </section>
         </div>
@@ -851,6 +848,34 @@ result = switch request.error_code
           </section>
         </div>
 
+        <div class="slide hide-jsbuffer" id="if-evaluates-examples-slide">
+          <section>
+            <div class="editor-content">foo = false
+result = if foo then "truthy" else "falsy"
+</div>
+          </section>
+        </div>
+
+        <div class="slide" id="while-evaluates-examples-slide">
+          <section>
+            <div class="editor-content">word = "Mudkip"
+word = word.slice 1
+</div>
+          </section>
+        </div>
+
+        <div class="slide hide-jsbuffer" id="switch-evaluates-examples-slide">
+          <section>
+            <div class="editor-content">result = switch request.error_code
+  when 200 then "OK"
+  when 301 then "don't live here anymore"
+  when 404 then "not found"
+  when 500 then "i maed u a page... but i eated it"
+  else "unknown error call the police " + request.error_code
+</div>
+          </section>
+        </div>
+
         <div class="slide" id="for-your-convenience-slide">
           <header>For your convenience</header>
           <section>
@@ -863,7 +888,7 @@ if 20 &lt; temperature &lt; 30
                 <pre>
 foo = { bar: "bar" }
 if foo.bar? then console.log foo.bar
-// if (foo.bar != null) { ... }</pre></li>
+# if (foo.bar != null) { ... }</pre></li>
             </ul>
           </section>
         </div>
@@ -911,6 +936,94 @@ html = """
        &lt;/div&gt;
        """</pre></li>
             </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="list-processing-slide">
+          <header>Working with arrays</header>
+          <section>
+            <ul data-build>
+              <li>Proper slicing operators:
+                <pre class="lang-coffee">
+numbers = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+
+numbers[3..6] # [ 3, 4, 5, 6 ]
+numbers[7..]  # [ 7, 8, 9 ]
+numbers[..3]  # [ 0, 1, 2, 3 ]</pre></li>
+              <li>And we can do splicing too:
+                <pre class="lang-coffee">
+numbers = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+
+numbers[3..6] = [ "foo", "bar" ]
+numbers # [ 0, 1, 2, "foo", "bar", 7, 8, 9 ]
+              </pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide hide-jsbuffer" id="slicing-examples-slide">
+          <section>
+            <div class="editor-content">numbers = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+</div>
+          </section>
+        </div>
+
+
+        <div class="slide" id="iteration-slide">
+          <header>The <code class="lang-coffee">for</code> loop</header>
+          <section>
+            <ul data-build>
+              <li>Iterate over a list's members:
+                <pre class="lang-coffee">
+numbers = [ 1, 2, 3, "many" ]
+for number in numbers
+  console.log "I just counted to #{number}"</pre></li>
+              <li>It has a suffix form too, of course:
+                <pre class="lang-coffee">
+numbers = [ 1, 2, 3, "many" ]
+console.log "I just counted to #{number}" for number in numbers</pre></li>
+              <li>And it <em>returns a new list:</em>
+                <pre class="lang-coffee">
+numbers = [ 1..5 ]
+result = number + 1 for number in numbers
+result # [ 2, 3, 4, 5, 6 ]</pre></li>
+          </section>
+        </div>
+
+        <div class="slide" id="for-in-examples-slide">
+          <section>
+            <div class="editor-content">numbers = [ 1 .. 5 ]
+for number in numbers
+  number
+</div>
+          </section>
+        </div>
+
+        <div class="slide hide-jsbuffer" id="for-of-examples-slide">
+          <section>
+            <div class="editor-content">dictionary =
+  "omg": "Object Management Group"
+  "wtf": "World Taekwondo Federation"
+  "lol": "Lord of Life"
+</div>
+          </section>
+        </div>
+
+
+        <div class="slide" id="list-comprehension-slide">
+          <header>List comprehension</header>
+          <section>
+            <p>Concise syntax for map and filter operations:
+            <pre class="lang-coffee">
+( <em>expression</em> for <em>item</em> in <em>list</em> )
+( <em>expression</em> for <em>item</em> in <em>list</em> when <em>condition</em> )</pre></p>
+          </section>
+        </div>
+
+        <div class="slide" id="omg-lisp-enlightenment-slide">
+          <section class="middle">
+            <p><img class="drop" src="media/omgcat.gif"/></p>
+            <h2 class="kitteh">LISP ENLIGHTENMENT</h2>
           </section>
         </div>
 
@@ -1012,76 +1125,6 @@ charltonHeston.exclaim "ape"
           </section>
         </div>
 
-        <div class="slide" id="list-processing-slide">
-          <header>List Processing</header>
-          <section>
-            <ul data-build>
-              <li>Proper slicing operators:
-                <pre class="lang-coffee">
-numbers = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
-
-numbers[3..6] // [ 3, 4, 5, 6 ]
-numbers[7..]  // [ 7, 8, 9 ]
-numbers[..3]  // [ 0, 1, 2, 3 ]</pre></li>
-              <li>And we can do splicing too:
-                <pre class="lang-coffee">
-numbers = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
-
-numbers[3..6] = [ "foo", "bar" ]
-numbers // [ 0, 1, 2, "foo", "bar", 7, 8, 9 ]
-              </pre></li>
-            </ul>
-          </section>
-        </div>
-
-        <div class="slide" id="iteration-slide">
-          <header>The <code class="lang-coffee">for</code> loop</header>
-          <section>
-            <ul data-build>
-              <li>Iterate over a list's members:
-                <pre class="lang-coffee">
-numbers = [ 1, 2, 3, "many" ]
-for number in numbers
-  console.log "I just counted to #{number}"</pre></li>
-              <li>It has a suffix form too, of course:
-                <pre class="lang-coffee">
-numbers = [ 1, 2, 3, "many" ]
-console.log "I just counted to #{number}" for number in numbers</pre></li>
-              <li>And it <em>returns a new list:</em>
-                <pre class="lang-coffee">
-numbers = [ 1..5 ]
-new_numbers = number + 1 for number in numbers
-new_numbers // [ 2, 3, 4, 6 ]</pre></li>
-          </section>
-        </div>
-
-
-        <div class="slide" id="list-comprehension-slide">
-          <header>List comprehension</header>
-          <section>
-            <ul data-build>
-              <li>Real map/reduce with a simple syntax:
-                <pre>
-numbers = [ 1, 2, 3, 4, 5 ]
-
-(x * 2 for x in numbers) // [ 2, 4, 6, 8, 10 ]
-(x * 2 for x in numbers when x % 2) // [ 2, 6, 10 ]
-</pre></li>
-              <li>Wait, what?
-                <pre>
-( <em>expression</em> for <em>item</em> in <em>list</em> )
-( <em>expression</em> for <em>item</em> in <em>list</em> when <em>condition</em> )</pre></li>
-            </ul>
-          </section>
-        </div>
-
-        <div class="slide" id="omg-lisp-enlightenment-slide">
-          <section class="middle">
-            <p><img class="drop" src="media/omgcat.gif"/></p>
-            <h2 class="kitteh">LISP ENLIGHTENMENT</h2>
-          </section>
-        </div>
-
 
         <div class="slide" id="howto-slide">
           <header>OK, but can I use this anywhere?</header>
@@ -1101,16 +1144,6 @@ $ coffee -c my_script.coffee</pre></li>
             </ul>
           </section>
         </div>
-
-        <div class="slide" id="questions-slide">
-          <section class="middle">
-            <h2 class="kitteh">CONFUSED?</h2>
-            <p><img class="drop" src="media/smartcat.gif"/></p>
-            <h3 class="kitteh">YOU MAY NOW ASK QUESTIONS</h3>
-          </section>
-        </div>
-
-
 
 
 
