@@ -132,6 +132,45 @@
         return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     };
 
+    // Resig's document.ready impl
+    function addEvent( obj, type, fn ) {
+        if ( obj.attachEvent ) {
+            obj['e'+type+fn] = fn;
+            obj[type+fn] = function(){obj['e'+type+fn]( window.event );}
+            obj.attachEvent( 'on'+type, obj[type+fn] );
+        } else
+            obj.addEventListener( type, fn, false );
+    }
+    var documentReady = ( function () {
+        function ready( f ) {
+            if( ready.done ) return f();
+
+            if( ready.timer ) {
+                ready.ready.push(f);
+            } else {
+                addEvent( window, "load", isDOMReady );
+                ready.ready = [ f ];
+                ready.timer = setInterval(isDOMReady, 13);
+            }
+        };
+
+        function isDOMReady() {
+            if( ready.done ) return false;
+
+            if( document && document.getElementsByTagName && document.getElementById && document.body ) {
+                clearInterval( ready.timer );
+                ready.timer = null;
+                for( var i = 0; i < ready.ready.length; i++ ) {
+                    ready.ready[i]();
+                }
+                ready.ready = null;
+                ready.done = true;
+            }
+        }
+
+        return ready;
+    })();
+
     //
     // Slide class
     //
@@ -337,7 +376,9 @@
                                 function(e) { if (e.state) { _t.go(e.state, true); } }, false);
         query('#left-init-key').addEventListener('click',
                                                  function() { _t.next(); }, false);
-        this._update();
+        documentReady(function() {
+            _t._update();
+        });
     };
 
     SlideShow.prototype = {
