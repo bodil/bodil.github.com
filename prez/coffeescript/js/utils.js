@@ -335,6 +335,10 @@
         getEditorConsole: function() {
             return this._editorConsole;
         },
+        toggleJSBuffer: function(editor) {
+            toggleClass(this._node, "hide-jsbuffer");
+            editor.resize();
+        },
         buildNext: function() {
             if (!this._buildList.length) {
                 return false;
@@ -718,6 +722,11 @@
                 jsBuf.scrollLeft = 0;
             }
         }
+    });
+    canon.addCommand({
+        name: "toggleJSBuffer",
+        bindKey: bindKey("Ctrl-1"),
+        exec: function(env, args, request) { env.editor.currentSlide.toggleJSBuffer(env.editor); }
     });
 
     document.addEventListener('DOMContentLoaded', function() {
