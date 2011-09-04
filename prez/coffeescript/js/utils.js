@@ -663,7 +663,7 @@
     var canon = require("pilot/canon");
     canon.addCommand({
         name: "slideForward",
-        bindKey: bindKey("Ctrl-Return"),
+        bindKey: bindKey("Ctrl-Alt-Right"),
         exec: function(env, args, request) {
             env.editor.blur();
             slideshow.next();
@@ -672,14 +672,6 @@
     canon.addCommand({
         name: "slideForward2",
         bindKey: bindKey("Next"),
-        exec: function(env, args, request) {
-            env.editor.blur();
-            slideshow.next();
-        }
-    });
-    canon.addCommand({
-        name: "slideForward3",
-        bindKey: bindKey("Ctrl-Alt-Right"),
         exec: function(env, args, request) {
             env.editor.blur();
             slideshow.next();
@@ -727,6 +719,11 @@
         name: "toggleJSBuffer",
         bindKey: bindKey("Ctrl-1"),
         exec: function(env, args, request) { env.editor.currentSlide.toggleJSBuffer(env.editor); }
+    });
+    canon.addCommand({
+        name: "splitLine",
+        bindKey: bindKey("Ctrl-Return"),
+        exec: function(env, args, request) { env.editor.splitLine(); }
     });
 
     document.addEventListener('DOMContentLoaded', function() {
