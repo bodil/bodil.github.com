@@ -844,8 +844,8 @@ result = switch request.error_code
           </section>
         </div>
 
-        <div class="slide" id="coolness-slide">
-          <header>More niceties</header>
+        <div class="slide" id="for-your-convenience-slide">
+          <header>For your convenience</header>
           <section>
             <ul data-build>
               <li>Chained comparisons:
@@ -861,8 +861,8 @@ if foo.bar? then console.log foo.bar
           </section>
         </div>
 
-        <div class="slide" id="fun-with-strings-slide">
-          <header>Fun with strings</header>
+        <div class="slide" id="string-interpolation-slide">
+          <header>String interpolation</header>
           <section>
             <ul data-build>
               <li>Tired of adding strings together? We borrowed this from Ruby:
@@ -870,21 +870,40 @@ if foo.bar? then console.log foo.bar
 power_level = 9000
 console.log "It's over #{power_level}!"
 "It's over 9000!"</pre></li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="string-interpolation-examples-slide">
+          <section>
+            <div class="editor-content">tweet =
+  user:
+    name: "bodiltv"
+    url: "http://bodil.tv"
+  text: "PONIES RULE SO HARD"
+
+</div>
+          </section>
+        </div>
+
+        <div class="slide" id="heredocs-slide">
+          <header>Heredocs</header>
+          <section>
+            <ul data-build>
               <li>Want to make really large strings? CoffeeScript doesn't mind line breaks:<pre>
 blurb = "I don't always drink beer,
          but when I do,
          I prefer Dos Equis."
 console.log blurb
 "I don't always drink beer, but when I do, I prefer Dos Equis."</pre></li>
+              <li>Or use heredocs to maintain formatting and stop worrying about escaping quotes:<pre>
+html = """
+       &lt;div class="article"&gt;
+         &lt;h1&gt;Honey Badger&lt;/h1&gt;
+         &lt;p&gt;Honey Badger don't care.&lt;/p&gt;
+       &lt;/div&gt;
+       """</pre></li>
             </ul>
-          </section>
-        </div>
-
-
-        <div class="slide" id="pretty-cool-slide">
-          <section class="middle">
-            <p><img class="drop" src="media/shakers.gif"/></p>
-            <h2 class="kitteh">PRETTY COOL</h2>
           </section>
         </div>
 
