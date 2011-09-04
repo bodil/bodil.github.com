@@ -458,6 +458,7 @@
                 setTimeout(function() {
                     editor.getSession().setValue(editorContent);
                     editor.focus();
+                    editor.navigateFileEnd();
                 });
                 editor.getSession().on("change", function(e) {
                     if (_t._changeTimer !== null) {
