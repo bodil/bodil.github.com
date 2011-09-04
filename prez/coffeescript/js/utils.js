@@ -428,6 +428,7 @@
                     _t._updateEditor();
                 }, 500);
             });
+            editor.currentSlide = this._slides[currentIndex - 1];
         } else {
             this._editor = null;
         }
@@ -590,91 +591,103 @@
 
 //  query('#toc-list').innerHTML = li_array.join('');
 
-     queryAll("div.editor-content").forEach(function(div) {
-         var parent = div.parentNode;
-         var editor = document.createElement("div");
-         addClass(editor, "editor");
-         var rendered = document.createElement("pre");
-         addClass(rendered, "editor-rendered");
-         var console = document.createElement("pre");
-         addClass(console, "editor-console");
-         parent.appendChild(editor);
-         parent.appendChild(rendered);
-         parent.appendChild(console);
-     });
+    queryAll("div.editor-content").forEach(function(div) {
+        var parent = div.parentNode;
+        var editor = document.createElement("div");
+        addClass(editor, "editor");
+        var rendered = document.createElement("pre");
+        addClass(rendered, "editor-rendered");
+        var console = document.createElement("pre");
+        addClass(console, "editor-console");
+        parent.appendChild(editor);
+        parent.appendChild(rendered);
+        parent.appendChild(console);
+    });
 
-  var slideshow = new SlideShow(queryAll('.slide'));
+    var slideshow = new SlideShow(queryAll('.slide'));
 
-     function bindKey(key) {
-         return {
-             win: key,
-             mac: key,
-             sender: "editor"
-         };
-     }
+    function bindKey(key) {
+        return {
+            win: key,
+            mac: key,
+            sender: "editor"
+        };
+    }
 
-     var canon = require("pilot/canon");
-     canon.addCommand({
-         name: "slideForward",
-         bindKey: bindKey("Ctrl-Return"),
-         exec: function(env, args, request) {
-             env.editor.blur();
-             slideshow.next();
-         }
-     });
-     canon.addCommand({
-         name: "slideForward2",
-         bindKey: bindKey("Next"),
-         exec: function(env, args, request) {
-             env.editor.blur();
-             slideshow.next();
-         }
-     });
-     canon.addCommand({
-         name: "slideForward3",
-         bindKey: bindKey("Ctrl-Alt-Right"),
-         exec: function(env, args, request) {
-             env.editor.blur();
-             slideshow.next();
-         }
-     });
-     canon.addCommand({
-         name: "slideBack",
-         bindKey: bindKey("Ctrl-Alt-Left"),
-         exec: function(env, args, request) {
-             env.editor.blur();
-             slideshow.prev();
-         }
-     });
-     canon.addCommand({
-         name: "slideBack2",
-         bindKey: bindKey("Prior"),
-         exec: function(env, args, request) {
-             env.editor.blur();
-             slideshow.prev();
-         }
-     });
-     canon.addCommand({
-         name: "runCode",
-         bindKey: bindKey("Alt-R"),
-         exec: function(env, args, request) { slideshow.runCode(); }
-     });
-     canon.addCommand({
-         name: "removetolineend",
-         bindKey: bindKey("Ctrl-K"),
-         exec: function(env, args, request) { env.editor.removeToLineEnd(); }
-     });
+    var canon = require("pilot/canon");
+    canon.addCommand({
+        name: "slideForward",
+        bindKey: bindKey("Ctrl-Return"),
+        exec: function(env, args, request) {
+            env.editor.blur();
+            slideshow.next();
+        }
+    });
+    canon.addCommand({
+        name: "slideForward2",
+        bindKey: bindKey("Next"),
+        exec: function(env, args, request) {
+            env.editor.blur();
+            slideshow.next();
+        }
+    });
+    canon.addCommand({
+        name: "slideForward3",
+        bindKey: bindKey("Ctrl-Alt-Right"),
+        exec: function(env, args, request) {
+            env.editor.blur();
+            slideshow.next();
+        }
+    });
+    canon.addCommand({
+        name: "slideBack",
+        bindKey: bindKey("Ctrl-Alt-Left"),
+        exec: function(env, args, request) {
+            env.editor.blur();
+            slideshow.prev();
+        }
+    });
+    canon.addCommand({
+        name: "slideBack2",
+        bindKey: bindKey("Prior"),
+        exec: function(env, args, request) {
+            env.editor.blur();
+            slideshow.prev();
+        }
+    });
+    canon.addCommand({
+        name: "runCode",
+        bindKey: bindKey("Alt-R"),
+        exec: function(env, args, request) { slideshow.runCode(); }
+    });
+    canon.addCommand({
+        name: "removetolineend",
+        bindKey: bindKey("Ctrl-K"),
+        exec: function(env, args, request) { env.editor.removeToLineEnd(); }
+    });
+    canon.addCommand({
+        name: "scrollJSBuffer",
+        bindKey: bindKey("Alt-V"),
+        exec: function(env, args, request) {
+            var jsBuf = env.editor.currentSlide.getEditorRendered();
+            if (jsBuf.scrollLeft === 0) {
+                jsBuf.scrollLeft = jsBuf.scrollWidth;
+            } else {
+                jsBuf.scrollLeft = 0;
+            }
+        }
+    });
 
-  document.addEventListener('DOMContentLoaded', function() {
-    query('.slides').style.display = 'block';
-  }, false);
+    document.addEventListener('DOMContentLoaded', function() {
+        query('.slides').style.display = 'block';
+    }, false);
 
-  queryAll('#toc-list li a').forEach(function(el) {
-      el.onclick = function() { slideshow.go(el.dataset['hash']); };
-  });
+    queryAll('#toc-list li a').forEach(function(el) {
+        el.onclick = function() { slideshow.go(el.dataset['hash']); };
+    });
 
-  queryAll('pre').forEach(function(el) {
-    addClass(el, 'prettyprint');
-  });
+    queryAll('pre').forEach(function(el) {
+        addClass(el, 'prettyprint');
+    });
 
 })();
