@@ -507,15 +507,24 @@
 
         code = "wrap_func = ->\n  " + code.replace(/\n/g, "\n  ") + "\nreturn wrap_func()";
 
+        var result = null, error = null;
         try {
             var compiled = CoffeeScript.compile(code);
-            var result = eval(compiled);
-            var resultText = JSON.stringify(result, null, 1).replace(/\n/g, "");
-            if (!resultText) resultText = "" + result;
+            result = eval(compiled);
+        } catch (x) {
+            error = x;
+        }
+
+        if (error) {
+            _console.innerHTML = output + "<span class=\"error\">" + escapeHTML(error.toString()) + "</span>";
+        } else {
+            var resultText = JSON.stringify(result, null, 1);
+            if (resultText)
+                resultText = resultText.replace(/\n/g, "");
+            else
+                resultText = "" + result;
             _console.innerHTML = output + "<span class=\"output\">" + escapeHTML(resultText) + "</span>";
             prettyPrintNode(query("span.output", _console));
-        } catch (error) {
-            _console.innerHTML = output + "<span class=\"error\">" + error + "</span>";
         }
         _console.scrollTop = _console.scrollHeight;
     },
