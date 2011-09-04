@@ -181,7 +181,7 @@
         this._speakerNote = note ? note.innerHTML : '';
         var editorContent = query('.editor-content', node);
         this._editorContent = editorContent ? unescapeHTML(editorContent.innerHTML) : '';
-        this._editorRendered = query('.editor-rendered', node);
+        this._editorJSBuffer = query('.editor-jsbuffer', node);
         this._editorConsole = query('.editor-console', node);
         if (idx >= 0) {
             this._count = idx + 1;
@@ -329,8 +329,8 @@
         getEditorContent: function() {
             return this._editorContent;
         },
-        getEditorRendered: function() {
-            return this._editorRendered;
+        getEditorJSBuffer: function() {
+            return this._editorJSBuffer;
         },
         getEditorConsole: function() {
             return this._editorConsole;
@@ -439,8 +439,8 @@
 
             var editorConsole = this._slides[currentIndex - 1].getEditorConsole();
             if (editorConsole) editorConsole.innerHTML = "";
-            var editorRendered = this._slides[currentIndex - 1].getEditorRendered();
-            if (editorRendered) editorRendered.innerHTML = "";
+            var editorJSBuffer = this._slides[currentIndex - 1].getEditorJSBuffer();
+            if (editorJSBuffer) editorJSBuffer.innerHTML = "";
 
             if (this._editor !== null) this._editor.destroy();
             var editor, editorNode = this._slides[currentIndex - 1].getEditorNode();
@@ -526,7 +526,7 @@
         _updateEditor: function() {
             var editor = this._editor;
             if (!editor) return;
-            var rendered = this._slides[this._getCurrentIndex() - 1].getEditorRendered();
+            var rendered = this._slides[this._getCurrentIndex() - 1].getEditorJSBuffer();
 
             try {
                 var compiled = CoffeeScript.compile(editor.getSession().getValue(), { bare: true });
@@ -636,12 +636,12 @@
         var parent = div.parentNode;
         var editor = document.createElement("div");
         addClass(editor, "editor");
-        var rendered = document.createElement("pre");
-        addClass(rendered, "editor-rendered");
+        var jsBuffer = document.createElement("pre");
+        addClass(jsBuffer, "editor-jsbuffer");
         var console = document.createElement("pre");
         addClass(console, "editor-console");
         parent.appendChild(editor);
-        parent.appendChild(rendered);
+        parent.appendChild(jsBuffer);
         parent.appendChild(console);
     });
 
@@ -710,7 +710,7 @@
         name: "scrollJSBuffer",
         bindKey: bindKey("Alt-V"),
         exec: function(env, args, request) {
-            var jsBuf = env.editor.currentSlide.getEditorRendered();
+            var jsBuf = env.editor.currentSlide.getEditorJSBuffer();
             if (jsBuf.scrollLeft === 0) {
                 jsBuf.scrollLeft = jsBuf.scrollWidth;
             } else {
