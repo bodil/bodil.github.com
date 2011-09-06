@@ -1040,100 +1040,61 @@ for number in numbers
           <section>
             <p>Have you ever tried to make JavaScript act object oriented?</p>
             <pre class="lang-js">
-Ape = function(name) {
-    this.name = name;
+Shape = function(x, y) {
+    this.x = x;
+    this.y = y;
 };
 
-Ape.prototype.sayHi = function() {
-    console.log "ohai my name is " + this.name;
-}
+Shape.prototype.centre = function() {
+    return [ this.x, this.y ];
+};
 
-Ape.prototype.exclaim = function(target) {
-    console.log "You damn dirty " + target +"!"
-}
+Shape.prototype.area = function() {
+    return 0;
+};
 
-doctorZaius = new Ape("Doctor Zaius");
-doctorZaius.exclaim("human");
+var point = new Shape(13, 37);
 </pre>
           </section>
         </div>
 
         <div class="slide" id="wtf-oop-slide">
           <section class="middle">
-            <p><img class="drop" src="media/wtf.gif"/></p>
+            <p><img class="drop" src="media/chuck.gif"/></p>
           </section>
         </div>
 
         <div class="slide" id="better-class-slide">
-          <header>A better kind of class</header>
           <section>
-            <pre class="lang-coffee">
-class Ape
-  constructor: (@name) ->
+            <div class="editor-content">class Shape
+  constructor: (@x, @y) ->
 
-  sayHi: ->
-    "ohay my name is " + @name
+  centre: -> [ @x, @y ]
 
-  exclaim: (target) ->
-    "You damn dirty #{target}!"
+  area: -> 0
 
-doctorZaius = new Ape "Doctor Zaius"
-doctorZaius.exclaim "human"
-</pre>
+point = new Shape 13, 37
+</div>
           </section>
         </div>
 
         <div class="slide" id="inheritance-slide">
-          <header>Class hierarchy keeps society together</header>
           <section>
-            <pre class="lang-coffee">
-class Ape
-  constructor: (@name) ->
+            <div class="editor-content">class Shape
+  constructor: (@x, @y) ->
+  centre: -> [ @x, @y ]
+  area: -> 0
 
-  sayHi: ->
-    "ohay my name is " + @name
+class Circle extends Shape
+  constructor: (x, y, @radius) ->
+    super x, y
 
-  exclaim: (target) ->
-    "You damn dirty #{target}!"
-
-class Orangutan extends Ape
-  exclaim: (target) ->
-    "I don't think #{target}s care."
- 
-doctorZaius = new Orangutan "Doctor Zaius"
-doctorZaius.sayHi()
-"ohai my name is Doctor Zaius"
-doctorZaius.exclaim "honey badger"
-"I don't think honey badgers care."
-
-charltonHeston = new Ape "Charlton Heston"
-charltonHeston.exclaim "ape"
-"You damn dirty ape!"</pre>
+circle = new Circle 13, 37, 5
+</div>
           </section>
         </div>
 
-        <div class="slide" id="mock-slide">
-          <section class="middle">
-            <p><img class="drop" src="media/wtf.gif"/></p>
-            <h2 class="kitteh">I MOCK UR OOP</h2>
-          </section>
-        </div>
-
-
-        <div class="slide" id="get-ready-slide">
-          <style>
-            #get-ready-slide h3 {
-              color: #400;
-            }
-          </style>
-          <section class="middle">
-            <p><img class="drop" src="media/hiding.gif"/></p>
-            <h2 class="kitteh">ASSUME SAFETY POSITIONS</h2>
-            <h3 class="kitteh">&mdash; FUNCTIONAL PROGRAMMING AHEAD &mdash;</h3>
-          </section>
-        </div>
-
-
+        
         <div class="slide" id="howto-slide">
           <header>OK, but can I use this anywhere?</header>
           <section>
@@ -1144,6 +1105,8 @@ charltonHeston.exclaim "ape"
 
 &lt;script type="text/coffeescript" src="my.coffee"&gt;&lt;/script&gt;</pre></li>
               <li>In Node:
+                <pre class="lang-sh">
+$ npm install coffee-script</pre>
                 <pre class="lang-js">
 var my_cs_module = require("./my_cs_module");</pre></li>
               <li>Compile and run anywhere JavaScript runs:
@@ -1165,6 +1128,7 @@ $ coffee -c my_script.coffee</pre></li>
             p.resource-link {
               font-size: 36px;
               line-height: 1.15em;
+              margin: 0.8em 0;
             }
             p.resource-link a {
               color: blue;
@@ -1181,10 +1145,10 @@ $ coffee -c my_script.coffee</pre></li>
             <h2>Thank you for listening!</h2>
             <p><img class="drop" src="media/honeybadger.jpg"></p>
             <p class="resource-link"><span class="bodil">Bodil Stokke</span><br>
-              <a href="http://steria.no/">steria.no</a><br>
               <a href="http://github.com/bodil">github.com/bodil</a><br>
               <a href="http://twitter.com/bodiltv">@bodiltv</a>
             </p>
+            <p class="resource-link">Want slides? <a href="http://bodil.github.com/coffeescript/">bodil.github.com/coffeescript</a></p>
           </section>
         </div>
 
