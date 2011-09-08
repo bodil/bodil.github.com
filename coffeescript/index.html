@@ -425,11 +425,9 @@ server.listen(function(request, response) {
           </section>
         </div>
 
-        <div class="slide" id="make-it-stop-1-slide">
-          <header>Make it stop!</header>
+        <div class="slide hide-jsbuffer" id="make-it-stop-slide">
           <section>
-            <p><pre class="lang-js">
-server.listen(function(request, response) {
+            <div class="editor-content">server.listen(function(request, response) {
   database.open(function(connection) {
     connection.query("SELECT * FROM posts", function(cursor) {
       cursor.fetchAll(function(posts) {
@@ -439,82 +437,8 @@ server.listen(function(request, response) {
       });
     });
   });
-});</pre></p>
-          </section>
-        </div>
-
-        <div class="slide" id="make-it-stop-2-slide">
-          <header>First, let's kill all the semicolons</header>
-          <section>
-            <p><pre class="lang-js">
-server.listen(function(request, response) {
-  database.open(function(connection) {
-    connection.query("SELECT * FROM posts", function(cursor) {
-      cursor.fetchAll(function(posts) {
-        response.write(posts.forEach(function(post) {
-          return post.title
-        }))
-      })
-    })
-  })
-})</pre></p>
-          </section>
-        </div>
-
-        <div class="slide" id="make-it-stop-3-slide">
-          <header>Do we really need those parentheses?</header>
-          <section>
-            <p><pre class="lang-js">
-server.listen function(request, response) {
-  database.open function(connection) {
-    connection.query "SELECT * FROM posts", function(cursor) {
-      cursor.fetchAll function(posts) {
-        response.write posts.forEach function(post) {
-          return post.title
-        }
-      }
-    }
-  }
-}</pre></p>
-          </section>
-        </div>
-
-        <div class="slide" id="make-it-stop-4-slide">
-          <header>Have some significant indentation</header>
-          <section>
-            <p><pre class="lang-js">
-server.listen function(request, response)
-  database.open function(connection)
-    connection.query "SELECT * FROM posts", function(cursor)
-      cursor.fetchAll function(posts)
-        response.write posts.forEach function(post)
-          return post.title</pre></p>
-          </section>
-        </div>
-
-        <div class="slide" id="make-it-stop-5-slide">
-          <header>Don't make me type <code>function</code></header>
-          <section>
-            <p><pre class="lang-js">
-server.listen (request, response) ->
-  database.open (connection) ->
-    connection.query "SELECT * FROM posts", (cursor) ->
-      cursor.fetchAll (posts) ->
-        response.write posts.forEach (post) ->
-          return post.title</pre></p>
-          </section>
-        </div>
-
-        <div class="slide" id="make-it-stop-6-slide">
-          <header><code>return</code> is implied</header>
-          <section>
-            <p><pre class="lang-js">
-server.listen (request, response) ->
-  database.open (connection) ->
-    connection.query "SELECT * FROM posts", (cursor) ->
-      cursor.fetchAll (posts) ->
-        response.write posts.forEach (post) ->
-          post.title</pre></p>
+});
+</div>
           </section>
         </div>
 
@@ -772,7 +696,7 @@ else
   console.log "You lie!"</pre></li>
               <li>It has a short form:
                 <pre class="lang-coffee">
-if balance &lt; 0 then file_for_bankruptcy() else invest_moar()</pre></li>
+if power_level &gt; 9000 then attack() else retreat()</pre></li>
               <li>It can even be used as a suffix:
                 <pre class="lang-coffee">
 reign_in_graceland() if name == "Elvis"</pre></li>
@@ -790,12 +714,11 @@ while count > 0
   count -= 1</pre></li>
               <li><code class="lang-coffee">unless</code> is like <code class="lang-coffee">while not</code>:
                 <pre class="lang-coffee">
-unless count > 1337
-  count += 1</pre></li>
+unless power_level &gt; 9000
+  power_level += 1</pre></li>
               <li>And you can put them <em>after</em> a statement, just like <code class="lang-coffee">if</code>:
                 <pre class="lang-coffee">
-counter = 0
-console.log counter++ while counter &lt; 5</pre></li>
+power_level++ while power_level &lt;= 9000</pre></li>
             </ul>
           </section>
         </div>
@@ -899,9 +822,14 @@ if foo.bar? then console.log foo.bar
             <ul data-build>
               <li>Tired of adding strings together? We borrowed this from Ruby:
                 <pre class="lang-coffee">
-power_level = 9000
-console.log "It's over #{power_level}!"
-"It's over 9000!"</pre></li>
+pokemon = "Snorlax"
+console.log "Wild #{pokemon} appeared!"
+"Wild Snorlax appeared!"</pre></li>
+              <li>It's not just variable lookup, you can put real code in there:
+                <pre class="lang-coffee">
+pokemon = "Snorlax"
+console.log "Wild #{pokemon.toUpperCase()} appeared!"
+"Wild SNORLAX appeared!"</pre></li>
             </ul>
           </section>
         </div>
@@ -1004,7 +932,7 @@ for number in numbers
             <div class="editor-content">dictionary =
   "omg": "Object Management Group"
   "wtf": "World Taekwondo Federation"
-  "lol": "Lord of Life"
+  "lol": "League of Legends"
 </div>
           </section>
         </div>
@@ -1078,7 +1006,7 @@ point = new Shape 13, 37
           </section>
         </div>
 
-        <div class="slide" id="inheritance-slide">
+        <div class="slide hide-jsbuffer" id="inheritance-slide">
           <section>
             <div class="editor-content">class Shape
   constructor: (@x, @y) ->
