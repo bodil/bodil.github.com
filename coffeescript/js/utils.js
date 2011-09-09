@@ -671,7 +671,7 @@
     });
     canon.addCommand({
         name: "slideForward2",
-        bindKey: bindKey("Next"),
+        bindKey: bindKey("PageDown"),
         exec: function(env, args, request) {
             env.editor.blur();
             slideshow.next();
@@ -687,7 +687,7 @@
     });
     canon.addCommand({
         name: "slideBack2",
-        bindKey: bindKey("Prior"),
+        bindKey: bindKey("PageUp"),
         exec: function(env, args, request) {
             env.editor.blur();
             slideshow.prev();
