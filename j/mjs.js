@@ -50,7 +50,7 @@ const MJS_DO_ASSERT = true;
 
 // Some hacks for running in both the shell and browser,
 // and for supporting F32 and WebGLFloat arrays
-try { WebGLFloatArray; } catch (x) { WebGLFloatArray = Float32Array; }
+// try { WebGLFloatArray; } catch (x) { WebGLFloatArray = Float32Array; }
 
 /*
  * Constant: MJS_FLOAT_ARRAY_TYPE
