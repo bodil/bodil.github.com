@@ -1,0 +1,73 @@
+body {
+    background: url("background.png") repeat-x fixed top;
+}
+
+div.sitebar {
+    background-color: #777;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #777), color-stop(100%, #111));
+    background-image: -webkit-linear-gradient(top, #777 0%, #111 100%);
+    background-image: -moz-linear-gradient(top, #777 0%, #111 100%);
+    background-image: -ms-linear-gradient(top, #777 0%, #111 100%);
+    background-image: -o-linear-gradient(top, #777 0%, #111 100%);
+    background-image: linear-gradient(top, #777 0%, #111 100%);
+    color: #fff;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    text-align: left;
+    margin-bottom: 1em;
+    font-family: "Georgia", "Times New Roman", Helvetica, Arial, sans-serif;
+    font-size: 1.5em;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+div.sitebar a {
+    color: #fff;
+    text-decoration: none;
+}
+
+div.sitebar span.left {
+    margin-left: 0.5em;
+}
+
+div.sitebar span.right {
+    float: right;
+    margin-right: 0.5em;
+}
+
+div.header {
+    text-align: center;
+}
+
+#viewport {
+}
+
+div.viewport {
+    margin-bottom: 1em;
+}
+
+div.small-print {
+    font-size: small;
+    text-align: center;
+}
+
+div.small-print hr {
+    margin-bottom: 0.3em;
+}
+
+div.small-print img {
+    vertical-align: middle;
+}
+
+div.small-print p {
+    margin: 0;
+}
+
+div.small-print.left {
+    text-align: left;
+}
+
+div.small-print.right {
+    text-align: right;
+}
+
