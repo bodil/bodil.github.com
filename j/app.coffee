@@ -45,6 +45,7 @@ class Scene
   constructor: (@entities) ->
     @camera = [0, 0, 0]
     @ambient_light = 0.6
+    @light_source = [0, 0, 0]
 
   # Assumes a static camera at [0,0,0] facing [0,0,0]
   project: (point) ->
@@ -68,7 +69,7 @@ class CanvasEngine
     for entity in @scene.entities
       for surface in ((surface.transform entity) for surface in entity.surfaces)
         if surface.visible @scene
-          angle = surface.angle [0,0,0]
+          angle = surface.angle @scene.light_source
           ps = ((@project v) for v in surface.vertices)
           c.fillStyle = hsl [surface.colour[0], surface.colour[1], surface.colour[2] * (@scene.ambient_light + angle * (1 - @scene.ambient_light))]
           c.beginPath()
