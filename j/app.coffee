@@ -125,8 +125,8 @@ $.domReady ->
   engine = new CanvasEngine (document.getElementById "viewport"), scene
   interval = setInterval ->
     engine.render()
-    box.rotate [0.03, 0.01, 0.02]
-  , 1000/25
+    box.rotate [0.015, 0.005, 0.01]
+  , 1000/50
   $("#viewport").click ->
     clearInterval interval
     $("#viewport").unbind "click"
