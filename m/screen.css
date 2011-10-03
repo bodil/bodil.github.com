@@ -39,11 +39,17 @@ div.header {
     text-align: center;
 }
 
-#viewport {
-}
-
 div.viewport {
     margin-bottom: 1em;
+    padding: 0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    height: 350px;
+}
+
+#viewport {
+    margin-top: -20px;
 }
 
 div.small-print {
