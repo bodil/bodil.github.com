@@ -84,10 +84,12 @@ class CanvasEngine
     # intersections = []
 
     for entity in @scene.entities
+      lines = []
+      obscured_lines = []
       for surface in ((surface.transform entity) for surface in entity.surfaces)
+        ps = ((@project v) for v in surface.vertices)
         if surface.visible @scene
-          ps = ((@project v) for v in surface.vertices)
-
+          lines.push ps
           [ p1, p2 ] = surface.extremes @scene.light_source
           p1_ = @project p1
           p2_ = @project p2
@@ -105,15 +107,29 @@ class CanvasEngine
           for p in ps[1..]
             c.lineTo p...
           c.fill()
-          c.strokeStyle = "black"
-          c.lineWidth = 3
-          c.miterLimit = 1
-          c.beginPath()
-          c.moveTo ps[0]...
-          for p in ps[1..]
-            c.lineTo p...
-          c.closePath()
-          c.stroke()
+        else
+          obscured_lines.push ps
+
+      for ps in obscured_lines
+        c.strokeStyle = "rgba(0,0,0,0.05)"
+        c.lineWidth = 3
+        c.miterLimit = 1
+        c.beginPath()
+        c.moveTo ps[0]...
+        for p in ps[1..]
+          c.lineTo p...
+        c.closePath()
+        c.stroke()
+      for ps in lines
+        c.strokeStyle = "black"
+        c.lineWidth = 3
+        c.miterLimit = 1
+        c.beginPath()
+        c.moveTo ps[0]...
+        for p in ps[1..]
+          c.lineTo p...
+        c.closePath()
+        c.stroke()
 
     # for vs in intersections
     #   c.strokeStyle = "black"
