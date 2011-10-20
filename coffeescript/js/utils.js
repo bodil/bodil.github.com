@@ -276,13 +276,24 @@
         },
         _makeBuildList: function() {
             this._buildList = [];
+            this._buildCycle = false;
             if (disableBuilds) { return; }
             if (this._node) {
-                this._buildList = queryAll('[data-build] > *', this._node);
+                this._buildList = queryAll('[data-cycle] > *', this._node);
+                if (this._buildList.length) {
+                    this._buildCycle = true;
+                    this._buildCyclePrev = this._buildList.shift();
+                    removeClass(this._buildCyclePrev, 'to-cycle');
+                    this._buildList.forEach(function(el) {
+                        addClass(el, 'to-cycle');
+                    });
+                } else {
+                    this._buildList = queryAll('[data-build] > *', this._node);
+                    this._buildList.forEach(function(el) {
+                        addClass(el, 'to-build');
+                    });
+                }
             }
-            this._buildList.forEach(function(el) {
-                addClass(el, 'to-build');
-            });
         },
         _runAutos: function() {
             if (this._currentState != 'current') {
@@ -343,7 +354,13 @@
             if (!this._buildList.length) {
                 return false;
             }
-            removeClass(this._buildList.shift(), 'to-build');
+            if (this._buildCycle) {
+                addClass(this._buildCyclePrev, 'to-cycle');
+                this._buildCyclePrev = this._buildList.shift();
+                removeClass(this._buildCyclePrev, 'to-cycle');
+            } else {
+                removeClass(this._buildList.shift(), 'to-build');
+            }
             return true;
         }
     };
