@@ -869,9 +869,19 @@ if 20 &lt; temperature &lt; 30
               <li>The existential operator:
                 <pre>
 foo = { bar: "bar" }
-if foo.bar? then console.log foo.bar
-# if (foo.bar != null) { ... }</pre></li>
+if foo?.bar then console.log foo.bar
+# if (foo != null && foo.bar) { ... }</pre></li>
             </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="existential-examples-slide">
+          <section>
+            <div class="editor-content">pokemon =
+  best: "Mudkip"
+  worst: "Magikarp"
+
+</div>
           </section>
         </div>
 
