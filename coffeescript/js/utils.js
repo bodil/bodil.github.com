@@ -607,8 +607,8 @@
                 //   this.switch3D(); break;
             case 78: // N
                 this.showNotes(); break;
-                // case 84: // T
-                //   this.changeTheme(); break;
+            case 84: // T
+                this.changeTheme(); break;
             case 13: // Return
                 this.focusEditor(); break;
             }
