@@ -176,7 +176,7 @@
 
         <div class="slide" id="ryan-slide">
           <section class="middle">
-            <p><img src="media/ryan.jpg"/></p>
+            <p><img src="media/ryan.jpg" class="drop"/></p>
             <h3 class="caption">Ryan Dahl</h3>
             <p>Hadde en bedre idé</p>
           </section>
@@ -184,8 +184,10 @@
 
         <div class="slide" id="node-slide">
           <section class="middle">
+            <h3>Event loops</h3>
             <p>Event loops er <strong>vanlige</strong> i systemnær C-kode.</p>
             <div class="block" data-build>
+              <p>Blant annet er <strong>nginx</strong>, verdens mest <strong>skalerbare webserver</strong>, bygget på en event loop.</p>
               <p>Men det er et <strong>helvete</strong> å skrive høynivålogikken din i C.</p>
             </div>
           </section>
@@ -214,11 +216,113 @@
             <div class="block" data-build>
               <p>Event loops i disse er ofte <strong>mer bry enn de er verdt</strong>.</p>
               <p>Men JavaScript i sitt vanlige miljø <strong>har ikke engang I/O</strong>.</p>
-              <p>Hva om vi skriver et <strong>nytt servermiljø</strong> med en <strong>JavaScript-runtime</strong> og <strong>asynkron I/O</strong>?</p>
+              <p>Hva om vi skriver et <strong>nytt servermiljø</strong> med<br/>en <strong>JavaScript-runtime</strong> og <strong>asynkron I/O</strong>?</p>
             </div>
           </section>
         </div>
 
+        <div class="slide" id="node-blir-til-slide">
+              <section class="middle">
+                <p>Så Ryan tok <strong>Googles V8-engine</strong><br/>og bygde en <strong>runtime</strong> rundt den.</p>
+                <div class="block" data-build>
+                  <p>Han kalte den <strong>Node.js</strong>.</p>
+                </div>
+              </section>
+        </div>
+
+        <div class="slide" id="arkitektur-slide">
+          <section class="middle">
+            <p><strong>I/O</strong> i Node er bygget rundt <strong>EventEmitters</strong>.</p>
+            <div class="block" data-build>
+              <p>Alle I/O-hendelser trigger en <strong>event</strong> og<br/>sender den til alle <strong>lyttere</strong> på den eventen.</p>
+              <p>En lytter er bare en vanlig <strong>funksjon</strong> som<br/>tar <strong>eventen</strong> som <strong>argument</strong>.</p>
+            </div>
+          </section>
+        </div>
+
+        <div class="slide" id="callbacks-slide">
+          <section class="middle">
+            <div class="block">
+              <p>Som regel forenkler vi dette til en <strong>callback</strong><br/>som tar <strong>resultatet</strong> som argument.</p>
+            </div>
+          </section>
+        </div>
+
+
+        <div class="slide" id="callback-ex-slide">
+          <section class="middle">
+            <div class="block">
+              <p>Istedenfor dette:</p>
+              <pre class="lang-js">var pokedex = fs.readFile("pokedex.txt");
+// ... her venter vi mens OSet leser inn fila ...
+console.log("Det finnes " + pokedex.split("\n").length
+            + " Pokémon i verden.");</pre>
+            </div>
+            <div class="block" data-build>
+              <div>
+                <p>...gjør vi dette:</p>
+                <pre class="lang-js">fs.readFile("pokedex.txt", function(err, pokedex) {
+  // denne funksjonen kalles når readFile() er ferdig.
+  console.log("Det finnes " + pokedex.split("\n").length
+              + " Pokémon i verden.");
+});</pre>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="slide" id="mer-arkitektur-slide">
+          <section class="middle">
+            <p>Dette mønsteret er <strong>gjennomgående</strong> i Node.</p>
+            <div class="block" data-build>
+              <div>
+                <p>Her er en <strong>HTTP-server:</strong></p>
+                <pre class="lang-js">http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');
+}).listen(1337, "127.0.0.1");</pre>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="slide" id="sql-hell-slide">
+          <section class="middle">
+            <div class="block">
+              <p>Her er noe så <strong>bakstrebersk</strong> som en <strong>SQL-spørring</strong>:</p>
+              <pre class="lang-js">db.query("SELECT COUNT(*) as count FROM pokedex", function(r) {
+  console.log("Det finnes " + r.rows[0].count
+              + " Pokémon i verden.");
+});</pre>
+            </div>
+          </section>
+        </div>
+
+        <div class="slide" id="orntli-server-slide">
+          <section class="middle">
+            <div class="block">
+              <p>Slår vi begge to sammen har vi en <strong>orntli webløsning</strong>:</p>
+              <pre class="lang-js">http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  var sql = "SELECT COUNT(*) as count FROM pokedex";
+  db.query(sql, function(r) {
+    res.end("Det finnes " + r.rows[0].count
+              + " Pokémon i verden.");
+  });
+}).listen(1337, "127.0.0.1");</pre>
+              <div data-build>
+                <p>JavaScript viser sin <strong>styrke</strong> med denne sorten kode<br/>fordi det har <strong>closures</strong>.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="slide" id="fort-slide">
+          <section class="middle">
+            <p>Servere som er <strong>raskere enn sin egen hale</strong>.</p>
+            <p><img src="media/smartcat.gif" class="drop"/></p>
+          </section>
+        </div>
 
 
 
@@ -259,7 +363,7 @@
             }
           </style>
           <section class="middle">
-            <h2>Det var alt!</h2>
+            <h2>kthxbye</h2>
             <p><img class="drop wtf" src="media/hunchcat.gif" width="412" height="256"></p>
             <p class="resource-link"><span class="bodil">Bodil Stokke</span><br>
               <a href="http://github.com/bodil">github.com/bodil</a><br>

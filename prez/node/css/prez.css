@@ -22,6 +22,7 @@
     margin: 0.5em 0;
     font-family: 'Droid Sans Mono';
     font-size: 20px;
+    line-height: 1.5em;
 }
 
 .slide code {
