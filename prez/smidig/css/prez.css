@@ -116,6 +116,13 @@ a {
     display: none;
 }
 
+h2.name {
+    color: white;
+    margin-top: 8em;
+    text-shadow: rgba(0, 0, 0, 0.8) 0 0 8px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 /* Timer */
 
 #timer {
@@ -134,7 +141,7 @@ a {
     background: -ms-linear-gradient(top, #D91A12 15%,#E13300 15%,#FF7F14 16%,#F2AB03 32%,#EBC000 32%,#FADE00 33%,#EFFF03 48%,#56FC02 49%,#52FF01 66%,#4ADE7E 67%,#3BAAF2 67%,#3BAAF2 84%,#7337F7 84%,#6B40F2 100%);
     background: linear-gradient(top, #D91A12 15%,#E13300 15%,#FF7F14 16%,#F2AB03 32%,#EBC000 32%,#FADE00 33%,#EFFF03 48%,#56FC02 49%,#52FF01 66%,#4ADE7E 67%,#3BAAF2 67%,#3BAAF2 84%,#7337F7 84%,#6B40F2 100%);
     margin: 0 0 0 -24px;
-    opacity: 0.75;
+    opacity: 0.3;
 }
 
 #nyan-timer {
@@ -148,7 +155,7 @@ a {
 	text-align: right;
 	box-sizing: border-box;
 	background: url(../media/nyancat.png) no-repeat center right;
-    opacity: 0.75;
+    opacity: 0.3;
 }
 
 #timer.end {

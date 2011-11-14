@@ -1,0 +1,35 @@
+* Hei - skal se om fine slides kompenserer for tynt innhold.
+* I gamle dager... var det bare fossefall.
+* Og alle prosesser var kjedelige og konforme.
+* Men så kom Smidig-manifestet!
+* Og da raser alt unna som bare satan.
+* Vi har redusert fossefallene til korte iterasjoner.
+* Og vi har fått alt inn i system.
+* Tusen takk, Scrum!
+* Jo mer ting forandrer seg, jo mer av akkurat samme skiten får vi.
+* Om man ikke lærer av fortiden, er man dømt til å gjenta den.
+** Godwin's lov QUAD DAMAGE
+* Så tilbake til gamle dager...
+* Peopleware hadde alle svarene på 80-tallet!
+* Advarte oss mot åpne landskap.
+* Beviste at vi ikke kan estimere.
+* Og den advarte oss mot å standardisere prosesser.
+* Knuth og historien om utviklingsprosessen.
+* rms og historien om gcc.
+* Zed Shaw, motreaksjon, tilbake til Knuth-måten.
+* Programming, Motherfucker.
+* PROGRAMMING, MOTHERFUCKER!
+* Videre! Knuth hadde en teknikk kalt literate programming.
+* Den handler om å flette dokumentasjonen inn i koden.
+** Tvinger deg til å forklare koden og dermed tenke gjennom den på en annen måte.
+* Tydelig motstykke til parprogrammering.
+* Moteløvene fortalte oss aldri at det finnes alternativer - PP skal være det perfekte multitool.
+** PP løser code review.
+** PP løser kompetansespredning.
+** PP løser dokumentasjon.
+** Slutt på fred til å tenke.
+** Slutt på intuitive hopp.
+** Og Gud hjelpe deg om du er introvert.
+* Men det finnes ingen verktøy som passer for alle mennesker og situasjoner.
+* Først og fremst, still spørsmål ved alle tiders moter og gjør det som funker for deg!
+* kthxbye
