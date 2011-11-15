@@ -1,4 +1,4 @@
-* Hei - skal se om fine slides kompenserer for tynt innhold.
+* Hei!
 * I gamle dager... var det bare fossefall.
 * Og alle prosesser var kjedelige og konforme.
 * Men så kom Smidig-manifestet!
@@ -19,6 +19,7 @@
 * Zed Shaw, motreaksjon, tilbake til Knuth-måten.
 * Programming, Motherfucker.
 * PROGRAMMING, MOTHERFUCKER!
+* Open Source-metoden. Release-iterasjoner, bug tracker, men programming mf.
 * Videre! Knuth hadde en teknikk kalt literate programming.
 * Den handler om å flette dokumentasjonen inn i koden.
 ** Tvinger deg til å forklare koden og dermed tenke gjennom den på en annen måte.
