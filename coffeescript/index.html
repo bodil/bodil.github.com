@@ -426,16 +426,8 @@ with (obj)
           <header>Strict Mode</header>
           <section>
             <ul data-build>
-              <li>No more global variables
-                <pre class="lang-js">
-"use strict";
-myUndeclaredVariable = 5; // throws a ReferenceError</pre></li>
-              <li>No more <code class="lang-js">with</code>
-                <pre>
-"use strict";
-var foo = 5;
-with (obj)  // syntax error!
-    foo;    // no more wondering what this evaluates to</pre></li>
+              <li>Assigning to global variables throws a <code class="lang-js">ReferenceError</code></li>
+              <li>The <code class="lang-js">with</code> statement no longer exists.</li>
               <li>But it's still JavaScript&hellip;</li>
             </ul>
           </section>
@@ -589,18 +581,18 @@ server.listen(function(request, response) {
         <div class="slide" id="significant-indentation-slide">
           <header>So what happened to the curly braces?</header>
           <section>
-            <ul data-build>
+            <ul>
               <li>CoffeeScript has significant indentation.
-                <pre class="lang-coffee">
-foo = (a, b) ->
-  c = a + b     # indent starts a block - "{" implied
-  console.log c # same indentation level, part of same block
-foo 2, 3        # unindent ends the block - "}" implied</pre></li>
-              <li>Blocks are defined by the indentation you'd give them anyway:<pre class="lang-coffee">
+                <pre class="lang-js">
+if (name != "honey badger") {
+  care()
+} else {
+  eat_cobra()
+}</pre>becomes<pre class="lang-coffee">
 if name != "honey badger"
   care()
 else
-  eat_cobra()</pre>Can you see the blocks?</li>
+  eat_cobra()</pre>Obvious, right?</li>
             </ul>
           </section>
         </div>
@@ -636,7 +628,7 @@ sum = (a, b) -> a + b # remember this? It calculates a + b :)
 
 sum(2, 3) # returns 5
 sum 2, 3  # returns 5</pre></li>
-              <li>Calling a function with no arguments:
+              <li>Except when calling a function with no arguments:
                 <pre class="lang-coffee">
 connection.close() # calls the close function
 connection.close   # returns the function, doesn't call it</pre></li>
