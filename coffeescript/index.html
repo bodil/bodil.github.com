@@ -188,6 +188,7 @@
             }
           </style>
           <section class="middle">
+            <p><img src="media/steria_challenge_accepted.svg"/></p>
             <p>This presentation is an HTML5 website</p>
             <p id="disclaimer-message">Presentation template from <a href="http://html5rocks.com/">http://html5rocks.com/</a></p>
             <p>Press <span class="key">PgDn</span> to advance.</p>
@@ -201,12 +202,12 @@
           </aside> 
         </div>
 
-        <div class="slide" id="video-slide">
-          <section class="middle">
-            <p>You can watch the full presentation here:</p>
-            <p><a href="http://vimeo.com/28772382">http://vimeo.com/28772382</a></p>
-          </section>
-        </div>
+        <!-- <div class="slide" id="video-slide"> -->
+        <!--   <section class="middle"> -->
+        <!--     <p>You can watch the full presentation here:</p> -->
+        <!--     <p><a href="http://vimeo.com/28772382">http://vimeo.com/28772382</a></p> -->
+        <!--   </section> -->
+        <!-- </div> -->
 
 
         <div class="slide" id="title-slide">
@@ -231,12 +232,6 @@
             </hgroup>
             <p style="margin: 0; color: black">Bodil Stokke</p>
             <p style="margin: 0">@bodiltv</p>
-          </section>
-        </div>
-
-        <div class="slide" id="steria-slide">
-          <section class="middle">
-            <p><img src="media/steria_challenge_accepted.svg"/></p>
           </section>
         </div>
 
@@ -268,9 +263,10 @@
             <ul data-build>
               <li>Global variables
                 <pre class="lang-js">
-function plus_two(n) { two = 2; return n + two; }
-plus_two(3); // 5 - obviously, 3 + 2 = 5
-two;         // 2 - wtf, JS?</pre></li>
+function plus_two(n) {
+    result = n + 2;
+    return result;
+}</pre></li>
               <li>The <code class="lang-js">with</code> block
                 <pre>
 var foo = 5;
@@ -278,8 +274,7 @@ with (obj)
     foo; // 5, unless obj.foo exists</pre></li>
               <li>Wtf is the deal with the == operator?
               <pre class="lang-js">
-2 === "2"; // false - obviously a number is not a string
-2 == "2";  // true - wtf JS?</pre></li>
+23 == "23";  // yes, of course a number is the same as a string</pre></li>
             </ul>
           </section>
         </div>
@@ -377,9 +372,6 @@ with (obj)
             <h2>Anders Hejlsberg</h2>
             <p><img class="drop" src="media/hejlsberg.png"/></p>
             <p>Inventor of C#, 2001</p>
-            <div data-build>
-              <p>(and Turbo Pascal, 1981)</p>
-            </div>
           </section>
         </div>
 
@@ -624,7 +616,7 @@ sum = (a, b) -> a + b</pre></li>
             <ul data-build>
               <li>Parentheses are optional:
                 <pre class="lang-coffee">
-sum = (a, b) -> a + b # remember this? It calculates a + b :)
+sum = (a, b) -> a + b
 
 sum(2, 3) # returns 5
 sum 2, 3  # returns 5</pre></li>
@@ -916,12 +908,12 @@ if foo?.bar then console.log foo.bar
                 <pre class="lang-coffee">
 pokemon = "Snorlax"
 console.log "Wild #{pokemon} appeared!"
-"Wild Snorlax appeared!"</pre></li>
+=> "Wild Snorlax appeared!"</pre></li>
               <li>It's not just variable lookup, you can put real code in there:
                 <pre class="lang-coffee">
 pokemon = "Snorlax"
 console.log "Wild #{pokemon.toUpperCase()} appeared!"
-"Wild SNORLAX appeared!"</pre></li>
+=> "Wild SNORLAX appeared!"</pre></li>
             </ul>
           </section>
         </div>
@@ -1005,7 +997,8 @@ console.log "I just counted to #{number}" for number in numbers</pre></li>
               <li>And it <em>returns a new list:</em>
                 <pre class="lang-coffee">
 numbers = [ 1..5 ]
-result = number + 1 for number in numbers
+result = for number in numbers
+  number + 1
 result # [ 2, 3, 4, 5, 6 ]</pre></li>
           </section>
         </div>

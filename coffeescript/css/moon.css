@@ -52,7 +52,7 @@ body {
   background-color: #eee;
   border-radius: 10px;
   -moz-border-radius: 10px;
-  opacity: 0.35;
+  opacity: 0.0;
 
   -webkit-transform: scale(0.8) translateZ(0);
   -moz-transform: scale(0.8);
