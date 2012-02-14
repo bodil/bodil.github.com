@@ -1122,6 +1122,11 @@ circle = new Circle 13, 37, 5
 $ npm install coffee-script</pre>
                 <pre class="lang-js">
 var my_cs_module = require("./my_cs_module");</pre></li>
+              <li>In Play Framework 2:
+                <pre class="lang-sh">
+app/assets/javascripts/main.coffee</pre>
+                <pre class="lang-html">
+&lt;script src="@routes.Assets.at("javascripts/main.js")"&gt;&lt;/script&gt;</pre></li>
               <li>Compile and run anywhere JavaScript runs:
                 <pre class="lang-sh">
 $ coffee -c my_script.coffee</pre></li>
