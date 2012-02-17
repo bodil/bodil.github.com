@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2011 Bodil Stokke <bodil@bodil.tv>
+
+
+  License and copyright notice for the HTML5Rocks slides:
+
+  Copyright 2011 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Chrome DevRel Team (chrome-devrel@googlegroups.com)
+                 Alex Russell (slightlyoff@chromium.org)
+                 Brad Neuberg
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
+    <title>Lisp Crash Course</title>
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono" rel="stylesheet" type="text/css" />
+    <link href="css/prettify.css" rel="stylesheet"/>
+    <link href="css/moon.css" class="theme" rel="stylesheet" media="screen" />
+    <link href="css/prez.css" rel="stylesheet" media="screen" />
+  </head>
+  <body data-duration="5">
+    <div id="presentation-counter">Loading...</div>
+
+    <div class="presentation">
+      <div class="slides">
+
+        <div class="slide" id="landing-slide">
+          <style>
+            p#disclaimer-message {
+              font-size: 20px;
+            }
+            #landing-slide p.help, #landing-slide p.help span.key {
+              font-size: 22px;
+            }
+          </style>
+          <section class="middle">
+            <p><img src="media/steria_challenge_accepted.svg"/></p>
+            <p>This presentation is an HTML5 website</p>
+            <p id="disclaimer-message">Presentation template from <a href="http://html5rocks.com/">http://html5rocks.com/</a></p>
+            <!-- <p>Press <span class="key">PgDn</span> to advance.</p> -->
+          </section>
+          <aside class="note">
+            <section>
+              Welcome! (This field is for presenter notes and commentary.)
+            </section>
+          </aside>
+        </div>
+
+        <div class="slide" id="title-slide">
+          <style>
+            #title-slide p {
+              margin: 0;
+            }
+            #title-slide p.author {
+              margin: 0.6em 0 0 0;
+              color: black;
+              font-weight: bold
+            }
+          </style>
+          <section class="middle">
+            <h1>Lisp in 3 Minutes</h1>
+            <hr>
+            <p class="author">Bodil Stokke</p>
+            <p>@bodiltv</p>
+          </section>
+        </div>
+
+
+        <div class="slide" id="functions-slide">
+          <style>
+            #functions-slide span.paren-slide-animate {
+              position: relative;
+              left: -234px;
+              -webkit-transition: 1.5s ease;
+            }
+          </style>
+          <section class="middle">
+            <pre class="lang-clj">println<span class="paren-slide">(</span>"Hello world!");</pre>
+          </section>
+        </div>
+
+        <div class="slide" id="lists-slide">
+          <section class="middle">
+            <pre class="lang-clj">(1 2 3 "this" "is" :a :list)</pre>
+          </section>
+        </div>
+
+        <div class="slide" id="function-call-slide">
+          <section class="middle">
+            <pre class="lang-clj">(println "this is a     
+     function call")</pre>
+          </section>
+        </div>
+
+        <div class="slide" id="syntax-is-for-suckers-slide">
+          <style>
+            #syntax-is-for-suckers-slide {
+              background: url(media/syntax-is-for-suckers.png) no-repeat center;
+            }
+          </style>
+        </div>
+  
+        <div class="slide" id="vector-slide">
+          <section class="middle">
+            <pre class="lang-clj">[1 2 3 "this is a vector"]</pre>
+          </section>
+        </div>
+
+        <div class="slide" id="function-definition-slide">
+          <section class="middle">
+            <pre class="lang-clj">(defn hello [name]     
+     (str "Hello " name)
+)                      </pre>
+          </section>
+        </div>
+
+        <div class="slide" id="function-example-slide">
+          <section class="middle">
+            <pre class="lang-clj">&gt;&gt; (hello "sailor!")
+"Hello sailor!"     </pre>
+          </section>
+        </div>
+
+        <div class="slide" id="you-now-know-lisp-slide">
+          <style>
+            #you-now-know-lisp-slide {
+              background: url(media/jmc.png) no-repeat center;
+            }
+          </style>
+        </div>
+  
+
+
+        <div class="slide" id="outro-slide">
+          <style>
+            #outro-slide h2 {
+              color: black;
+              letter-spacing: -1px;
+              font-size: 64px;
+            }
+            p.resource-link {
+              font-size: 36px;
+              line-height: 1.15em;
+              margin: 0.8em 0;
+            }
+            p.resource-link a {
+              color: blue;
+              text-decoration: underline;
+              border: none;
+            }
+            span.bodil {
+              font-weight: bold;
+              font-size: 48px;
+              letter-spacing: -2px;
+            }
+            img.wtf {
+              background: -webkit-linear-gradient(top, rgb(213,206,166) 0%, rgb(244,236,190) 62%, rgb(213,206,201) 63%, rgb(247,234,234) 100%);
+              background:    -moz-linear-gradient(top, rgb(213,206,166) 0%, rgb(244,236,190) 62%, rgb(213,206,201) 63%, rgb(247,234,234) 100%);
+              background:      -o-linear-gradient(top, rgb(213,206,166) 0%, rgb(244,236,190) 62%, rgb(213,206,201) 63%, rgb(247,234,234) 100%)
+              background:     -ms-linear-gradient(top, rgb(213,206,166) 0%, rgb(244,236,190) 62%, rgb(213,206,201) 63%, rgb(247,234,234) 100%);
+              background:         linear-gradient(top, rgb(213,206,166) 0%, rgb(244,236,190) 62%, rgb(213,206,201) 63%, rgb(247,234,234) 100%);
+              border-top: 24px solid white;
+              border-bottom: 48px solid white;
+              border-left: 12px solid white;
+            border-right: 12px solid white;
+            }
+          </style>
+          <section class="middle">
+            <h2>Thank you for listening!</h2>
+            <p><img class="drop wtf" src="media/hunchcat.gif" width="412" height="256"></p>
+            <p class="resource-link"><span class="bodil">Bodil Stokke</span><br>
+              <a href="http://bodil.github.com">bodil.github.com</a><br>
+              <a href="http://twitter.com/bodiltv">@bodiltv</a>
+            </p>
+          </section>
+        </div>
+
+      </div> <!-- slides -->
+      <style>
+      #speaker-note {
+        position:absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        height: 50%;
+        z-index: 50;
+        background-color: rgba(255, 255, 255, 0.95);
+        overflow: auto;
+        padding: 2px 20px;
+        -webkit-transition: top 0.5s ease-in-out;
+        -moz-transition: top 0.5s ease-in-out;
+        -o-transition: top 0.5s ease-in-out;
+        transition: top 0.5s ease-in-out;
+      }
+      #speaker-note.invisible {
+        top: 101%;
+      }
+      </style>
+      <div id="speaker-note" class="invisible" style="display: none;">
+      </div> <!-- speaker note -->
+    </div> <!-- presentation -->
+
+    <!--[if lt IE 9]>
+    <script
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
+    </script>
+    <script>CFInstall.check({ mode: "overlay" });</script>
+    <![endif]-->
+
+    <script src="js/ender.min.js"></script>
+    <script src="js/prefixfree.min.js"></script>
+    <script src="js/prettify.js"></script>
+    <script src="js/prettify/lang-clj.js"></script>
+    <script src="js/utils.js"></script>
+    <script>prettyPrint();</script>
+  </body>
+</html>

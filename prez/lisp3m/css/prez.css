@@ -1,0 +1,164 @@
+.presentation {
+    background: black url(../media/black_paper.png) repeat;
+}
+
+.slide {
+    background: #eee url(../media/cork_1.png) repeat;
+}
+
+.slide li, .slide p {
+    font-size: 28px;
+    line-height: 1.3em;
+}
+.slide li {
+    padding: 0.2em;
+}
+
+.slide li {
+    list-style-type: disc;
+}
+
+.slide pre {
+    margin: 0.5em 0;
+    font-family: 'Droid Sans Mono';
+    line-height: 1.5em;
+    text-align: center;
+    background: inherit;
+    border: inherit;
+    font-size: 3em;
+}
+
+.slide code {
+    font-family: 'Droid Sans Mono';
+    font-size: 90%;
+}
+
+img.drop {
+    box-shadow: 8px 8px 16px #888;
+}
+
+h1 {
+    letter-spacing: -2px;
+    font-size: 96px;
+    font-weight: bold;
+}
+
+h2 {
+    color: #181818;
+    font-size: 56px;
+    letter-spacing: -1px;
+}
+
+h3 {
+    color: black;
+    font-size: 40px;
+    letter-spacing: -1px;
+    margin: 0;
+}
+
+h3.caption {
+    line-height: 0.2em;
+}
+
+.block {
+    margin-left: 5em;
+    margin-right: 5em;
+    margin-bottom: 2em;
+}
+
+ol, ul {
+    text-align: left;
+}
+
+.slide ol li {
+    list-style-type: decimal;
+}
+
+a {
+    color: #336;
+}
+
+.slide blockquote {
+    margin: 0 6em;
+    padding: 0.5em 2em;
+    background-color: rgba(255, 255, 255, 0.4);
+    text-align: left;
+    border-radius: 1em;
+    border: 2px solid rgba(128, 128, 128, 0.1);
+    box-shadow: 8px 8px 16px rgba(128, 128, 128, 0.3);
+}
+
+.slide blockquote p {
+    line-height: 1.3em;
+    margin: 0.5em;
+}
+
+.slide blockquote footer {
+    line-height: 1em;
+    text-align: right;
+    font-size: 1.2em;
+    padding: 0 2em 1.2em 0;
+}
+
+.slide blockquote cite:before {
+    content: "— ";
+}
+
+.slide blockquote p.photo {
+    float: left;
+    margin-left: -0.5em;
+    margin-right: 1em;
+}
+
+.kitteh {
+    font-family: 'Impact';
+    font-weight: normal;
+}
+
+.to-cycle {
+    display: none;
+}
+
+/* Timer */
+
+#timer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 101;
+	width: 0%;
+	height: 20px;
+	overflow: hidden;
+	text-align: right;
+	box-sizing: border-box;
+    background: -webkit-linear-gradient(top, #D91A12 15%,#E13300 15%,#FF7F14 16%,#F2AB03 32%,#EBC000 32%,#FADE00 33%,#EFFF03 48%,#56FC02 49%,#52FF01 66%,#4ADE7E 67%,#3BAAF2 67%,#3BAAF2 84%,#7337F7 84%,#6B40F2 100%);
+    background: -moz-linear-gradient(top, #D91A12 15%,#E13300 15%,#FF7F14 16%,#F2AB03 32%,#EBC000 32%,#FADE00 33%,#EFFF03 48%,#56FC02 49%,#52FF01 66%,#4ADE7E 67%,#3BAAF2 67%,#3BAAF2 84%,#7337F7 84%,#6B40F2 100%);
+    background: -o-linear-gradient(top, #D91A12 15%,#E13300 15%,#FF7F14 16%,#F2AB03 32%,#EBC000 32%,#FADE00 33%,#EFFF03 48%,#56FC02 49%,#52FF01 66%,#4ADE7E 67%,#3BAAF2 67%,#3BAAF2 84%,#7337F7 84%,#6B40F2 100%);
+    background: -ms-linear-gradient(top, #D91A12 15%,#E13300 15%,#FF7F14 16%,#F2AB03 32%,#EBC000 32%,#FADE00 33%,#EFFF03 48%,#56FC02 49%,#52FF01 66%,#4ADE7E 67%,#3BAAF2 67%,#3BAAF2 84%,#7337F7 84%,#6B40F2 100%);
+    background: linear-gradient(top, #D91A12 15%,#E13300 15%,#FF7F14 16%,#F2AB03 32%,#EBC000 32%,#FADE00 33%,#EFFF03 48%,#56FC02 49%,#52FF01 66%,#4ADE7E 67%,#3BAAF2 67%,#3BAAF2 84%,#7337F7 84%,#6B40F2 100%);
+    margin: 0 0 0 -24px;
+    opacity: 0.75;
+}
+
+#nyan-timer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 102;
+	width: 0%;
+	height: 20px;
+	overflow: hidden;
+	text-align: right;
+	box-sizing: border-box;
+	background: url(../media/nyancat.png) no-repeat center right;
+    opacity: 0.75;
+}
+
+#timer.end {
+	width: 100%;
+}
+
+#nyan-timer.end {
+	width: 100%;
+}
+
