@@ -69,18 +69,24 @@ h1:after {
     content: ' ❧';
 }
 
-div.body h1 {
-    padding-top: 0.3em;
-    border-top: 1px solid #ddd;
+div.body h1, div.articles h1 {
     padding-bottom: 0.3em;
     border-bottom: 1px solid #ddd;
 }
 
-div.body, div.viewport {
+div.body h1 {
+    padding-top: 0.3em;
+    border-top: 1px solid #ddd;
+}
+
+div.body, div.viewport, div.articles {
     margin-bottom: 1em;
     padding: 0;
-    border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
+}
+
+div.body, div.viewport {
+    border-top: 1px solid #ddd;
 }
 
 div.viewport {
@@ -197,4 +203,30 @@ span.obf:before {
 
 div.blurb td {
     padding: 0 1em 1em 0;
+}
+
+article {
+    font-size: 1.2em;
+    line-height: 1.5em;
+}
+
+article h2 a {
+    text-decoration: none;
+}
+
+article h2:before {
+    content: "❦ ";
+    font-size: 0.8em;
+    color: #aaa;
+}
+
+article p.separator {
+    text-align: center;
+    margin: 3em 0;
+}
+
+article p.date {
+    color: #888;
+    font-size: 0.8em;
+    margin-left: 1em;
 }
