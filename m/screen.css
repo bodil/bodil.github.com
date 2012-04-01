@@ -4,12 +4,12 @@ body {
 
 div.sitebar {
     background-color: #777;
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #777), color-stop(100%, #111));
-    background-image: -webkit-linear-gradient(top, #777 0%, #111 100%);
-    background-image: -moz-linear-gradient(top, #777 0%, #111 100%);
-    background-image: -ms-linear-gradient(top, #777 0%, #111 100%);
-    background-image: -o-linear-gradient(top, #777 0%, #111 100%);
-    background-image: linear-gradient(top, #777 0%, #111 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #777), color-stop(100%, #111));
+    background: -webkit-linear-gradient(top, #777 0%, #111 100%);
+    background: -moz-linear-gradient(top, #777 0%, #111 100%);
+    background: -ms-linear-gradient(top, #777 0%, #111 100%);
+    background: -o-linear-gradient(top, #777 0%, #111 100%);
+    background: linear-gradient(top, #777 0%, #111 100%);
     color: #fff;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
@@ -17,13 +17,30 @@ div.sitebar {
     margin-bottom: 1em;
     font-family: "Georgia", "Times New Roman", Helvetica, Arial, sans-serif;
     font-size: 1.5em;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 0.25em;
+    border-bottom-right-radius: 0.25em;
 }
 
 div.sitebar a {
     color: #fff;
     text-decoration: none;
+    -webkit-transition: background-color 0.4s ease;
+    -moz-transition: background-color 0.4s ease;
+    -ms-transition: background-color 0.4s ease;
+    -o-transition: background-color 0.4s ease;
+    transition: background-color 0.4s ease;
+    background-color: rgba(255, 255, 255, 0.0);
+    padding: 0.1em 0.4em;
+    border-radius: 0.2em;
+}
+
+div.sitebar a:hover {
+    -webkit-transition: background-color 0.4s ease;
+    -moz-transition: background-color 0.4s ease;
+    -ms-transition: background-color 0.4s ease;
+    -o-transition: background-color 0.4s ease;
+    transition: background-color 0.4s ease;
+    background-color: rgba(255, 255, 255, 0.25);
 }
 
 div.sitebar span.left {
@@ -39,11 +56,34 @@ div.header {
     text-align: center;
 }
 
-div.viewport {
+h1 {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+h1:before {
+    content: '❧ ';
+}
+
+h1:after {
+    content: ' ❧';
+}
+
+div.body h1 {
+    padding-top: 0.3em;
+    border-top: 1px solid #ddd;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #ddd;
+}
+
+div.body, div.viewport {
     margin-bottom: 1em;
     padding: 0;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
+}
+
+div.viewport {
     text-align: center;
     height: 350px;
 }
@@ -55,6 +95,7 @@ div.viewport {
 div.small-print {
     font-size: small;
     text-align: center;
+    margin-bottom: 1.5em;
 }
 
 div.small-print hr {
@@ -77,3 +118,83 @@ div.small-print.right {
     text-align: right;
 }
 
+div.section {
+    margin: 3em 0;
+}
+
+div.body ul {
+    margin: 3em 0;
+}
+
+div.body li {
+    font-family: "Georgia", "Times New Roman", Helvetica, Arial, sans-serif;
+    font-size: 1.5em;
+    text-align: center;
+    font-weight: bold;
+    margin: 1.5em;
+}
+
+li span.resource:before {
+    content: "⇒ ";
+    margin: 0 0.4em;
+}
+
+li span.resource {
+    font-size: 0.8em;
+    font-weight: normal;
+	font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+li span.resource a {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #aaa), color-stop(100%, #ccc));
+    background: -webkit-linear-gradient(top, #aaa 0%, #ccc 100%);
+    background: -moz-linear-gradient(top, #aaa 0%, #ccc 100%);
+    background: -ms-linear-gradient(top, #aaa 0%, #ccc 100%);
+    background: -o-linear-gradient(top, #aaa 0%, #ccc 100%);
+    background: linear-gradient(top, #aaa 0%, #ccc 100%);
+    padding: 0.1em 0.4em;
+    border-radius: 0.3em;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #bbb;
+    border-right: 1px solid #aaa;
+    color: #f8f8f8;
+    text-shadow: #888 0px 0px 2px;
+    text-decoration: none;
+}
+
+li span.resource a:hover {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bbb), color-stop(100%, #ddd));
+    background: -webkit-linear-gradient(top, #bbb 0%, #ddd 100%);
+    background: -moz-linear-gradient(top, #bbb 0%, #ddd 100%);
+    background: -ms-linear-gradient(top, #bbb 0%, #ddd 100%);
+    background: -o-linear-gradient(top, #bbb 0%, #ddd 100%);
+    background: linear-gradient(top, #bbb 0%, #ddd 100%);
+    color: #fff;
+    text-shadow: #eee 0px 0px 2px;
+}
+
+div.portrait {
+    float: left;
+    margin: -2em 3em 3em 0;
+    width: 400px;
+}
+
+div.blurb {
+    font-family: "Georgia", "Times New Roman", Helvetica, Arial, sans-serif;
+    font-size: 1.4em;
+}
+
+h2 {
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 0.6em;
+}
+
+span.obf:before {
+    content: "@";
+}
+
+div.blurb td {
+    padding: 0 1em 1em 0;
+}
