@@ -197,10 +197,6 @@ h2 {
     margin-bottom: 0.6em;
 }
 
-span.obf:before {
-    content: "@";
-}
-
 div.blurb td {
     padding: 0 1em 1em 0;
 }
