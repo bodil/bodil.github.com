@@ -4,15 +4,17 @@ title: Articles
 body:
   class: articles
 ---
-{% for post in site.posts limit:3 %}
-<article>
-  <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-  <p class="date">{{ post.date | date_to_long_string }}</p>
-  {{ post.content }}
-  <p class="separator">✢ ✢ ✢</p>
-</article>
-{% endfor %}
+<div class="twelve columns offset-by-two">
+  {% for post in site.posts limit:3 %}
+  <article>
+    <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+    <p class="date">{{ post.date | date_to_long_string }}</p>
+    {{ post.content }}
+    <p class="separator">✢ ✢ ✢</p>
+  </article>
+  {% endfor %}
 
-{% for post in site.posts offset:3 %}
-<p class="article-link"><a href="{{ post.url }}">{{ post.title }}</a> <span class="date">{{ post.date | date_to_string }}</span></p>
-{% endfor %}
+  {% for post in site.posts offset:3 %}
+  <p class="article-link"><a href="{{ post.url }}">{{ post.title }}</a> <span class="date">{{ post.date | date_to_string }}</span></p>
+  {% endfor %}
+</div>

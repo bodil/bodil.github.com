@@ -42,9 +42,11 @@
           &middot; <a href="/ohai/">Contact</a>
         </span>
       </div>
+      {% unless page.body.suppresstitle %}
       <div class="sixteen columns header">
         <h1>{% if page.header %}{{ page.header }}{% else %}{{ page.title }}{% endif %}</h1>
       </div>
+      {% endunless %}
       <div class="sixteen columns {% if page.body.class %}{{ page.body.class }}{% else %}body{% endif %}">
         {{ content }}
       </div>
