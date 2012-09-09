@@ -148,7 +148,7 @@ li span.resource:before {
 li span.resource {
     font-size: 0.8em;
     font-weight: normal;
-	font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 li span.resource a {
@@ -210,7 +210,7 @@ article h2 a {
     text-decoration: none;
 }
 
-article h2:before {
+article h2:before, p.article-link a:before {
     content: "❦ ";
     font-size: 0.8em;
     color: #aaa;
@@ -221,8 +221,19 @@ article p.separator {
     margin: 3em 0;
 }
 
-article p.date {
+article p.date, span.date {
     color: #888;
     font-size: 0.8em;
     margin-left: 1em;
+}
+
+p.article-link {
+    font-size: 1.2em;
+    margin-left: 2em;
+}
+
+p.article-link a {
+    text-decoration: none;
+    font-family: "Georgia", "Times New Roman", Helvetica, Arial, sans-serif;
+    font-size: 1.4em;
 }

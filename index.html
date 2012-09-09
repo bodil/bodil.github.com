@@ -1,64 +1,12 @@
-<!doctype html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
-  <head>
-    <meta charset="utf-8">
-    <title>Bodil</title>
-    <meta name="description" content="Bodil">
-    <meta name="author" content="Bodil">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="/articles/atom.xml" rel="alternate" title="Giga Bodil" type="application/atom-xml">
-    <link rel="stylesheet" href="m/base.css">
-    <link rel="stylesheet" href="m/skeleton.css">
-    <link rel="stylesheet" href="m/layout.css">
-    <link rel="stylesheet" href="m/screen.css">
-    <link rel="shortcut icon" href="m/favicon.ico">
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-332358-13']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-  </head>
-  <body>
-
-    <div class="container">
-      <div class="sixteen columns sitebar">
-        <span class="left"><a href="/">Bodil</a>
-          &middot; <a href="/articles/">Articles</a>
-          &middot; <a href="/prez/">Talks</a>
-          &middot; <a href="/ohai/">Contact</a>
-          &middot; <a href="https://github.com/bodil">Github</a>
-        </span>
-      </div>
-      <div class="sixteen columns header">
-        <h1>GIGA BODIL</h1>
-      </div>
-      <div class="sixteen columns viewport">
-        <canvas id="viewport" width="390" height="390"></canvas>
-      </div>
-      <div class="sixteen columns small-print clearfix">
-        <div class="eight columns offset-by-four">
-          This <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" rel="dct:type">website</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://github.com/bodil" property="cc:attributionName" rel="cc:attributionURL">Bodil Stokke</a> is licensed under the <a rel="license" href="http://www.gnu.org/copyleft/gpl.html">GNU&nbsp;General&nbsp;Public&nbsp;License,&nbsp;version&nbsp;3</a>.
-        </div>
-      </div>
-    </div>
-    
-    <script type="text/javascript" src="j/mjs.js"></script>
-    <script type="text/javascript" src="j/coffee-script.min.js"></script>
-    <script type="text/javascript" src="j/ender.min.js"></script>
-    <script type="text/coffeescript" src="j/app.coffee"></script>
-  </body>
-</html>
+---
+layout: default
+header: GIGA BODIL
+body:
+  class: viewport
+  scripts:
+    - j/mjs.js
+    - j/coffee-script.min.js
+    - j/ender.min.js
+    - j/app.coffee
+---
+<canvas id="viewport" width="390" height="390"></canvas>
