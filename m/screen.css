@@ -274,3 +274,15 @@ ul li:before, ol li:before {
     width: 2em;
     margin-left: -2.3em;
 }
+
+.lanyrd-target-splat ol li:before, .lanyrd-target-splat ul li:before {
+    content: "";
+}
+
+.lanyrd-target-splat > a {
+    display: block;
+    text-align: center;
+    font-size: 1.6em;
+    font-family: "Georgia", "Times New Roman", Helvetica, Arial, sans-serif;
+    margin: 2em 0 1em 0;
+}
