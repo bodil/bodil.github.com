@@ -124,6 +124,10 @@ div.small-print.right {
     text-align: right;
 }
 
+.doge-widget-wrapper {
+    float: left;
+}
+
 div.section {
     margin: 3em 0;
 }
