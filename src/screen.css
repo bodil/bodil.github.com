@@ -1,0 +1,65 @@
+/* -*- mode: less-css -*- */
+
+body {
+    background-color: black;
+    color: #999;
+    opacity: 1;
+    transition: opacity 4s, background-color 4s;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    height: 100%;
+}
+
+#container {
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+}
+
+div {
+    font-family: "Prosto One", sans-serif;
+    font-weight: bold;
+    text-shadow: 4pt 4pt 8pt black;
+}
+
+div.el {
+    font-size: 16pt;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    background-color: rgba(64, 64, 64, 0.3);
+    & h1 {
+        font-size: 128pt;
+        margin: 0 0 -0.3em 0;
+    }
+    & p {
+        color: white;
+    }
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 1s;
+    &:hover {
+        color: #213484;
+    }
+}
+
+div.foot {
+    position: absolute;
+    bottom: 0;
+    right: 1em;
+    font-size: 8pt;
+}

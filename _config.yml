@@ -1,4 +1,0 @@
-safe: true
-pygments: true
-lsi: false
-permalink: /articles/:categories/:year/:month/:day/:title.html

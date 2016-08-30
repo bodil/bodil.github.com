@@ -1,0 +1,25 @@
+{
+  "name": "lol.camp",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "webpack-dev-server",
+    "compile": "webpack",
+    "start": "lserver -p $PORT -r app"
+  },
+  "license": "GPL-3.0+",
+  "dependencies": {
+    "detector-webgl": "^2.0.0",
+    "local-server": "^0.1.8",
+    "three": "^0.80.1",
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-babili": "0.0.1",
+    "babel-preset-es2015": "^6.14.0",
+    "css-loader": "^0.24.0",
+    "postcss-cssnext": "^2.7.0",
+    "postcss-loader": "^0.11.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.15.0"
+  }
+}
