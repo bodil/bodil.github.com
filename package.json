@@ -1,6 +1,6 @@
 {
   "name": "lol.camp",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "dev": "webpack-dev-server",
     "compile": "webpack",
