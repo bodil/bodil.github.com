@@ -42,9 +42,10 @@ div.el {
         font-size: 128pt;
         margin: 0 0 -0.3em 0;
     }
-    & p {
-        color: white;
-    }
+}
+
+p {
+    color: white;
 }
 
 a {
