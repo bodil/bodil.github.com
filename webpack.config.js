@@ -1,3 +1,5 @@
+var webpack = require("webpack");
+
 var prod = process.env["NODE_ENV"] === "production";
 
 module.exports = {
@@ -36,5 +38,10 @@ module.exports = {
   },
   postcss: function() {
     return [require("postcss-cssnext")];
-  }
+  },
+  plugins: prod ? [
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin()
+  ] : []
 };
