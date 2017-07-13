@@ -1,3 +1,5 @@
 /node_modules
 *~
 .tern-port
+/app/app.js
+/app/app.js.map
