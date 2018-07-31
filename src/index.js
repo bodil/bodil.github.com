@@ -6,7 +6,12 @@ import * as hasWebGL from "detector-webgl";
 if (hasWebGL) {
   const scene = new Three.Scene();
   scene.fog = new Three.Fog(0x000000, 1, 1000);
-  const camera = new Three.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1100);
+  const camera = new Three.PerspectiveCamera(
+    70,
+    window.innerWidth / window.innerHeight,
+    1,
+    1100
+  );
   camera.position.z = 20;
 
   const textureBuffer = document.createElement("canvas");
@@ -15,7 +20,10 @@ if (hasWebGL) {
 
   function texture(path) {
     const texture = new Three.Texture(textureBuffer);
-    const material = new Three.MeshBasicMaterial({map: texture, overdraw: 0.5});
+    const material = new Three.MeshBasicMaterial({
+      map: texture,
+      overdraw: 0.5
+    });
     const image = new Image();
     image.onload = () => {
       texture.image = image;
@@ -71,8 +79,6 @@ if (hasWebGL) {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.getElementById("container").appendChild(renderer.domElement);
 
-
-
   let lon = 90;
   let lat = 0;
   let llat = 0;
@@ -112,9 +118,24 @@ if (hasWebGL) {
 
   animate();
 
-  window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  }, false);
+  window.addEventListener(
+    "resize",
+    () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    },
+    false
+  );
 }
+
+document
+  .getElementById("contact-link")
+  .addEventListener("click", () =>
+    document.getElementById("contact").classList.add("active")
+  );
+document
+  .getElementById("contact")
+  .addEventListener("click", () =>
+    document.getElementById("contact").classList.remove("active")
+  );
