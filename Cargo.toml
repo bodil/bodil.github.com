@@ -1,0 +1,13 @@
+[package]
+name = "bodil-dot-lol"
+version = "0.1.0"
+authors = ["Bodil Stokke <bodil@bodil.org>"]
+
+[dependencies]
+hyper = "0.12.7"
+tokio-core = "0.1.17"
+log = "0.4.3"
+env_logger = "0.5.11"
+dotenv = "0.13.0"
+hyper-staticfile = "0.3.0"
+futures = "0.1.23"

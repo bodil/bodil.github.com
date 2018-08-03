@@ -1,5 +1,5 @@
+/target
+**/*.rs.bk
+.env
 /node_modules
-*~
-.tern-port
-/app/app.js
-/app/app.js.map
+/web/app/app.js*
