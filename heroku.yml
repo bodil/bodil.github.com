@@ -1,0 +1,8 @@
+setup:
+  config:
+    RUST_LOG: bodil_dot_lol=info
+build:
+  docker:
+    web: Dockerfile
+run:
+  web: cargo run --release
