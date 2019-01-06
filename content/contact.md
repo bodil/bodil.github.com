@@ -5,12 +5,8 @@ template = "content.html"
 
 ### Recruiters
 
-If you are contacting me about an unsolicited job opportunity, please stop. Such
-requests are highly unwelcome, and I will respond with a formal request per
-Article 15 of the GDPR if you proceed to contact me.
-
-At my discretion, if your unwanted request is particularly egregious, I may also
-share it on social media with the intent to name and shame you.
+Please don't contact me. I'm asking you nicely now; I will not be nice if you
+disregard this and contact me anyway.
 
 ### Others
 
@@ -20,8 +16,8 @@ If you have an informal request, I am most likely to respond on
 If you want to raise an issue about one of my software projects, it is better to
 use [GitHub](https://github.com/bodil).
 
-If you are contacting me about speaking at your conference, please use the form
-below:
+If you are contacting me about speaking at your conference or anything else
+related to teaching, please use the form below.
 
 <div id="wufoo-zp6eg9l10yls0i">
 Fill out my <a href="https://wtfbodil.wufoo.com/forms/zp6eg9l10yls0i">online form</a>.
