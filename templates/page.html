@@ -1,10 +1,17 @@
 {% extends "index.html" %}
 
+{% block title %}{{ config.title | escape }} : {{ page.title | escape }}{% endblock title %}
+
+{% block meta %}
+<meta name="summary" content="{{ page.summary | striptags | escape }}">
+<meta name="date" content="{{ page.date | date(format="%F") }}">
+{% endblock meta %}
+
 {% block content %}
 <article>
-  <h1>{{ page.title | safe }}</h1>
+  <h1>{{ page.title | escape }}</h1>
   <div class="post-meta">
-    {{ page.date | date(format="%F") }}
+    {{ page.date | date(format="%e %b %Y") }}
   </div>
     {{ page.content | safe }}
 </article>
