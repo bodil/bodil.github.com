@@ -19,7 +19,7 @@ use hyper::{
 use hyper_staticfile as stat;
 
 const PROXY_BASE: &str = "http://github.bodil.lol";
-const STATIC_FILE_PATH: &str = "./web/app";
+const STATIC_FILE_PATH: &str = "./public";
 
 fn main() {
     dotenv::dotenv().ok();

@@ -1,1 +1,2 @@
-web: npm start && ./target/release/bodil-dot-lol
+release: sh ./release-tasks.sh
+web: ./target/release/bodil-dot-lol

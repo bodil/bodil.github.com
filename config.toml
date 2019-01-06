@@ -1,0 +1,24 @@
+# The URL the site will be built for
+base_url = "https://bodil.lol"
+
+title = "Bodil dot lol"
+description = "Bodil"
+default_language = "en"
+
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = true
+
+# Whether to do syntax highlighting
+# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
+highlight_code = true
+highlight_theme = "charcoal"
+
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = false
+
+generate_rss = true
+
+check_external_links = false
+
+[extra]
+# Put all your custom variables here

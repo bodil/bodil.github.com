@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{% block title %}{{ config.title | safe }}{% endblock title %}</title>
+  <meta name="description" content="{{ config.description }}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="alternate" type="application/rss+xml" title="{{ config.title | safe }}" href="/rss.xml">
+  {% block css %}
+  <link rel="stylesheet" href="/site.css">
+  <link rel="stylesheet" href="/print.css" media="print">
+  {% endblock css %}
+  <!-- <link href="https://fonts.googleapis.com/css?family=Prosto+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"> -->
+</head>
+
+<body>
+  <header class="no-print">
+    <ul>
+      <li>
+        <a href="{{ config.base_url }}/contact/">Contact</a>
+      </li>
+      <li>
+        <a href="https://github.com/bodil">GitHub</a>
+      </li>
+      <li>
+        <a href="https://twitter.com/bodil">Twitter</a>
+      </li>
+    </ul>
+    <h1><a href="{{ config.base_url }}">{{ config.title | safe }}</a></h1>
+    <hr>
+  </header>
+
+  <main>
+    {% block content %}
+    {% if paginator.pages %}
+    {% for page in paginator.pages %}
+    <article>
+      <h2><a href="{{ page.permalink }}">{{ page.title | safe }}</a></h2>
+      <div class="post-meta">
+        {{ page.date | date(format="%F") }}
+      </div>
+      <p>
+        {{ page.summary | safe }}
+      </p>
+      <div class="read-more">
+        <a href="{{ page.permalink }}">👉 Read</a>
+      </div>
+    </article>
+    {% endfor %}
+    <nav class="pagination">
+      {% if paginator.previous %}
+      <a class="previous" href="{{ paginator.previous }}">‹ Previous</a>
+      {% endif %}
+      {% if paginator.next %}
+      <a class="next" href="{{ paginator.next }}">Next ›</a>
+      {% endif %}
+    </nav>
+    {% else %}
+    <p>No articles found. Commencing scheduled entertainment:</p>
+    <p class="video"><img src="/joe-and-monkey.gif"></p>
+    {% endif %}
+    {% endblock content %}
+  </main>
+
+  <footer>
+    <hr>
+    <ul class="no-print">
+      <li>
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">Licence</a>
+      </li>
+    </ul>
+    <div class="print-only">
+      This article by <a xmlns:cc="http://creativecommons.org/ns#" href="https://bodil.org/" property="cc:attributionName" rel="cc:attributionURL">Bodil Stokke</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+        Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+    </div>
+  </footer>
+
+</body>
+
+</html>

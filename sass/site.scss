@@ -1,0 +1,105 @@
+@import "_mu.scss";
+@import "_iosevka.scss";
+@import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC');
+
+footer,
+header {
+  ul {
+    text-align: right;
+
+    li {
+      display: inline;
+      font-size: 0.8em;
+    }
+
+    li::before {
+      content: "|";
+    }
+
+    li:first-child::before {
+      content: "";
+    }
+  }
+}
+
+header {
+  h1 {
+    font-family: "Bowlby One SC";
+    font-size: 2.6em;
+    margin-top: -0.4em;
+    margin-bottom: -0.4em;
+    text-shadow: 4px 5px 6px rgba(0, 0, 0, 0.3);
+
+    a {
+      color: black;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+  }
+
+  ul {
+    float: right;
+  }
+
+  hr {
+    clear: both;
+  }
+}
+
+footer {
+  margin-top: 1em;
+
+  hr,
+  ul {
+    margin: 0;
+  }
+}
+
+pre {
+  border-radius: 0.3em;
+  padding: 1em 1.5em;
+  font-family: "Iosevka SS08 Web";
+  font-weight: 400;
+  font-size: 0.9em;
+}
+
+.post-meta {
+  font-size: 0.8em;
+  color: #777;
+  margin-top: -1em;
+}
+
+.anchor {
+  font-size: 0.8em;
+  color: #ccc;
+}
+
+.video img {
+  width: 100%;
+}
+
+.print-only {
+  display: none;
+}
+
+@media screen and (max-width: 640px) {
+  header h1 {
+    font-size: 2em;
+  }
+
+  header ul {
+    float: none;
+  }
+
+  body {
+    font-size: 12pt;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  body {
+    font-size: 10pt;
+  }
+}

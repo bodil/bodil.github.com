@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+
+{% block content %}
+<article>
+  <h1>{{ page.title | safe }}</h1>
+  <div class="post-meta">
+    {{ page.date | date(format="%F") }}
+  </div>
+    {{ page.content | safe }}
+</article>
+{% endblock content %}
