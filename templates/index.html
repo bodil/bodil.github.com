@@ -2,13 +2,13 @@
 <html>
 
 <head>
-  <title>{% block title %}{{ config.title | escape }}{% endblock title %}</title>
+  <title>{% block title %}{{ config.title }}{% endblock title %}</title>
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta charset="utf-8">
-  <meta name="subject" content="{{ config.description | escape }}">
+  <meta name="subject" content="{{ config.description }}">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="author" content="{{ config.extra.author | escape }}">
-  <meta name="copyright" content="{{ config.extra.author | escape }}">
+  <meta name="author" content="{{ config.extra.author }}">
+  <meta name="copyright" content="{{ config.extra.author }}">
   <meta name="language" content="{{ config.default_language }}">
   {% block meta %}
   {% endblock meta %}
@@ -31,8 +31,8 @@
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
   {% endblock favicon %}
-  <link rel="alternate" type="application/rss+xml" title="{{ config.title | safe }}" href="/rss.xml">
-  <link rel="canonical" href="{{ current_url | urlencode }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ config.title }}" href="/rss.xml">
+  <link rel="canonical" href="{{ current_url }}">
   {% block css %}
   <link rel="stylesheet" href="/site.css">
   <link rel="stylesheet" href="/print.css" media="print">
