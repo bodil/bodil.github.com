@@ -1460,7 +1460,7 @@ single element *or* a parent element.
 
 To get there, we need a combinator which tries two parsers in order: if the
 first parser succeeds, we're done, we return its result and that's it. If it
-fails, instead of returning an error, instead we try the second parser *on the
+fails, instead of returning an error, we try the second parser *on the
 same input*. If that succeeds, great, and if it doesn't, we return the error
 too, as that means both our parsers have failed, and that's an overall failure.
 
