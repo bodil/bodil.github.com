@@ -1022,7 +1022,7 @@ The nesting of combinators is getting slightly annoying at this point, but we're
 going to resist refactoring everything to fix it just for now, and instead focus
 on what's going on here.
 
-The outermost combinator is a `map`, because of the aforemenetioned annoying
+The outermost combinator is a `map`, because of the aforementioned annoying
 nesting, and it's a terrible place to start if we're going to understand this
 one, so let's try and find where it really starts: the first quote character.
 Inside the `map`, there's a `right`, and the first part of the `right` is the
@@ -1126,7 +1126,7 @@ Tests are green! Ship it!
 Actually, no, at this point in the narrative, my rustc was complaining that my
 types are getting terribly complicated, and that I need to increase the max
 allowed type size to carry on. It's a good chance you're getting the same error
-at this point, and if you are, you need to know how to deal with it. Fortunatey,
+at this point, and if you are, you need to know how to deal with it. Fortunately,
 in these situations, rustc generally gives good advice, so when it tells you to
 add `#![type_length_limit = "…some big number…"]` to the top of your file,
 just do as it says. Actually, just go ahead and make it `#![type_length_limit =
@@ -1155,7 +1155,7 @@ fn element_start<'a>() -> impl Parser<'a, (String, Vec<(String, String)>)> {
 ```
 
 With that in place, we can quickly tack the tag closer on it to make a parser
-for the singe element.
+for the single element.
 
 ```rust
 fn single_element<'a>() -> impl Parser<'a, Element> {
