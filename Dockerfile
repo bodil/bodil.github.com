@@ -1,4 +1,4 @@
-FROM rust:1.31.1
+FROM rust:1.39.0
 WORKDIR /app
 RUN curl -sL https://github.com/getzola/zola/releases/download/v0.5.0/zola-v0.5.0-x86_64-unknown-linux-gnu.tar.gz | tar zx
 COPY ./Cargo.lock ./Cargo.lock

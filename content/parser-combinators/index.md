@@ -297,6 +297,12 @@ In the third, we feed it some incorrect input, `"Hello Mike!"`, and note that it
 does indeed reject the input with an error. Not that Mike is incorrect as a
 general rule, he's just not what this parser was looking for.
 
+{% exercises(slug="parser-builder") %}
+- Can you find a method on the `str` type in the standard library that would let
+  you write `match_literal()` without having to do the somewhat cumbersome `get`
+  indexing?
+{% end %}
+
 ### A Parser For Something Less Specific
 
 So that lets us parse `<`, `>`, `=` and even `</` and `/>`. We're practically
@@ -1671,7 +1677,7 @@ still waiting to resolve, instead of `and_then` immediately calling the function
 to create a `Future<B>`, instead it creates a new `Future<B>` which contains
 both the `Future<A>` and the function, and which then waits for `Future<A>` to
 finish. When it does, it calls the function with the result of the `Future<A>`,
-and Bob's your uncle<sup>[1](#footnote1)</sup>, you get your `Future<B>` back.
+and Bob's your uncle{{footnote(name="1")}}, you get your `Future<B>` back.
 In other words, in the case of a `Future` you can think of the function you pass
 to `and_then` as a *callback function*, because it gets called with the result
 of the original future when it completes. It's also a little more interesting
@@ -1777,14 +1783,14 @@ long, article.
 Let's focus on the good news: we wrote a parser from scratch using parser
 combinators! We know that a parser forms both a functor and a monad, so you can
 now impress people at parties with your daunting knowledge of category
-theory<sup>[2](#footnote2)</sup>.
+theory{{footnote(name="2")}}.
 
 Most importantly, we now know how parser combinators work from the ground up.
 Nobody can stop us now!
 
 ### Victory Puppies
 
-<p class="gif"><img src="./many-puppies.gif"/></p>
+{{gif(url="./many-puppies.gif")}}
 
 ### Further Resources
 
@@ -1817,18 +1823,18 @@ Finally, I owe my first awareness of parser combinators to the book
 Hutton, which is a great read and has the positive side effect of also teaching
 you Haskell.
 
-
-
 ## Licence
 
-This work is copyright Bodil Stokke and is licensed under the Creative Commons
-Attribution-NonCommercial-ShareAlike 4.0 International Licence. To view a copy
-of this licence, visit http://creativecommons.org/licenses/by-nc-sa/4.0/.
+This <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" rel="dct:type">work</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://bodil.lol/" property="cc:attributionName" rel="cc:attributionURL">Bodil Stokke</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
 
 
 ## Footnotes
 
-<a name="footnote1">1</a>: He isn't really your uncle.
+{% define_footnote(name="1") %}
+He isn't really your uncle.
+{% end %}
 
-<a name="footnote2">2</a>: Please don't be that person at parties.
+{% define_footnote(name="2") %}
+Please don't be that person at parties.
+{% end %}

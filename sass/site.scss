@@ -82,6 +82,40 @@ p.gif {
   }
 }
 
+article {
+  label.exercise {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+    background: #f0f0f0;
+  }
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  input + label.exercise + div {
+    height: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.1s ease-out;
+  }
+
+  input:checked + label.exercise + div {
+    height: auto;
+    transform: scaleY(1);
+  }
+
+  label.exercise:after {
+    content: " ☝️";
+  }
+
+  input:checked + label.exercise:after {
+    content: " 👇";
+  }
+}
+
 .post-meta {
   font-size: 0.8em;
   color: #777;

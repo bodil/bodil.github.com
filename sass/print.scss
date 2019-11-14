@@ -742,3 +742,30 @@ acronym[title].no-reformat:after {
   content: '';
 }
 @import "_gutenberg_old_style.scss";
+
+article {
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  label.exercise {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    display: block;
+    background: #f0f0f0;
+  }
+
+  label.exercise:after {
+    content: " ☝️";
+  }
+
+  input:checked + label.exercise:after {
+    content: " ☝️";
+  }
+
+  input + label.exercise + div {
+    height: auto;
+    transform: scaleY(1);
+    margin-bottom: 2em;
+  }
+}
