@@ -1,156 +1,258 @@
 @import "_mu.scss";
 @import "_iosevka.scss";
-@import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC');
+@import url("https://fonts.googleapis.com/css?family=Bowlby+One+SC");
+
+body {
+    background: #eee;
+}
+
+body.spj-mode * {
+    font-family: "Comic Sans MS", fantasy;
+}
 
 footer,
 header {
-  ul {
-    text-align: right;
+    ul.menu {
+        text-align: right;
 
-    li {
-      display: inline;
-      font-size: 0.8em;
-    }
+        li.menu-item {
+            display: inline;
+            font-size: 0.8em;
+        }
 
-    li::before {
-      content: "|";
-    }
+        li.menu-item::before {
+            content: "|";
+        }
 
-    li:first-child::before {
-      content: "";
+        li.menu-item:first-child::before {
+            content: "";
+        }
     }
-  }
 }
 
 header {
-  h1 {
-    font-family: "Bowlby One SC";
-    font-size: 2.6em;
-    margin-top: -0.4em;
-    margin-bottom: -0.4em;
-    text-shadow: 4px 5px 6px rgba(0, 0, 0, 0.3);
+    h1 {
+        font-family: "Bowlby One SC";
+        font-size: 2.6em;
+        margin-top: -0.4em;
+        margin-bottom: -0.4em;
+        text-shadow: 4px 5px 6px rgba(0, 0, 0, 0.3);
 
-    a {
-      color: black;
+        a {
+            color: black;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
     }
 
-    a:hover {
-      text-decoration: none;
+    ul.menu {
+        float: right;
+        margin: 0;
     }
-  }
 
-  ul {
-    float: right;
-  }
+    hr {
+        clear: both;
+    }
+}
 
-  hr {
-    clear: both;
-  }
+.dropdown {
+    position: relative;
+
+    > label {
+        cursor: pointer;
+    }
+
+    input[type="checkbox"] {
+        display: none;
+    }
+
+    input + label + ul {
+        display: hidden;
+        z-index: -10;
+        position: absolute;
+        right: 0;
+        opacity: 0;
+        padding: 0;
+        margin: 0;
+        transition: opacity 0.1s ease-out;
+        background: white;
+        border: 1px solid #bbb;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+
+        li {
+            margin: 0;
+            white-space: nowrap;
+            display: block;
+            cursor: pointer;
+            padding: 0.2em 0.7em;
+        }
+
+        li:hover {
+            background: #336699;
+            color: white;
+        }
+
+        input + li:after {
+            content: "☐";
+        }
+
+        input:checked + li:after {
+            content: "☑";
+        }
+    }
+
+    input:checked + label {
+        background: white;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+    }
+
+    input:checked + label + ul {
+        display: block;
+        opacity: 1;
+        z-index: 10;
+    }
 }
 
 footer {
-  margin-top: 1em;
+    margin-top: 1em;
 
-  hr,
-  ul {
-    margin: 0;
-  }
+    hr,
+    ul {
+        margin: 0;
+    }
 }
 
-pre, code {
-  font-family: "Iosevka SS08 Web";
-  font-weight: 400;
-  font-size: 0.9em;
+pre,
+code {
+    font-family: "Iosevka SS08 Web";
+    font-weight: 400;
+    font-size: 0.9em;
 }
 
 pre {
-  border-radius: 0.3em;
-  padding: 1em 1.5em;
+    border-radius: 0.3em;
+    padding: 1em 1.5em;
 }
 
 h1 {
-  font-size: 1.8em;
-  font-weight: bold;
+    font-size: 1.8em;
+    font-weight: bold;
 }
 
 p.gif {
-  text-align: center;
+    text-align: center;
 
-  img {
-    width: 100%;
-    max-width: 640px;
-  }
+    img {
+        width: 100%;
+        max-width: 640px;
+    }
 }
 
 article {
-  label.exercise {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: bold;
-    cursor: pointer;
-    display: block;
-    background: #f0f0f0;
-  }
+    label.exercise {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: bold;
+        cursor: pointer;
+        display: block;
+        background: #f0f0f0;
+    }
 
-  input[type="checkbox"] {
-    display: none;
-  }
+    input[type="checkbox"] {
+        display: none;
+    }
 
-  input + label.exercise + div {
-    height: 0;
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 0.1s ease-out;
-  }
+    input + label.exercise + div {
+        height: 0;
+        transform: scaleY(0);
+        transform-origin: top;
+        transition: transform 0.1s ease-out;
+    }
 
-  input:checked + label.exercise + div {
-    height: auto;
-    transform: scaleY(1);
-  }
+    input:checked + label.exercise + div {
+        height: auto;
+        transform: scaleY(1);
+    }
 
-  label.exercise:after {
-    content: " ☝️";
-  }
+    label.exercise:after {
+        content: " ☝️";
+    }
 
-  input:checked + label.exercise:after {
-    content: " 👇";
-  }
+    input:checked + label.exercise:after {
+        content: " 👇";
+    }
 }
 
 .post-meta {
-  font-size: 0.8em;
-  color: #777;
-  margin-top: -1em;
+    font-size: 0.8em;
+    color: #777;
+    margin-top: -1em;
 }
 
 .anchor {
-  font-size: 0.8em;
-  color: #ccc;
+    font-size: 0.8em;
+    color: #ccc;
 }
 
 .video img {
-  width: 100%;
+    width: 100%;
 }
 
 .print-only {
-  display: none;
+    display: none;
 }
 
 @media screen and (max-width: 640px) {
-  header h1 {
-    font-size: 2em;
-  }
+    header h1 {
+        font-size: 2em;
+    }
 
-  header ul {
-    float: none;
-  }
+    header ul {
+        float: none;
+    }
 
-  body {
-    font-size: 12pt;
-  }
+    body {
+        font-size: 12pt;
+    }
 }
 
 @media screen and (max-width: 340px) {
-  body {
-    font-size: 10pt;
-  }
+    body {
+        font-size: 10pt;
+    }
+}
+
+body.dark-mode {
+    background: #191919;
+    color: #999;
+
+    a {
+        color: #57b;
+    }
+
+    header h1 a {
+        color: #eee;
+    }
+
+    code,
+    article label.exercise {
+        background: #2b2c2f;
+    }
+
+    .dropdown {
+        ul {
+            background: #222;
+            border: 1px solid #333;
+        }
+
+        label {
+            border: 1px solid rgba(0, 0, 0, 0);
+        }
+
+        input:checked + label {
+            background: #222;
+            border: 1px solid #333;
+        }
+    }
 }

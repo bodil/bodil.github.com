@@ -2,105 +2,148 @@
 <html>
 
 <head>
-  <title>{% block title %}{{ config.title }}{% endblock title %}</title>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta charset="utf-8">
-  <meta name="subject" content="{{ config.description }}">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="author" content="{{ config.extra.author }}">
-  <meta name="copyright" content="{{ config.extra.author }}">
-  <meta name="language" content="{{ config.default_language }}">
-  {% block meta %}
-  {% endblock meta %}
-  {% block favicon %}
-  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-  <meta name="theme-color" content="#ffffff">
-  {% endblock favicon %}
-  <link rel="alternate" type="application/rss+xml" title="{{ config.title }}" href="/rss.xml">
-  <link rel="canonical" href="{{ current_url }}">
-  {% block css %}
-  <link rel="stylesheet" href="/site.css">
-  <link rel="stylesheet" href="/print.css" media="print">
-  {% endblock css %}
+    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta charset="utf-8" />
+    <meta name="subject" content="{{ config.description }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="author" content="{{ config.extra.author }}" />
+    <meta name="copyright" content="{{ config.extra.author }}" />
+    <meta name="language" content="{{ config.default_language }}" />
+    {% block meta %} {% endblock meta %} {% block favicon %}
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+    {% endblock favicon %}
+    <link rel="alternate" type="application/rss+xml" title="{{ config.title }}" href="/rss.xml" />
+    <link rel="canonical" href="{{ current_url }}" />
+    {% block css %}
+    <link rel="stylesheet" href="/site.css" />
+    <link rel="stylesheet" href="/print.css" media="print" />
+    {% endblock css %}
+
+    <script type="text/javascript">
+        function onChange(prop) {
+            return function (event) {
+                console.log("changed:", prop, event.target.checked);
+                window.localStorage.setItem(prop, event.target.checked ? "true" : "false");
+                if (event.target.checked) {
+                    document.body.classList.add(prop);
+                } else {
+                    document.body.classList.remove(prop);
+                }
+                console.log(document.body.classList);
+            };
+        }
+
+        window.onload = function () {
+            document.getElementById("menu-dark-mode").checked = window.localStorage.getItem("dark-mode") == "true";
+            document.getElementById("menu-spj-mode").checked = window.localStorage.getItem("spj-mode") == "true";
+            document.getElementById("menu-dark-mode").onchange = onChange("dark-mode");
+            document.getElementById("menu-spj-mode").onchange = onChange("spj-mode");
+        }
+    </script>
 </head>
 
 <body>
-  <header class="no-print">
-    <ul>
-      <li>
-        <a href="{{ config.base_url }}/contact/">Contact</a>
-      </li>
-      <li>
-        <a href="https://github.com/bodil">GitHub</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/bodil">Twitter</a>
-      </li>
-    </ul>
-    <h1><a href="{{ config.base_url }}">{{ config.title | safe }}</a></h1>
-    <hr>
-  </header>
+    <script type="text/javascript">
+        if (window.localStorage.getItem("dark-mode") == "true") {
+            document.body.classList.add("dark-mode");
+        }
+        if (window.localStorage.getItem("spj-mode") == "true") {
+            document.body.classList.add("spj-mode");
+        }
 
-  <main>
-    {% block content %}
-    {% if paginator.pages %}
-    {% for page in paginator.pages %}
-    <article>
-      <h2><a href="{{ page.permalink }}">{{ page.title | safe }}</a></h2>
-      <div class="post-meta">
-        {{ page.date | date(format="%F") }}
-      </div>
-      <p>
-        {{ page.summary | safe }}
-      </p>
-      <div class="read-more">
-        <a href="{{ page.permalink }}">👉 Read</a>
-      </div>
-    </article>
-    {% endfor %}
-    <nav class="pagination">
-      {% if paginator.previous %}
-      <a class="previous" href="{{ paginator.previous }}">‹ Previous</a>
-      {% endif %}
-      {% if paginator.next %}
-      <a class="next" href="{{ paginator.next }}">Next ›</a>
-      {% endif %}
-    </nav>
-    {% else %}
-    <p>No articles found. Commencing scheduled entertainment:</p>
-    <p class="video"><img src="/joe-and-monkey.gif"></p>
-    {% endif %}
-    {% endblock content %}
-  </main>
+    </script>
+    <header class="no-print">
+        <ul class="menu">
+            <li class="menu-item">
+                <a href="{{ config.base_url }}/contact/">Contact</a>
+            </li>
+            <li class="menu-item">
+                <a href="https://github.com/bodil">GitHub</a>
+            </li>
+            <li class="menu-item">
+                <a href="https://twitter.com/bodil">Twitter</a>
+            </li>
+            <li class="menu-item dropdown">
+                <input id="settings-menu" type="checkbox" />
+                <label class="dropdown-button" for="settings-menu">⚙</label>
+                <ul>
+                    <input type="checkbox" id="menu-dark-mode">
+                    <li onclick="document.getElementById('menu-dark-mode').click()">
+                        Dark Mode
+                    </li>
+                    <input type="checkbox" id="menu-spj-mode">
+                    <li onclick="document.getElementById('menu-spj-mode').click()">
+                        SPJ Mode
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <h1><a href="{{ config.base_url }}">{{ config.title | safe }}</a></h1>
+        <hr />
+    </header>
 
-  <footer>
-    <hr>
-    <ul class="no-print">
-      <li>
-        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">Licence</a>
-      </li>
-    </ul>
-    <div class="print-only">
-      This article by <a xmlns:cc="http://creativecommons.org/ns#" href="{{ config.base_url }}" property="cc:attributionName" rel="cc:attributionURL">{{ config.extra.author }}</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
-        Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
-    </div>
-  </footer>
+    <main>
+        {% block content %} {% if paginator.pages %} {% for page in paginator.pages %}
+        <article>
+            <h2><a href="{{ page.permalink }}">{{ page.title | safe }}</a></h2>
+            <div class="post-meta">
+                {{ page.date | date(format="%F") }}
+            </div>
+            <p>
+                {{ page.summary | safe }}
+            </p>
+            <div class="read-more">
+                <a href="{{ page.permalink }}">👉 Read</a>
+            </div>
+        </article>
+        {% endfor %}
+        <nav class="pagination">
+            {% if paginator.previous %}
+            <a class="previous" href="{{ paginator.previous }}">‹ Previous</a>
+            {% endif %} {% if paginator.next %}
+            <a class="next" href="{{ paginator.next }}">Next ›</a>
+            {% endif %}
+        </nav>
+        {% else %}
+        <p>No articles found. Commencing scheduled entertainment:</p>
+        <p class="video"><img src="/joe-and-monkey.gif" /></p>
+        {% endif %} {% endblock content %}
+    </main>
 
+    <footer>
+        <hr />
+        <ul class="menu no-print">
+            <li class="menu-item">
+                <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">Licence</a>
+            </li>
+        </ul>
+        <div class="print-only">
+            This article by
+            <a xmlns:cc="http://creativecommons.org/ns#" href="{{ config.base_url }}" property="cc:attributionName"
+                rel="cc:attributionURL">{{ config.extra.author }}</a>
+            is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons
+                Attribution-NonCommercial-ShareAlike 4.0 International
+                License</a>.
+        </div>
+    </footer>
 </body>
 
 </html>
