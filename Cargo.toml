@@ -1,13 +1,13 @@
 [package]
 name = "bodil-dot-lol"
 version = "0.1.0"
+edition = "2018"
 authors = ["Bodil Stokke <bodil@bodil.org>"]
 
 [dependencies]
-hyper = "0.12.7"
-tokio-core = "0.1.17"
+hyper = "0.13.1"
 log = "0.4.3"
-env_logger = "0.6.0"
-dotenv = "0.13.0"
-hyper-staticfile = "0.3.0"
-futures = "0.1.23"
+env_logger = "0.7.1"
+dotenv = "0.15.0"
+hyper-staticfile = "0.5.1"
+tokio = "0.2.6"
