@@ -51,12 +51,36 @@
         }
 
         window.onload = function () {
-            document.getElementById("menu-dark-mode").checked = window.localStorage.getItem("dark-mode") == "true";
-            document.getElementById("menu-spj-mode").checked = window.localStorage.getItem("spj-mode") == "true";
+            document.getElementById("menu-dark-mode").checked =
+                window.localStorage.getItem("dark-mode") == "true";
+            document.getElementById("menu-spj-mode").checked =
+                window.localStorage.getItem("spj-mode") == "true";
             document.getElementById("menu-dark-mode").onchange = onChange("dark-mode");
             document.getElementById("menu-spj-mode").onchange = onChange("spj-mode");
-        }
+        };
     </script>
+
+    <!-- Matomo -->
+    <script type="text/javascript">
+        var _paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(["trackPageView"]);
+        _paq.push(["enableLinkTracking"]);
+        (function () {
+            var u = "//tortuga.lol.camp/matomo/";
+            _paq.push(["setTrackerUrl", u + "matomo.php"]);
+            _paq.push(["setSiteId", "1"]);
+            var d = document,
+                g = d.createElement("script"),
+                s = d.getElementsByTagName("script")[0];
+            g.type = "text/javascript";
+            g.async = true;
+            g.defer = true;
+            g.src = u + "matomo.js";
+            s.parentNode.insertBefore(g, s);
+        })();
+    </script>
+    <!-- End Matomo Code -->
 </head>
 
 <body>
@@ -67,7 +91,6 @@
         if (window.localStorage.getItem("spj-mode") == "true") {
             document.body.classList.add("spj-mode");
         }
-
     </script>
     <header class="no-print">
         <ul class="menu">
@@ -84,11 +107,11 @@
                 <input id="settings-menu" type="checkbox" />
                 <label class="dropdown-button" for="settings-menu">⚙</label>
                 <ul>
-                    <input type="checkbox" id="menu-dark-mode">
+                    <input type="checkbox" id="menu-dark-mode" />
                     <li onclick="document.getElementById('menu-dark-mode').click()">
                         Dark Mode
                     </li>
-                    <input type="checkbox" id="menu-spj-mode">
+                    <input type="checkbox" id="menu-spj-mode" />
                     <li onclick="document.getElementById('menu-spj-mode').click()">
                         SPJ Mode
                     </li>

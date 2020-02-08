@@ -227,12 +227,21 @@ body.dark-mode {
     background: #191919;
     color: #999;
 
+    hr {
+        border: 1px inset #555;
+    }
+
     a {
         color: #57b;
     }
 
+    a.anchor {
+        color: #444;
+    }
+
     header h1 a {
-        color: #eee;
+        color: #000;
+        text-shadow: 4px 5px 6px rgba(255, 255, 255, 0.3);
     }
 
     code,
