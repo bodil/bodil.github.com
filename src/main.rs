@@ -1,9 +1,6 @@
 #![forbid(rust_2018_idioms)]
 #![deny(nonstandard_style)]
 
-use hyper::server::conn::AddrStream;
-use hyper::HeaderMap;
-use hyper::Uri;
 use std::env;
 use std::io::{Error, ErrorKind};
 use std::net::SocketAddr;
@@ -11,10 +8,12 @@ use std::path::Path;
 
 use hyper::{
     header::{HeaderValue, ACCEPT_LANGUAGE, HOST, LOCATION, REFERER, USER_AGENT},
+    server::conn::AddrStream,
     service::{make_service_fn, service_fn},
-    Body, Client, Request, Response, Server,
+    Body, Client, HeaderMap, Request, Response, Server, Uri,
 };
 use hyper_staticfile as stat;
+use hyper_tls::HttpsConnector;
 use log::{error, info, trace};
 use url::Url;
 
@@ -36,8 +35,10 @@ fn main() {
     }
 }
 
+#[allow(dead_code)]
 async fn track(addr: SocketAddr, uri: Uri, headers: HeaderMap<HeaderValue>) -> Result<(), Error> {
-    let client = Client::new();
+    let https = HttpsConnector::new();
+    let client = Client::builder().build::<_, Body>(https);
     let mut url = Url::parse(MATOMO_PATH).unwrap();
     let random: u128 = rand::random();
     url.query_pairs_mut()
@@ -45,24 +46,6 @@ async fn track(addr: SocketAddr, uri: Uri, headers: HeaderMap<HeaderValue>) -> R
         .append_pair("idsite", MATOMO_SITE_ID)
         .append_pair("rec", "1")
         .append_pair("url", &uri.to_string())
-        .append_pair(
-            "urlref",
-            &headers[REFERER]
-                .to_str()
-                .map_err(|err| Error::new(ErrorKind::Other, err))?,
-        )
-        .append_pair(
-            "ua",
-            &headers[USER_AGENT]
-                .to_str()
-                .map_err(|err| Error::new(ErrorKind::Other, err))?,
-        )
-        .append_pair(
-            "lang",
-            &headers[ACCEPT_LANGUAGE]
-                .to_str()
-                .map_err(|err| Error::new(ErrorKind::Other, err))?,
-        )
         .append_pair("cip", &addr.ip().to_string())
         .append_pair(
             "cdt",
@@ -81,15 +64,49 @@ async fn track(addr: SocketAddr, uri: Uri, headers: HeaderMap<HeaderValue>) -> R
         .append_pair("rand", &format!("{}", random))
         .append_pair("apiv", "1")
         .append_pair("send_image", "0");
+    if let Some(header) = headers.get(REFERER) {
+        url.query_pairs_mut().append_pair(
+            "urlref",
+            header
+                .to_str()
+                .map_err(|err| Error::new(ErrorKind::Other, err))?,
+        );
+    }
+    if let Some(header) = headers.get(USER_AGENT) {
+        url.query_pairs_mut().append_pair(
+            "ua",
+            header
+                .to_str()
+                .map_err(|err| Error::new(ErrorKind::Other, err))?,
+        );
+    }
+    if let Some(header) = headers.get(ACCEPT_LANGUAGE) {
+        url.query_pairs_mut().append_pair(
+            "lang",
+            header
+                .to_str()
+                .map_err(|err| Error::new(ErrorKind::Other, err))?,
+        );
+    }
+
     let uri = url
         .into_string()
         .parse()
         .map_err(|err| Error::new(ErrorKind::Other, err))?;
-    client
+    println!("Sending tracking request: {}", uri);
+    let result = client
         .get(uri)
         .await
-        .map_err(|err| Error::new(ErrorKind::Other, err))
-        .map(|_| {})
+        .map_err(|err| Error::new(ErrorKind::Other, err));
+    if let Ok(response) = result {
+        let bytes = hyper::body::to_bytes(response.into_body()).await.unwrap();
+        let s = std::str::from_utf8(&bytes).unwrap();
+        println!("Tracker responded:\n\n{}\n", s);
+    } else {
+        println!("Tracking error: {:?}", result);
+        return result.map(|_| ());
+    }
+    Ok(())
 }
 
 async fn resolve_static(req: Request<Body>) -> Result<Response<Body>, Error> {
@@ -139,23 +156,26 @@ fn resolve_redirect(req: &Request<Body>) -> Result<Response<Body>, Error> {
     }
 }
 
-async fn resolve(addr: SocketAddr, req: Request<Body>) -> Result<Response<Body>, Error> {
+async fn resolve(_addr: SocketAddr, req: Request<Body>) -> Result<Response<Body>, Error> {
     let path = req.uri().path().to_owned();
-    let uri = req.uri().clone();
-    let headers = req.headers().clone();
-    let response = if let response @ Ok(_) = resolve_redirect(&req) {
+    // let uri = req.uri().clone();
+    // let headers = req.headers().clone();
+    if let response @ Ok(_) = resolve_redirect(&req) {
         response
     } else if let response @ Ok(_) = resolve_static(req).await {
         response
     } else {
         resolve_proxy(&path).await
-    };
-    if let Ok(response) = &response {
-        if response.status().is_success() {
-            tokio::spawn(track(addr.clone(), uri, headers));
-        }
     }
-    response
+    // if let Ok(response) = &response {
+    //     let status = response.status();
+    //     if status.is_success() || status.is_redirection() {
+    //         println!("Tracking url {}", uri);
+    //         tokio::spawn(track(addr, uri, headers));
+    //     } else {
+    //         println!("Did not track, status was {}", response.status());
+    //     }
+    // }
 }
 
 async fn main_process() -> Result<(), hyper::Error> {
