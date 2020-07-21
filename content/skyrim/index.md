@@ -60,15 +60,16 @@ but disabled by default, because it may add a bit _too_ much immersion to the ga
 You can also pick another main menu replacer from the three provided, or disable them altogether for
 the original Skyrim main menu experience.
 
-You should run _zEdit_ afterwards to regenerate the three patch ESPs (`zPatch.esp`,
-`ENBLight Patch.esp` and `ReProccer.esp`) for your changed content. If you've disabled _SkyRe_, you
-should not generate `ReProccer.esp` in _zEdit_, and you should also disable it in your MO2 plugin
-list. The other two are needed by the visual mods, and `zPatch.esp` is also needed by you, as, among
-other things, it patches helmets to show Khajiit ears through them, without which the game is
-generally a huge disappointment.
+You should run _zEdit_ from the MO2 run interface afterwards to rebuild the three patch ESPs
+(`zPatch.esp`, `ENBLight Patch.esp` and `ReProccer.esp`) for your changed content. Load your mods in
+_zEdit_ and hit the jigsaw piece icon in the top right, then "Build All" to start the build process.
+If you've disabled _SkyRe_, you should not build `ReProccer.esp` in _zEdit_, and you should also
+disable it in your MO2 plugin list. The other two are needed by the visual mods, and `zPatch.esp` is
+also needed by you personally, as, among other things, it patches helmets to show Khajiit ears
+through them, without which the game is generally a huge disappointment.
 
 Once this is done, go through the plugin list in the MO2 interface and disable any plugins that now
-have missing masters, these are patches you no longer need for the content you've disabled.
+have missing masters. These are patches you no longer need for the content you've disabled.
 
 #### Generate LOD Files
 
@@ -88,7 +89,8 @@ folder.
 
 ### Launching the Game
 
-Launch the game by opening MO2 and running SKSE through it.
+Launch the game by opening MO2 and running SKSE through it. Don't launch Skyrim directly, or you
+won't have your mods.
 
 Now go meet some dogs!
 
