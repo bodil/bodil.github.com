@@ -2,24 +2,23 @@
 title = "Contact Me"
 template = "content.html"
 date = 2019-01-06
-draft = true
 +++
 
 ### Recruiters
 
-Please don't contact me. I'm asking you nicely now; I will not be nice if you
-disregard this and contact me anyway.
+Please don't contact me. I'm asking you nicely now; I will not be nice if you disregard this and
+contact me anyway.
 
 ### Others
 
 If you have an informal request, I am most likely to respond on
 [Twitter](https://twitter.com/bodil).
 
-If you want to raise an issue about one of my software projects, it is better to
-use [GitHub](https://github.com/bodil).
+If you want to raise an issue about one of my software projects, it is better to use
+[GitHub](https://github.com/bodil).
 
-If you are contacting me about speaking at your conference or anything else
-related to teaching, please use the form below.
+If you are contacting me about speaking at your conference or anything else related to teaching,
+please use the form below.
 
 <div id="wufoo-zp6eg9l10yls0i">
 Fill out my <a href="https://wtfbodil.wufoo.com/forms/zp6eg9l10yls0i">online form</a>.

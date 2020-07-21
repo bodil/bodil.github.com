@@ -1,6 +1,8 @@
 +++
 title = "Building TodoMVC With vgtk"
 date = 2020-02-20
+[taxonomies]
+category = ["article"]
 +++
 
 The [`vgtk`][vgtk] project started out as a side effect of one of my "must write a text editor"
