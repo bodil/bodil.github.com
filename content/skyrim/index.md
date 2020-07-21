@@ -12,7 +12,7 @@ guarantees or support are offered in this regard.
 
 ### Download
 
-Download: (Bodilrim.wabbajack)[Bodilrim.wabbajack]
+Download this: [Bodilrim-20200720.wabbajack](Bodilrim-20200720.wabbajack)
 
 ### Installation
 
