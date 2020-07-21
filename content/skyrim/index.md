@@ -20,7 +20,7 @@ standard bug fixes, a number of strictly optional gameplay mods (notably
 of survival/crafting mods), and a small amount of non-intrusive playable content (notably
 [_Hammet's Dungeon Pack_](https://www.nexusmods.com/skyrimspecialedition/mods/12186) and
 [_Skyrim Sewers_](https://www.nexusmods.com/skyrimspecialedition/mods/9320)). Also, most
-importantly, [_Dachshunds_](https://www.nexusmods.com/skyrimspecialedition/mods/37560).
+importantly, [Dachshunds](https://www.nexusmods.com/skyrimspecialedition/mods/37560).
 
 ### Download
 
