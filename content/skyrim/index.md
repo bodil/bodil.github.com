@@ -22,9 +22,32 @@ of survival/crafting mods), and a small amount of non-intrusive playable content
 [_Skyrim Sewers_](https://www.nexusmods.com/skyrimspecialedition/mods/9320)). Also, most
 importantly, [Dachshunds](https://www.nexusmods.com/skyrimspecialedition/mods/37560).
 
+What to expect from this modlist:
+
+-   Skyrim will look an order of magnitude better than the first time you played it. You will need a
+    beefy GPU to handle it (mine's an Nvidia RTX 2080 and you won't get away with much less than
+    that).
+-   The user interface should be vastly improved, through
+    [_SkyUI_](https://www.nexusmods.com/skyrimspecialedition/mods/12604) as well as numerous smaller
+    quality of life tweaks.
+-   Gameplay mods add considerably more depth to the game mechanics but don't substantially change
+    the game. It will be a tougher gameplay experience that will keep you on your toes at all times
+    worrying how to survive but it should still feel like the original game.
+
+What this modlist very specifically isn't:
+
+-   Nothing that feels even remotely like a cheat mod.
+-   No big content changes, no major questlines, nothing that isn't Skyrim. The modlist should be a
+    good base on which to add such things, if you want them, but it won't force anything on you. Any
+    content additions are either only for the visuals or very nonintrusive.
+-   No male gaze mods, no boob physics, no character overhauls to make everyone look like a
+    supermodel. People look like they did when you first played the game, just with better textures.
+
 ### Download
 
-Download this: [Bodilrim-0.1.wabbajack](Bodilrim-0.1.wabbajack)
+Download this:
+[Bodilrim-0.2.wabbajack](https://mega.nz/file/bhoXmA7a#BGr9UgQQGZpor-9igNzZy29zZKgsQlM5neA0F1jAJ2Q)
+(external link, 694Mb)
 
 ### Installation
 
@@ -57,6 +80,9 @@ You should also consider, if you've kept the survival mods, whether you want to 
 [_Skills of the Wild_](https://www.nexusmods.com/skyrimspecialedition/mods/37693), which is included
 but disabled by default, because it may add a bit _too_ much immersion to the game.
 
+There are a few mods which I find amusing under the **Non-Lore** section which you may choose to
+enable if you don't mind the immersion breaking.
+
 You can also pick another main menu replacer from the three provided, or disable them altogether for
 the original Skyrim main menu experience.
 
@@ -70,6 +96,9 @@ through them, without which the game is generally a huge disappointment.
 
 Once this is done, go through the plugin list in the MO2 interface and disable any plugins that now
 have missing masters. These are patches you no longer need for the content you've disabled.
+
+It's also a good idea to run _LOOT_ to make sure your mods are in sorted order and you have all the
+requisite patches installed whenever you've made any substantial changes to your modlist.
 
 #### Generate LOD Files
 
