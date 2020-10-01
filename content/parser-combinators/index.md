@@ -578,8 +578,8 @@ type ParseResult<'a, Output> = Result<(&'a str, Output), &'a str>;
 So that now, instead of typing that monstrosity out all the time, we can just
 type `ParseResult<String>` or similar. We've added a lifetime there, because the
 type declaration requires it, but a lot of the time the Rust compiler should be
-able to infer it for you. As a rule, try leaving the lifetime out and see if
-rustc gets upset, then just put it in if it does.
+able to infer it for you. As a rule of thumb, try leaving the lifetime out and
+see if rustc gets upset, then just put it in if it does.
 
 The lifetime `'a`, in this case, refers specifically to the lifetime of the
 *input*.
