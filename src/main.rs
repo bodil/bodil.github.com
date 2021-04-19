@@ -7,7 +7,7 @@ use std::net::SocketAddr;
 use std::path::Path;
 
 use hyper::{
-    header::{HeaderValue, ACCEPT_LANGUAGE, HOST, LOCATION, REFERER, USER_AGENT},
+    header::{HeaderValue, ACCEPT_LANGUAGE, CONTENT_TYPE, HOST, LOCATION, REFERER, USER_AGENT},
     server::conn::AddrStream,
     service::{make_service_fn, service_fn},
     Body, Client, HeaderMap, Request, Response, Server, Uri,
@@ -157,6 +157,29 @@ fn resolve_redirect(req: &Request<Body>) -> Result<Response<Body>, Error> {
 }
 
 async fn resolve(_addr: SocketAddr, req: Request<Body>) -> Result<Response<Body>, Error> {
+    let referer = req
+        .headers()
+        .get(REFERER)
+        .and_then(|r| r.to_str().ok())
+        .map(|r| r.to_lowercase());
+    if let Some(referer) = referer {
+        if referer.contains("//news.ycombinator.com/") {
+            return Ok(Response::builder()
+                .status(200)
+                .header(CONTENT_TYPE, "text/html")
+                .body(Body::from(
+                    "<!DOCTYPE html>
+<html>
+  <head><title>Get Tae Fuck</title></head>
+  <body>
+    <h1>Hacker News Can Fuck Off</h1>
+    <p>So get tae fuck.</p>
+  </body>
+</html>",
+                ))
+                .unwrap());
+        }
+    }
     let path = req.uri().path().to_owned();
     // let uri = req.uri().clone();
     // let headers = req.headers().clone();
