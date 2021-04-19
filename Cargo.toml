@@ -7,10 +7,10 @@ authors = ["Bodil Stokke <bodil@bodil.org>"]
 [dependencies]
 hyper = "0.13.1"
 log = "0.4.3"
-env_logger = "0.7.1"
+env_logger = "0.8.3"
 dotenv = "0.15.0"
 hyper-staticfile = "0.5.1"
 hyper-tls = "0.4.1"
 tokio = "0.2.6"
 url = "2.1.1"
-rand = "0.7.3"
+rand = "0.8.3"
