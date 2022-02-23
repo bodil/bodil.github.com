@@ -81,7 +81,7 @@
         function updateTheme() {
             const spj = window.localStorage.getItem("spj-mode") == "true";
             const darkValue = window.localStorage.getItem("dark-mode");
-            const dark = darkValue === null ? window.matchMedia("(prefers-color-scheme: dark)") : darkValue == "true";
+            const dark = darkValue === null ? window.matchMedia("(prefers-color-scheme: dark)").matches : darkValue == "true";
 
             document.body.classList[spj ? "add" : "remove"]("spj-mode");
             document.body.classList[dark ? "add" : "remove"]("sl-theme-dark");
