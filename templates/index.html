@@ -30,6 +30,7 @@
     <meta name="theme-color" content="#ffffff" />
     {% endblock favicon %}
     <link rel="alternate" type="application/rss+xml" title="{{ config.title }}" href="/rss.xml" />
+    <link rel="me" href="https://lol.camp/bodil" />
     <link rel="canonical" href="{{ current_url }}" />
     {% block css %}
     <link rel="stylesheet" href="/site.css" />
@@ -75,7 +76,7 @@
                 }
 
                 updateTheme();
-            }
+            };
         }
 
         function updateTheme() {
