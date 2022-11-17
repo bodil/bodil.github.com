@@ -104,27 +104,9 @@
             document.getElementById("menu-spj-mode").onclick = onSPJMode();
         };
     </script>
-    <!-- Matomo -->
-    <script type="text/javascript">
-        var _paq = window._paq || [];
-        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-        _paq.push(["trackPageView"]);
-        _paq.push(["enableLinkTracking"]);
-        (function () {
-            var u = "//tortuga.lol.camp/matomo/";
-            _paq.push(["setTrackerUrl", u + "matomo.php"]);
-            _paq.push(["setSiteId", "1"]);
-            var d = document,
-                g = d.createElement("script"),
-                s = d.getElementsByTagName("script")[0];
-            g.type = "text/javascript";
-            g.async = true;
-            g.defer = true;
-            g.src = u + "matomo.js";
-            s.parentNode.insertBefore(g, s);
-        })();
-    </script>
-    <!-- End Matomo Code -->
+    <!-- Analytics -->
+    <script defer data-domain="bodil.lol" src="https://plausible.io/js/script.js"></script>
+    <!-- End Analytics -->
 </head>
 
 <body>
@@ -142,20 +124,6 @@
             <li class="menu-item">
                 <a href="https://twitter.com/bodil">Twitter</a>
             </li>
-            <!-- <li class="menu-item dropdown">
-                <input id="settings-menu" type="checkbox" />
-                <label class="dropdown-button" for="settings-menu">⚙</label>
-                <ul>
-                    <input type="checkbox" id="menu-dark-mode" />
-                    <li onclick="document.getElementById('menu-dark-mode').click()">
-                        Dark Mode
-                    </li>
-                    <input type="checkbox" id="menu-spj-mode" />
-                    <li onclick="document.getElementById('menu-spj-mode').click()">
-                        SPJ Mode
-                    </li>
-                </ul>
-            </li> -->
             <li class="menu-item">
                 <sl-dropdown placement="bottom-end" stay-open-on-select>
                     <sl-icon-button name="gear" label="Settings" slot="trigger" caret></sl-icon-button>
