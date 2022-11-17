@@ -1,0 +1,29 @@
+﻿name: Deploy
+on: push
+
+jobs:
+  deploy:
+    name: Deploy Job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: List files
+        run: |
+          curl -sL https://github.com/getzola/zola/releases/download/v0.16.1/zola-v0.16.1-x86_64-unknown-linux-gnu.tar.gz | tar zx
+          ./zola build
+      - name: SSH setup
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "${KNOWN_HOSTS}" >> ~/.ssh/known_hosts
+          echo "${DEPLOY_KEY}" > ~/.ssh/my_rsync_key
+          echo "IdentityFile ~/.ssh/my_rsync_key" >> ~/.ssh/config
+          chmod -R 700 ~/.ssh
+      - name: Rsync deploy
+        env:
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+        run: |
+          rsync -avz -e ssh --delete public/ ${DEPLOY_USER}@${DEPLOY_HOST}:/var/www/bodil.lol/
