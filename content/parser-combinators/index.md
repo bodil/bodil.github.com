@@ -439,7 +439,7 @@ where
     move |input| match parser1(input) {
         Ok((next_input, result1)) => match parser2(next_input) {
             Ok((final_input, result2)) => Ok((final_input, (result1, result2))),
-            Err(err) => Err(err),
+            Err(_err) => Err(input),
         },
         Err(err) => Err(err),
     }
@@ -650,7 +650,7 @@ where
     move |input| match parser1.parse(input) {
         Ok((next_input, result1)) => match parser2.parse(next_input) {
             Ok((final_input, result2)) => Ok((final_input, (result1, result2))),
-            Err(err) => Err(err),
+            Err(_err) => Err(input),
         },
         Err(err) => Err(err),
     }
@@ -673,6 +673,7 @@ where
         parser1.parse(input).and_then(|(next_input, result1)| {
             parser2.parse(next_input)
                 .map(|(last_input, result2)| (last_input, (result1, result2)))
+                .map_err(|_err| (input))
         })
     }
 }
