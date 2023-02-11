@@ -1,6 +1,2 @@
-/target
-**/*.rs.bk
-.env
-/node_modules
-/web/app/app.js*
-/public
+/_site/
+/node_modules/

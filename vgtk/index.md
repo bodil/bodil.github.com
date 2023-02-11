@@ -1,9 +1,9 @@
-+++
-title = "Building TodoMVC With vgtk"
-date = 2020-02-20
-[taxonomies]
-category = ["article"]
-+++
+---
+title: Building TodoMVC With vgtk
+date: 2020-02-20
+tags: post
+layout: post.liquid
+---
 
 The [`vgtk`][vgtk] project started out as a side effect of one of my "must write a text editor"
 phases, as many things do. It triggers a review of the state of UI development in my current
@@ -24,7 +24,7 @@ I'll try to introduce `vgtk`, idea by idea, by way of a tutorial. You'll need to
 knowledge of [Rust] to follow along. You shouldn't need to know [GTK] already, but you may need to
 be prepared to consult GTK documentation to understand certain things fully.
 
-<!-- more -->
+<!--more-->
 
 ## Where Did It Come From?
 
@@ -119,7 +119,7 @@ $ cargo run
 After a while, your project will finish compiling, and your very first shadow of a `vgtk`
 application should appear on your desktop:
 
-{{gif(url="template-app.png")}}
+{% gif "template-app.png" %}
 
 Let's open the `src/main.rs` file that `cargo-generate` made for us and see what's in it.
 
@@ -291,7 +291,7 @@ In an ideal world, when a GTK widget declares a property, the [Gtk-rs] bindings 
 the case, which is why the [`vgtk::ext`][vgtk::ext] module exists. It tries to work around the
 inconsistencies and provide properly named getters and setters for everything, but it's far from
 complete. If you find something obvious missing, bug reports or pull requests are very
-welcome.{{footnote(name="1")}}
+welcome.{% footnote "1" %}
 
 ## Adding Component State
 
@@ -373,7 +373,7 @@ that won't outlive the iterator.
 
 Let's `cargo run` that and see what happens.
 
-{{gif(url="a-basic-list.png")}}
+{% gif "a-basic-list.png" %}
 
 That's our list in that list box! Try it out, you can highlight each item with the mouse or the
 keyboard.
@@ -478,7 +478,7 @@ fn render(&self) -> VNode<Model> {
 
 Let's run it and see how it looks now:
 
-{{gif(url="checked-list.png")}}
+{% gif "checked-list.png" %}
 
 That's our list, with checkboxes, and they reflect the state we created: Joe and Mike are checked,
 while the remaining tasks are not. You can even go and check and uncheck the items as you like,
@@ -521,7 +521,7 @@ fn render(&self) -> VNode<Model> {
 
 And now it looks like this:
 
-{{gif(url="strikeout-tasks.png")}}
+{% gif "strikeout-tasks.png" %}
 
 However, if you try and check or uncheck the items, you'll notice that the strikeouts don't change
 along with the checkbox state. We'll need to actually update our model in response to the checkboxes
@@ -730,7 +730,7 @@ string.
 
 We can now enter new tasks:
 
-{{gif(url="text-entry.png")}}
+{% gif "text-entry.png" %}
 
 ## A Scrollable List
 
@@ -766,7 +766,7 @@ The property we use to turn off the selection indicator is [`selection_mode`][se
 
 But now it ends up looking really cramped!
 
-{{gif(url="cramped.png")}}
+{% gif "cramped.png" %}
 
 The [`ScrolledWindow`][scrolledwindow] only requests the minimal amount of space it needs to render
 itself, rather than the size of the list box, so the minimum width of the window has now decreased
@@ -837,7 +837,7 @@ easy as just three quick additions to our code.
 
 Except it looks _really bad._ Really, _really_ bad.
 
-{{gif(url="wtf.png")}}
+{% gif "wtf.png" %}
 
 That button is way too big, and it needs to be aligned along the right edge of the list box, not
 just plonked down in the middle of the row wherever the label ends. It would also be nice if,
@@ -875,7 +875,7 @@ Let's update the `<Button>` tag in the `Task` render function:
 
 That looks _much_ better.
 
-{{gif(url="pretty-delete-button.png")}}
+{% gif "pretty-delete-button.png" %}
 
 ## Making A Subcomponent
 
@@ -967,12 +967,12 @@ We could have been smarter about the [`change`][component::change] method, which
 `UpdateAction::None` if the new properties are identical to the current set, but let's leave that as
 an exercise.
 
-{% exercises(slug="smarter-change-method") %}
+{% exercises "smarter-change-method" %}
 
 -   Extend the `change()` method to check if the new properties are different from the current
     state, and only return `UpdateAction::Render` if they are.
 
-{% end %}
+{% endexercises %}
 
 Looking at the view function, there's a new widget, [`ToggleButton`][togglebutton], which works just
 like [`CheckButton`][checkbutton] except it's styled to look like a regular button, not a checkbox.
@@ -1016,7 +1016,7 @@ layout flow and always positions it in the exact centre of the box.
 
 OK, let's try running that and see how it turns out.
 
-{{gif(url="subcomponent.png")}}
+{% gif "subcomponent.png" %}
 
 There's no logic in the buttons, though, you can just toggle them all individually with no effect on
 the list, and we're going to have to fix that.
@@ -1197,9 +1197,9 @@ our [`ListBox`][listbox] with a `filter()` call:
 
 Now try `cargo run` again—the list should now update to reflect the filters you choose.
 
-{{gif(url="working-filter.png")}}
+{% gif "working-filter.png" %}
 
-{% exercises(slug="filter-enum") %}
+{% exercises "filter-enum" %}
 
 -   The `filter_task()` method we just wrote isn't very nice. It would be much better if we could
     make the filter type an enum, rather than a `usize`, and better still if we could generalise the
@@ -1209,7 +1209,7 @@ Now try `cargo run` again—the list should now update to reflect the filters yo
     the `vgtk` git repo offers one solution, using the [`strum`](https://docs.rs/strum/) crate for
     maximum ease of use via some fancy derives.)
 
-{% end %}
+{% endexercises %}
 
 ## Nearly There
 
@@ -1239,7 +1239,7 @@ Notice also how the `center_widget` property from earlier is paying off: the lab
 lot as you select and deselect tasks, but the filter widget stays in the exact same position
 throughout.
 
-{{gif(url="very-informative-label.png")}}
+{% gif "very-informative-label.png" %}
 
 Next, we want that button we can click to immediately clear out all completed tasks from our list.
 This button should not be present if there are no completed tasks to clear out. We can do this using
@@ -1318,7 +1318,7 @@ explicit `Box::pack_type=PackType::End` goes to the left of it.
 
 Behold! the button:
 
-{{gif(url="cleanup-button.png")}}
+{% gif "cleanup-button.png" %}
 
 The best part? When you click it, it will disappear. Tick off another task, and it's back. This
 right here is what programming is all about.
@@ -1326,14 +1326,14 @@ right here is what programming is all about.
 We're just missing one thing now to be fully TodoMVC compliant, but it's not terribly exciting so
 we'll leave it as an exercise.
 
-{% exercises(slug="toggle-all-button") %}
+{% exercises "toggle-all-button" %}
 
 -   There's one item left to get to a complete standards compliant TodoMVC app: a button to the left
     of the input box which lets you toggle all your tasks in one go. It should work like this: if
     all your tasks are currently done, it should set them all to not done. If any task is set to not
     done, it should set them all to done. See if you can implement this button.
 
-{% end %}
+{% endexercises %}
 
 ## Making A Menu
 
@@ -1400,7 +1400,7 @@ So let's try adding a custom title bar. There's one in GTK already that's exactl
 
 Let's run it and see what it looks like.
 
-{{gif(url="custom-title-bar.png")}}
+{% gif "custom-title-bar.png" %}
 
 See the difference? It's a little larger now, and we have a custom title, but it's designed to blend
 in.
@@ -1563,7 +1563,7 @@ we need to give it.
 
 OK, let's `cargo run` and try this out.
 
-{{gif(url="dropdown-menu.png")}}
+{% gif "dropdown-menu.png" %}
 
 That's our menu! Look, the "quit" item even has the keyboard shortcut printed on it. You should be
 able to exit the app using that menu item now.
@@ -1578,7 +1578,7 @@ with a _dog_ in it.
 
 Here is a dog.
 
-<a href="dog.png">{{gif(url="dog.png")}}</a>
+<a href="dog.png">{% gif "dog.png" %}</a>
 
 Save this very good dog as `dog.png` in your project's `src` folder, alongside your `main.rs` file.
 Rust has an [`include_bytes!`][include_bytes!] macro which we can use to embed the dog directly into
@@ -1712,7 +1712,7 @@ window have to re-render itself, but now it's launching the dialog first.
 
 So let's `cargo run` this and try it out!
 
-{{gif(url="dog-dialog.png")}}
+{% gif "dog-dialog.png" %}
 
 _Look at that amazing dog dialog!_
 
@@ -1734,7 +1734,7 @@ As a final bonus for getting this far, if you've noticed the other dog lurking b
 application window, and you really want her as your desktop wallpaper too, it is
 [here](follow-your-dreams.jpg), and it's an unlimited fount of inspiration.
 
-{% exercises(slug="exercises") %}
+{% exercises "exercises" %}
 
 -   So far, we've used a hardcoded list of tasks, discarding any edits on exit, which is a bit silly
     for a real app. Design a storage format for todo lists (or see if there's a standard format out
@@ -1746,11 +1746,11 @@ application window, and you really want her as your desktop wallpaper too, it is
 -   Once you have a way to open and save files, make the window title show the name of the current
     file. For extra credits, make it also show a little star `*` after the file when it's dirty.
 
-{% end %}
+{% endexercises %}
 
 ## Footnotes
 
-{% define_footnote(name="1") %}
+{% define_footnote "1" %}
 
 GTK properties aren't just defined by getters and setters, in reality: GTK objects actually keep a
 list of which properties exist and what sort of values they should accept, with a full API for
@@ -1760,7 +1760,7 @@ the expected value at runtime rather than at compile time. The reason for the cu
 we can now check the property values at compile time and throw the appropriate type errors, rather
 than have the application panic at runtime when you've made a boo-boo.
 
-{% end %}
+{% enddefine_footnote %}
 
 [elm]: https://elm-lang.org/
 [rust]: https://www.rust-lang.org/

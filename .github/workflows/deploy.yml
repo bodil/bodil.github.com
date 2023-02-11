@@ -9,11 +9,17 @@ jobs:
     name: Deploy Job
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Build Zola site
-        run: |
-          curl -sL https://github.com/getzola/zola/releases/download/v0.16.1/zola-v0.16.1-x86_64-unknown-linux-gnu.tar.gz | tar zx
-          ./zola build
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: latest
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: latest
+          run_install: true
+      - name: Build site
+        run: pnpm eleventy
       - name: SSH setup
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
@@ -29,4 +35,4 @@ jobs:
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
         run: |
-          rsync -avz -e ssh --delete public/ ${DEPLOY_USER}@${DEPLOY_HOST}:/var/www/bodil.lol/
+          rsync -avz -e ssh --delete _site/ ${DEPLOY_USER}@${DEPLOY_HOST}:/var/www/bodil.lol/

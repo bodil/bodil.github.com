@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>
+      {% if title %}{{ title }} : {{ config.title }}{% else %}{{ config.title }}{% endif %}</title>
+      <meta http-equiv="x-ua-compatible" content="ie=edge" />
+      <meta charset="utf-8" />
+      <meta name="subject" content="{{ config.description }}" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <meta name="author" content="{{ config.author }}" />
+      <meta name="copyright" content="{{ config.author }}" />
+      <meta name="language" content="{{ config.default_language }}" />
+      {% for entry in meta %}
+        <meta name="{{entry.name}}" content="{{entry.content}}" />
+      {% endfor %}
+      <link
+        rel="apple-touch-icon"
+        sizes="57x57"
+        href="/static/apple-icon-57x57.png" />
+      <link
+        rel="apple-touch-icon"
+        sizes="60x60"
+        href="/static/apple-icon-60x60.png" />
+      <link
+        rel="apple-touch-icon"
+        sizes="72x72"
+        href="/static/apple-icon-72x72.png" />
+      <link
+        rel="apple-touch-icon"
+        sizes="76x76"
+        href="/static/apple-icon-76x76.png" />
+      <link
+        rel="apple-touch-icon"
+        sizes="114x114"
+        href="/static/apple-icon-114x114.png" />
+      <link
+        rel="apple-touch-icon"
+        sizes="120x120"
+        href="/static/apple-icon-120x120.png" />
+      <link
+        rel="apple-touch-icon"
+        sizes="144x144"
+        href="/static/apple-icon-144x144.png" />
+      <link
+        rel="apple-touch-icon"
+        sizes="152x152"
+        href="/static/apple-icon-152x152.png" />
+      <link
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href="/static/apple-icon-180x180.png" />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="192x192"
+        href="/static/android-icon-192x192.png" />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="/static/favicon-32x32.png" />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="96x96"
+        href="/static/favicon-96x96.png" />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="/static/favicon-16x16.png" />
+      <link rel="manifest" href="/static/manifest.json" />
+      <meta name="msapplication-TileColor" content="#ffffff" />
+      <meta name="msapplication-TileImage" content="/static/ms-icon-144x144.png" />
+      <meta name="theme-color" content="#ffffff" />
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title="{{ config.title }}"
+        href="/atom.xml" />
+      <link rel="me" href="{{ config.fedi }}" />
+      <link rel="canonical" href="{{ config.base_url  }}" />
+      <link rel="stylesheet" href="/site.css" />
+      <link
+        rel="stylesheet"
+        href="/print.css"
+        media="print" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.64/dist/themes/light.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.64/dist/themes/dark.css">
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.64/dist/shoelace.js"></script>
+
+      <script type="text/javascript" src="/static/theme.js"></script>
+      <!-- Analytics -->
+      <script
+        defer
+        data-domain="bodil.lol"
+        src="https://plausible.io/js/script.js"></script>
+      <!-- End Analytics -->
+    </head>
+
+    <body>
+      <script type="text/javascript">
+        updateTheme();
+      </script>
+      <header class="no-print">
+        <ul class="menu">
+          <li class="menu-item">
+            <a href="/contact/">Contact</a>
+          </li>
+          <li class="menu-item">
+            <a href="https://github.com/bodil">GitHub</a>
+          </li>
+          <li class="menu-item">
+            <a href="{{ config.fedi }}">Fedi</a>
+          </li>
+          <li class="menu-item">
+            <sl-dropdown placement="bottom-end" stay-open-on-select>
+              <sl-icon-button
+                name="gear"
+                label="Settings"
+                slot="trigger"
+                caret></sl-icon-button>
+              <sl-menu>
+                <sl-menu-item id="menu-light-mode">Light Mode</sl-menu-item>
+                <sl-menu-item id="menu-dark-mode">Dark Mode</sl-menu-item>
+                <sl-menu-item id="menu-system-mode">Follow System Theme</sl-menu-item>
+                <sl-divider></sl-divider>
+                <sl-menu-item id="menu-spj-mode">SPJ Mode</sl-menu-item>
+              </sl-menu>
+            </sl-dropdown>
+          </li>
+        </ul>
+        <h1>
+          <a href="/">{{ config.title }}</a>
+        </h1>
+        <hr/>
+      </header>
+
+      <main>
+        {{ content }}
+      </main>
+
+      <footer>
+        <hr/>
+        <ul class="menu no-print">
+          <li class="menu-item">
+            <a
+              rel="license"
+              href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+              target="_blank">Licence</a>
+          </li>
+        </ul>
+        <div class="print-only">
+          This article by
+          <a
+            xmlns:cc="http://creativecommons.org/ns#"
+            href="{{ config.base_url }}"
+            property="cc:attributionName"
+            rel="cc:attributionURL">{{ config.author }}</a>
+          is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+        </div>
+      </footer>
+    </body>
+  </head>
+</html>

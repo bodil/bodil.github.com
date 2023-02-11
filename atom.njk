@@ -1,0 +1,38 @@
+---
+permalink: atom.xml
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  metadata:
+    title: "{{ config.title }}"
+    subtitle: "{{ config.description }}"
+    language: "{{ config.default_language }}"
+    url: "{{ config.base_url }}"
+    author:
+      name: "{{ config.author }}"
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:base="{{ metadata.url }}">
+    <title>{{ metadata.title }}</title>
+    <subtitle>{{ metadata.subtitle }}</subtitle>
+    <link href="{{ permalink | absoluteUrl(metadata.url) }}" rel="self" />
+    <link href="{{ metadata.url }}" />
+    <updated>{{ collections.post | getNewestCollectionItemDate | dateToRfc3339 }}</updated>
+    <id>{{ metadata.url }}</id>
+    <author>
+        <name>{{ metadata.author.name }}</name>
+        <email>{{ metadata.author.email }}</email>
+    </author>
+    {%- for post in collections.post | reverse %}
+    {%- set absolutePostUrl = post.url | absoluteUrl(metadata.url) %}
+    <entry>
+        <title>{{ post.data.title }}</title>
+        <link href="{{ absolutePostUrl }}" />
+        <updated>{{ post.date | dateToRfc3339 }}</updated>
+        <id>{{ absolutePostUrl }}</id>
+        <content xml:lang="{{ metadata.language }}" type="html">{{ post.templateContent | excerpt |
+            htmlToAbsoluteUrls(absolutePostUrl) }}
+            &lt;p&gt;&lt;a href=&quot;{{ absolutePostUrl }}&quot;&gt;Read more&lt;/a&gt;&lt;/p&gt;
+        </content>
+    </entry>
+    {%- endfor %}
+</feed>

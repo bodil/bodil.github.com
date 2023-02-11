@@ -1,0 +1,17 @@
+---
+layout: index.liquid
+eleventyComputed:
+  meta:
+    - name: summary
+      content: "{{ summary }}"
+    - name: date
+      content: "{{ date | date: '%Y-%m-%d' }}"
+---
+
+<article>
+  <h1>{{ title }}</h1>
+  <div class="post-meta">
+    {{ date | date: "%e %b %Y" }}
+  </div>
+  {{ content }}
+</article>

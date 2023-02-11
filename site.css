@@ -1,5 +1,6 @@
-@import "_mu.scss";
-@import "_iosevka.scss";
+@import "_mu.css";
+@import "_iosevka.css";
+@import "_prism-night-owl.css";
 @import url("https://fonts.googleapis.com/css?family=Bowlby+One+SC");
 
 body {
@@ -77,8 +78,8 @@ code {
     font-size: 0.9em;
 }
 
-pre code {
-    background: #2b2c2f;
+code[class*="language-"] {
+    background: inherit;
 }
 
 pre {

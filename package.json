@@ -1,0 +1,25 @@
+{
+  "name": "bodil.lol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.0",
+    "@11ty/eleventy-plugin-rss": "^1.2.0",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^4.2.0",
+    "@iarna/toml": "^2.2.5",
+    "autoprefixer": "^10.4.13",
+    "eleventy-plugin-activity-pub": "^0.1.1",
+    "eleventy-plugin-postcss": "^1.0.4",
+    "eleventy-plugin-read-more": "^1.0.2",
+    "postcss": "^8.4.21",
+    "postcss-import": "^15.1.0",
+    "postcss-nesting": "^11.1.0"
+  }
+}
